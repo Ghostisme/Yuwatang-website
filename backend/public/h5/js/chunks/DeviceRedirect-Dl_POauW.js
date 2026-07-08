@@ -1,0 +1,1 @@
+import{d as r,o as s,u as c,m as n}from"./vue-oxmsRPpi.js";import{_ as u}from"../entries/main-Edu2ep75.js";import"./i18n-BDfsCY9q.js";const a=r({__name:"DeviceRedirect",setup(_){const t=c(),o=n();return s(()=>{const e=t.query.redirect||"/";setTimeout(()=>{o.replace(e)},100)}),(e,i)=>null}}),f=u(a,[["__scopeId","data-v-40784d3b"]]);export{f as default};

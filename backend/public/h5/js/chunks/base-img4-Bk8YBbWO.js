@@ -1,0 +1,1 @@
+const t="http://www.yuhetangtcm.com/h5/images/base-banner-Bk8B6bEb.jpg",m="http://www.yuhetangtcm.com/h5/images/base-img1-DSJgZ3Ge.jpg",s="http://www.yuhetangtcm.com/h5/images/base-img2-DgREjyb_.jpg",a="http://www.yuhetangtcm.com/h5/images/base-img3-D74I7mHP.jpg",g="http://www.yuhetangtcm.com/h5/images/base-img4-B7kSSjfc.jpg";export{t as _,a,g as b,m as c,s as d};

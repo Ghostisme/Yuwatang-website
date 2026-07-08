@@ -1,0 +1,56 @@
+body,
+html,
+div,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+li,
+input,
+button {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+}
+
+ul,
+li {
+  list-style: none;
+}
+
+.swiper-pagination-bullet-active {
+  opacity: 1;
+  background: rgb(194, 153, 116) !important;
+}
+
+/* 5个断点，平衡效果和性能 */
+html {
+  font-size: 16px;
+} /* > 1440px */
+@media (max-width: 1440px) {
+  html {
+    font-size: 15px;
+  }
+} /* 1200-1440px */
+@media (max-width: 1200px) {
+  html {
+    font-size: 14px;
+  }
+} /* 768-1200px */
+@media (max-width: 768px) {
+  html {
+    font-size: 13px;
+  }
+} /* 480-768px */
+@media (max-width: 480px) {
+  html {
+    font-size: 12px;
+  }
+} /* < 480px */

@@ -1,0 +1,16 @@
+@font-face {
+  font-family: "LinHai";
+  src: url("./linhai.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap; /* 优化加载显示行为 */
+  text-rendering: geometricPrecision; /* 优化间距渲染 */
+  text-rendering: optimizeLegibility;
+}
+@font-face {
+  font-family: "PingFangSC-Regular";
+  src: url("./PingFangSC-Regular.ttf") format("truetype");
+  font-style: normal;
+  font-display: swap; /* 优化加载显示行为 */
+  text-rendering: geometricPrecision; /* 优化间距渲染 */
+  text-rendering: optimizeLegibility;
+}

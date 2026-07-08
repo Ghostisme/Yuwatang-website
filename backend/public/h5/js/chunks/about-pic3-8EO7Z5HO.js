@@ -1,0 +1,1 @@
+const t="http://www.yuhetangtcm.com/h5/images/about-pic1-DzoY_jZ6.png",c="http://www.yuhetangtcm.com/h5/images/about-pic2-BEKs7C1c.png",a="http://www.yuhetangtcm.com/h5/images/about-pic3-BJ1AjcOs.png";export{t as a,c as b,a as c};
