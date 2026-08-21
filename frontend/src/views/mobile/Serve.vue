@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="serve">
     <div class="serve-banner">
       <img src="@/assets/img/serve-banner.jpg" alt="" />
@@ -27,7 +27,7 @@ const { t } = useI18n()
   min-height: calc(100vh - 240px);
   position: relative;
   z-index: 1;
-  margin-top: 50px;
+  margin-top: 52px;
   &-banner {
     width: 100%;
     img {

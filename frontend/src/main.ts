@@ -5,6 +5,7 @@ import router from "./router"
 import i18n from "./i18n"
 import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
+import { lazyLoadDirective } from "./utils/lazy-load"
 import "./utils/rem"
 import "./assets/main.css"
 import "./assets/base.css"
@@ -21,6 +22,7 @@ const pinia = createPinia()
 app.use(pinia)
 pinia.use(piniaPluginPersistedstate)
 
+app.directive("lazy", lazyLoadDirective)
 app.use(router)
 app.use(i18n)
 

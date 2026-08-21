@@ -154,7 +154,35 @@ export default {
     item3: "工作日 9:00-18:00 专人接听，为您实时解答疑问",
     item4: "メール",
     item5: "发送详细咨询或建议，我们将在24小时内回复",
-    item6: "お問い合わせ"
+    item6: "お問い合わせ",
+    feedbackTitle: "ご意見・フィードバック",
+    namePlaceholder: "お名前",
+    phonePlaceholder: "電話番号",
+    storePlaceholder: "ご利用店舗",
+    contentPlaceholder: "ご意見（任意）",
+    submit: "送信する",
+    submitting: "送信中...",
+    required: "お名前・電話番号・店舗を入力してください",
+    success: "送信が完了しました",
+    fail: "送信に失敗しました。しばらくしてから再度お試しください"
+  },
+  news: {
+    title: "ニュース情報",
+    loading: "読み込み中...",
+    empty: "記事がありません",
+    prev: "前へ",
+    next: "次へ",
+    back: "一覧へ戻る"
+  },
+  nav: {
+    home: "ホーム",
+    feature: "サービス",
+    base: "基地",
+    store: "店舗",
+    news: "ニュース",
+    trace: "溯源",
+    about: "について",
+    contact: "お問い合わせ"
   },
   footer: {
     item1: "私たちについて",

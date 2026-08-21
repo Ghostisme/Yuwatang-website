@@ -6,43 +6,93 @@
     </div>
     <div class="contact-box" style="max-width: 1407px; padding: 0 25px">
       <div class="contact-title">{{ t("contact.item1") }}</div>
-      <!-- 联系卡片 -->
       <div class="contact-cards">
-        <!-- 电话联系 -->
         <div class="contact-card">
           <div class="card-icon phone-icon">📞</div>
           <h3>{{ t("contact.item2") }}</h3>
-          <!-- <p>{{ t("contact.item3") }}</p> -->
-          <div class="contact-link" @click="makePhoneCall">+86-18895366320</div>
+          <div class="contact-link" @click="makePhoneCall('+86-18895366320')">+86-18895366320</div>
         </div>
-
-        <!-- 邮箱联系 -->
         <div class="contact-card">
           <div class="card-icon email-icon">✉️</div>
           <h3>{{ t("contact.item4") }}</h3>
-          <!-- <p>{{ t("contact.item5") }}</p> -->
           <div class="contact-link">tty12138@foxmail.com</div>
         </div>
       </div>
+
+      <form class="feedback-form" @submit.prevent="onSubmit">
+        <h3 class="form-title">{{ t("contact.feedbackTitle") }}</h3>
+        <input v-model.trim="form.name" type="text" :placeholder="t('contact.namePlaceholder')" />
+        <input v-model.trim="form.phone" type="tel" :placeholder="t('contact.phonePlaceholder')" />
+        <input v-model.trim="form.store_name" type="text" :placeholder="t('contact.storePlaceholder')" />
+        <textarea v-model.trim="form.content" rows="5" :placeholder="t('contact.contentPlaceholder')"></textarea>
+        <p v-if="message" class="form-msg" :class="{ error: isError }">{{ message }}</p>
+        <button class="submit-btn" type="submit" :disabled="submitting">
+          {{ submitting ? t("contact.submitting") : t("contact.submit") }}
+        </button>
+      </form>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+import { reactive, ref } from "vue"
 import { useI18n } from "vue-i18n"
+import { submitFeedback } from "@/api/index"
+
 const { t } = useI18n()
-const makePhoneCall = (tel) => {
+const submitting = ref(false)
+const message = ref("")
+const isError = ref(false)
+const form = reactive({
+  name: "",
+  phone: "",
+  store_name: "",
+  content: ""
+})
+
+const makePhoneCall = (tel: string) => {
   const link = document.createElement("a")
   link.href = `tel:${tel}`
   link.click()
 }
+
+const onSubmit = async () => {
+  message.value = ""
+  if (!form.name || !form.phone || !form.store_name) {
+    isError.value = true
+    message.value = t("contact.required")
+    return
+  }
+  submitting.value = true
+  try {
+    const res: any = await submitFeedback({ ...form })
+    if (res.code == 1) {
+      isError.value = false
+      message.value = t("contact.success")
+      form.name = ""
+      form.phone = ""
+      form.store_name = ""
+      form.content = ""
+    } else {
+      isError.value = true
+      message.value = res.msg || t("contact.fail")
+    }
+  } catch (e: any) {
+    isError.value = true
+    message.value = e?.msg || e?.message || t("contact.fail")
+  } finally {
+    submitting.value = false
+  }
+}
 </script>
+
 <style lang="scss" scoped>
 .contact {
   min-height: calc(100vh - 383px);
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-top: 100px;
+  margin-top: 88px;
   background: rgba(255, 252, 250, 1);
   &-banner {
     width: 100%;
@@ -74,18 +124,14 @@ const makePhoneCall = (tel) => {
     font-size: 20px;
     font-weight: 500;
     line-height: 28px;
-    letter-spacing: 0px;
-    text-align: center;
   }
-  /* 联系方式卡片 */
   .contact-cards {
     display: flex;
     flex-wrap: wrap;
     gap: 30px;
     justify-content: center;
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
-
   .contact-card {
     flex: 1;
     min-width: 280px;
@@ -96,57 +142,96 @@ const makePhoneCall = (tel) => {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     text-align: center;
     transition: transform 0.3s ease, box-shadow 0.3s ease;
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
+    }
   }
-
-  .contact-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  }
-
   .card-icon {
-    width: 80px;
-    height: 80px;
-    margin: 0 auto 24px;
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 20px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 32px;
+    font-size: 28px;
   }
-
   .phone-icon {
     background-color: #e8f4f8;
-    color: #3498db;
   }
-
   .email-icon {
     background-color: #fef7fb;
-    color: #e91e63;
   }
-
   .contact-card h3 {
-    font-size: 18px;
+    font-size: 20px;
     color: #2c3e50;
     margin-bottom: 16px;
     font-weight: 500;
   }
-
-  .contact-card p {
-    color: #7f8c8d;
-    margin-bottom: 24px;
-    font-size: 16px;
-  }
-
   .contact-link {
     display: inline-block;
-    padding: 12px 32px;
+    padding: 10px 16px;
     border-radius: 8px;
     color: rgba(60, 50, 28, 1);
-    text-decoration: none;
-    font-size: 16px;
     background: rgb(252, 248, 244);
-    transition: background-color 0.3s ease;
     cursor: pointer;
+  }
+  .feedback-form {
+    max-width: 600px;
+    margin: 40px auto 80px;
+    padding: 40px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    .form-title {
+      margin: 0 0 24px;
+      text-align: center;
+      font-size: 22px;
+      color: rgba(60, 50, 28, 1);
+      font-weight: 500;
+    }
+    input,
+    textarea {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      box-sizing: border-box;
+      font-family: inherit;
+      &:focus {
+        outline: none;
+        border-color: rgba(60, 50, 28, 0.45);
+      }
+    }
+    .form-msg {
+      margin: -8px 0 16px;
+      font-size: 14px;
+      color: #2e7d32;
+      &.error {
+        color: #c62828;
+      }
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 14px;
+      background: rgba(60, 50, 28, 1);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: opacity 0.3s ease;
+      &:hover:not(:disabled) {
+        opacity: 0.9;
+      }
+      &:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+      }
+    }
   }
 }
 </style>

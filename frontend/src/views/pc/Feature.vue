@@ -108,7 +108,7 @@ onMounted(() => {
   display: flex;
   justify-content: space-between;
   overflow-y: scroll;
-  padding-top: 100px;
+  padding-top: 88px;
   &-left {
     width: 50%;
     &-img {

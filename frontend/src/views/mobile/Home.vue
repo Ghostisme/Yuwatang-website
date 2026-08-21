@@ -20,7 +20,7 @@
             loop
             playsinline
             webkit-playsinline
-            preload="auto"
+            preload="metadata"
             poster="@/assets/img/home-banner.jpg"
           ></video>
         </swiper-slide>
@@ -270,7 +270,7 @@ onMounted(() => {
 .home {
   background: rgba(255, 252, 250, 1);
   position: relative;
-  margin-top: 50px;
+  margin-top: 52px;
 }
 .banner {
   width: 100%;
@@ -281,7 +281,7 @@ onMounted(() => {
   }
   .video {
     width: 100%;
-    height: calc(100vh - 50px);
+    height: calc(100vh - 52px);
     max-width: 100%;
     object-fit: cover; /* 保持视频比例 */
     display: block;
@@ -434,11 +434,12 @@ onMounted(() => {
         // text-indent: 2em;
       }
       .info-btn {
-        padding: 15px 16px;
-        border-bottom: 1px solid rgba(194, 153, 116, 1);
+        padding: 10px 20px;
+        border: 1px solid rgba(60, 50, 28, 0.3);
+        border-radius: 6px;
         background: rgba(255, 255, 255, 1);
-        color: rgba(194, 153, 116, 1);
-        font-size: 12px;
+        color: rgba(60, 50, 28, 1);
+        font-size: 14px;
         font-weight: 400;
         line-height: 14px;
         letter-spacing: 1px;
@@ -448,6 +449,9 @@ onMounted(() => {
         display: flex;
         align-items: center;
         justify-content: center;
+        &:active {
+          background: rgba(60, 50, 28, 0.08);
+        }
       }
     }
   }

@@ -158,7 +158,35 @@ export default {
     item3: "工作日 9:00-18:00 专人接听，为您实时解答疑问",
     item4: "Email",
     item5: "发送详细咨询或建议，我们将在24小时内回复",
-    item6: "Contact Us"
+    item6: "Contact Us",
+    feedbackTitle: "Feedback",
+    namePlaceholder: "Name",
+    phonePlaceholder: "Phone",
+    storePlaceholder: "Store",
+    contentPlaceholder: "Message (optional)",
+    submit: "Submit",
+    submitting: "Submitting...",
+    required: "Please fill in name, phone and store",
+    success: "Submitted successfully",
+    fail: "Submission failed, please try again"
+  },
+  news: {
+    title: "News",
+    loading: "Loading...",
+    empty: "No articles yet",
+    prev: "Prev",
+    next: "Next",
+    back: "Back to list"
+  },
+  nav: {
+    home: "Home",
+    feature: "Services",
+    base: "Base",
+    store: "Stores",
+    news: "News",
+    trace: "Trace",
+    about: "About",
+    contact: "Contact"
   },
   footer: {
     item1: "About Us",

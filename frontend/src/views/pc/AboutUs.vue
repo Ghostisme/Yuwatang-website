@@ -144,14 +144,14 @@ onMounted(() => {
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-top: 100px;
+  margin-top: 88px;
   .about-banner {
     width: 100%;
     max-height: 100vh;
     overflow: hidden;
     .video {
       width: 100%;
-      height: calc(100vh - 100px);
+      height: calc(100vh - 88px);
       max-width: 100%;
       min-height: 80%;
       object-fit: cover; /* 保持视频比例 */

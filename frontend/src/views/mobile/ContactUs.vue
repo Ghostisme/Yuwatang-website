@@ -6,40 +6,90 @@
     <div class="banner-tit">{{ t("contact.item6") }}</div>
     <div class="contact-box" style="padding: 0 15px">
       <div class="contact-title">{{ t("contact.item1") }}</div>
-      <!-- 联系卡片 -->
       <div class="contact-cards">
-        <!-- 电话联系 -->
         <div class="contact-card">
           <div class="card-icon phone-icon">📞</div>
           <h3>{{ t("contact.item2") }}</h3>
-          <!-- <p>{{ t("contact.item3") }}</p> -->
-          <div class="contact-link" @click="makePhoneCall">+86-18895366320</div>
+          <div class="contact-link" @click="makePhoneCall('18895366320')">+86-18895366320</div>
         </div>
-
-        <!-- 邮箱联系 -->
         <div class="contact-card">
           <div class="card-icon email-icon">✉️</div>
           <h3>{{ t("contact.item4") }}</h3>
-          <!-- <p>{{ t("contact.item5") }}</p> -->
           <div class="contact-link">tty12138@foxmail.com</div>
         </div>
       </div>
+
+      <form class="feedback-form" @submit.prevent="onSubmit">
+        <h3 class="form-title">{{ t("contact.feedbackTitle") }}</h3>
+        <input v-model.trim="form.name" type="text" :placeholder="t('contact.namePlaceholder')" />
+        <input v-model.trim="form.phone" type="tel" :placeholder="t('contact.phonePlaceholder')" />
+        <input v-model.trim="form.store_name" type="text" :placeholder="t('contact.storePlaceholder')" />
+        <textarea v-model.trim="form.content" rows="4" :placeholder="t('contact.contentPlaceholder')"></textarea>
+        <p v-if="message" class="form-msg" :class="{ error: isError }">{{ message }}</p>
+        <button class="submit-btn" type="submit" :disabled="submitting">
+          {{ submitting ? t("contact.submitting") : t("contact.submit") }}
+        </button>
+      </form>
     </div>
   </div>
 </template>
+
 <script setup lang="ts">
+import { reactive, ref } from "vue"
 import { useI18n } from "vue-i18n"
+import { submitFeedback } from "@/api/index"
+
 const { t } = useI18n()
-const makePhoneCall = (tel) => {
+const submitting = ref(false)
+const message = ref("")
+const isError = ref(false)
+const form = reactive({
+  name: "",
+  phone: "",
+  store_name: "",
+  content: ""
+})
+
+const makePhoneCall = (tel: string) => {
   const link = document.createElement("a")
   link.href = `tel:${tel}`
   link.click()
 }
+
+const onSubmit = async () => {
+  message.value = ""
+  if (!form.name || !form.phone || !form.store_name) {
+    isError.value = true
+    message.value = t("contact.required")
+    return
+  }
+  submitting.value = true
+  try {
+    const res: any = await submitFeedback({ ...form })
+    if (res.code == 1) {
+      isError.value = false
+      message.value = t("contact.success")
+      form.name = ""
+      form.phone = ""
+      form.store_name = ""
+      form.content = ""
+    } else {
+      isError.value = true
+      message.value = res.msg || t("contact.fail")
+    }
+  } catch (e: any) {
+    isError.value = true
+    message.value = e?.msg || e?.message || t("contact.fail")
+  } finally {
+    submitting.value = false
+  }
+}
 </script>
+
 <style lang="scss" scoped>
 .contact {
   min-height: calc(100vh - 240px);
-  margin-top: 50px;
+  margin-top: 52px;
   position: relative;
   width: 100%;
   overflow: hidden;
@@ -60,8 +110,6 @@ const makePhoneCall = (tel) => {
     font-size: 24px;
     font-weight: 500;
     line-height: 1.5;
-    letter-spacing: 0px;
-    text-align: center;
     margin-top: 10px;
   }
   &-box {
@@ -74,26 +122,23 @@ const makePhoneCall = (tel) => {
     font-size: 14px;
     font-weight: 400;
     line-height: 1.5;
-    letter-spacing: 0px;
   }
-  /* 联系方式卡片 */
   .contact-cards {
     display: flex;
     flex-wrap: wrap;
     gap: 15px;
     justify-content: center;
-    margin-bottom: 60px;
+    margin-bottom: 24px;
   }
-
   .contact-card {
-    width: 50%;
+    width: calc(50% - 8px);
     background: white;
     border-radius: 12px;
     padding: 20px 10px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     text-align: center;
+    box-sizing: border-box;
   }
-
   .card-icon {
     width: 40px;
     height: 40px;
@@ -104,40 +149,69 @@ const makePhoneCall = (tel) => {
     justify-content: center;
     font-size: 20px;
   }
-
   .phone-icon {
     background-color: #e8f4f8;
-    color: #3498db;
   }
-
   .email-icon {
     background-color: #fef7fb;
-    color: #e91e63;
   }
-
   .contact-card h3 {
     font-size: 14px;
     color: #2c3e50;
     margin-bottom: 10px;
     font-weight: 500;
   }
-
-  .contact-card p {
-    color: #7f8c8d;
-    margin-bottom: 10px;
-    font-size: 12px;
-  }
-
   .contact-link {
     display: inline-block;
     padding: 6px 8px;
     border-radius: 8px;
     color: rgba(60, 50, 28, 1);
-    text-decoration: none;
     font-size: 12px;
     background: rgb(252, 248, 244);
-    transition: background-color 0.3s ease;
-    cursor: pointer;
+  }
+  .feedback-form {
+    padding: 20px 15px 40px;
+    .form-title {
+      margin: 0 0 16px;
+      text-align: center;
+      font-size: 18px;
+      color: rgba(60, 50, 28, 1);
+      font-weight: 500;
+    }
+    input,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 14px;
+      margin-bottom: 15px;
+      box-sizing: border-box;
+      font-family: inherit;
+    }
+    .form-msg {
+      margin: -6px 0 12px;
+      font-size: 13px;
+      color: #2e7d32;
+      &.error {
+        color: #c62828;
+      }
+    }
+    .submit-btn {
+      width: 100%;
+      padding: 12px;
+      background: rgba(60, 50, 28, 1);
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      font-size: 14px;
+      &:disabled {
+        opacity: 0.6;
+      }
+      &:active:not(:disabled) {
+        opacity: 0.85;
+      }
+    }
   }
 }
 </style>

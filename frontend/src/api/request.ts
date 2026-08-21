@@ -17,7 +17,7 @@ interface ResponseData<T = any> {
 
 // 创建axios实例
 const request: AxiosInstance = axios.create({
-  baseURL: "http://www.yuhetangtcm.com/api.php",
+  baseURL: import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api.php",
   timeout: 10000,
   headers: {
     "Content-Type": "application/json"

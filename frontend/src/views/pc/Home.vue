@@ -12,7 +12,15 @@
         :effect="'fade'"
       >
         <swiper-slide v-for="(item, index) in videoList" :key="index">
-          <video class="video" :src="item" autoplay muted loop preload="auto" poster="@/assets/img/home-banner.jpg"></video>
+          <video
+            class="video"
+            :src="item"
+            autoplay
+            muted
+            loop
+            preload="metadata"
+            poster="@/assets/img/home-banner.jpg"
+          ></video>
         </swiper-slide>
       </swiper>
       <!-- <img src="@/assets/img/home-banner.jpg" alt="" /> -->
@@ -256,7 +264,7 @@ onMounted(() => {
   overflow: hidden;
   background: rgba(255, 252, 250, 1);
   position: relative;
-  margin-top: 100px;
+  margin-top: 88px;
 }
 .banner {
   width: 100%;
@@ -264,7 +272,7 @@ onMounted(() => {
   overflow: hidden;
   .video {
     width: 100%;
-    height: calc(100vh - 100px);
+    height: calc(100vh - 88px);
     max-width: 100%;
     min-height: 80%;
     object-fit: cover; /* 保持视频比例 */
@@ -342,19 +350,24 @@ onMounted(() => {
         text-align: center;
       }
       .info-btn {
-        width: 90px;
-        height: 28px;
-        padding: 10px 0;
-        border: 1px solid rgba(194, 153, 116, 1);
+        min-width: 120px;
+        padding: 12px 24px;
+        border: 1px solid rgba(60, 50, 28, 0.3);
+        border-radius: 6px;
         background: rgba(255, 255, 255, 1);
-        color: rgba(194, 153, 116, 1);
-        font-size: 24px;
+        color: rgba(60, 50, 28, 1);
+        font-size: 16px;
         font-weight: 400;
         line-height: 28px;
         letter-spacing: 0px;
         text-align: center;
         margin: 30px auto 0;
         cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover {
+          background: rgba(60, 50, 28, 0.05);
+          border-color: rgba(60, 50, 28, 0.6);
+        }
       }
     }
   }
@@ -453,10 +466,11 @@ onMounted(() => {
         text-align: center;
       }
       .info-btn {
-        padding: 10px 15px;
-        border: 1px solid rgba(194, 153, 116, 1);
+        padding: 12px 32px;
+        border: 1px solid rgba(60, 50, 28, 0.3);
+        border-radius: 6px;
         background: rgba(255, 255, 255, 1);
-        color: rgba(194, 153, 116, 1);
+        color: rgba(60, 50, 28, 1);
         font-size: 15px;
         font-weight: 400;
         line-height: 18px;
@@ -464,6 +478,11 @@ onMounted(() => {
         text-align: center;
         margin: 50px auto 0;
         cursor: pointer;
+        transition: all 0.3s ease;
+        &:hover {
+          background: rgba(60, 50, 28, 0.05);
+          border-color: rgba(60, 50, 28, 0.6);
+        }
       }
     }
   }

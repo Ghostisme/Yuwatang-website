@@ -25,3 +25,32 @@ export const getStoreBanner = () => {
     method: "get"
   })
 }
+
+export const getArticleList = (data: { project_id?: number; page: number; limit: number }) => {
+  return request({
+    url: "/api/ygame/article/index",
+    method: "post",
+    data
+  })
+}
+
+export const getArticleDetail = (id: number) => {
+  return request({
+    url: "/api/ygame/article/info",
+    method: "post",
+    data: { id }
+  })
+}
+
+export const submitFeedback = (data: {
+  name: string
+  phone: string
+  store_name: string
+  content: string
+}) => {
+  return request({
+    url: "/api/ygame/feedback/submit",
+    method: "post",
+    data
+  })
+}

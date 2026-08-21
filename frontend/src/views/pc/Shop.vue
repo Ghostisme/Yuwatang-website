@@ -50,13 +50,13 @@
 import { ref, onMounted, onUnmounted, computed, nextTick, watch } from "vue"
 import { useI18n } from "vue-i18n"
 import { getStoreBanner } from "@/api"
-import ShopPic1 from "@/assets/img/shop-pic1.png"
-import ShopPic2 from "@/assets/img/shop-pic2.png"
-import ShopPic3 from "@/assets/img/shop-pic3.png"
-import ShopPic4 from "@/assets/img/shop-pic4.png"
-import ShopPic5 from "@/assets/img/shop-pic5.png"
-import ShopPic6 from "@/assets/img/shop-pic6.png"
-import ShopPic7 from "@/assets/img/shop-pic7.png"
+import ShopPic1 from "@/assets/img/shop-pic1.jpg"
+import ShopPic2 from "@/assets/img/shop-pic2.jpg"
+import ShopPic3 from "@/assets/img/shop-pic3.jpg"
+import ShopPic4 from "@/assets/img/shop-pic4.jpg"
+import ShopPic5 from "@/assets/img/shop-pic5.jpg"
+import ShopPic6 from "@/assets/img/shop-pic6.jpg"
+import ShopPic7 from "@/assets/img/shop-pic7.jpg"
 import ShopBanZh from "@/assets/img/shop-banner-zh.jpg"
 import ShopBanEn from "@/assets/img/shop-banner-en.jpg"
 import ShopBanJp from "@/assets/img/shop-banner-jp.jpg"
@@ -312,7 +312,7 @@ onUnmounted(() => {
   min-height: calc(100vh - 383px);
   width: 100%;
   overflow: hidden;
-  margin-top: 100px;
+  margin-top: 88px;
   &-banner {
     width: 100%;
     img {

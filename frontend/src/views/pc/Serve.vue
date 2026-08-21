@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="serve">
     <div class="serve-banner">
       <img src="@/assets/img/serve-banner.jpg" alt="" />
@@ -33,7 +33,7 @@ const { t } = useI18n()
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-top: 100px;
+  margin-top: 88px;
   &-banner {
     width: 100%;
     img {

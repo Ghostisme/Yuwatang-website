@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="about-us">
     <div class="about-banner">
       <swiper
@@ -163,7 +163,7 @@ onMounted(() => {
 .about-us {
   width: 100%;
   min-height: calc(100vh - 240px);
-  margin-top: 50px;
+  margin-top: 52px;
   position: relative;
   z-index: 1;
   overflow: hidden;
@@ -171,7 +171,7 @@ onMounted(() => {
     width: 100%;
     .video {
       width: 100%;
-      height: calc(100vh - 50px);
+      height: calc(100vh - 52px);
       max-width: 100%;
       object-fit: cover; /* 保持视频比例 */
       display: block;

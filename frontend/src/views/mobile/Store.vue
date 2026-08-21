@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="store">
     <div class="store-banner">
       <img src="@/assets/img/store-banner.png" alt="" />
@@ -170,7 +170,7 @@ const goContact = () => {
 <style lang="scss" scoped>
 .store {
   min-height: calc(100vh - 240px);
-  margin-top: 50px;
+  margin-top: 52px;
   position: relative;
   width: 100%;
   overflow: hidden;

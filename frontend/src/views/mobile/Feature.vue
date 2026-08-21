@@ -127,7 +127,7 @@ onMounted(() => {
   width: 100%;
   min-height: calc(100vh - 240px);
   overflow: hidden;
-  padding-top: 50px;
+  padding-top: 52px;
   &-left {
     width: 100%;
     &-img {

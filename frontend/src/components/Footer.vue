@@ -5,7 +5,7 @@
         <div class="footer-pc-us" :class="locale == 'zh' ? 'fontzh' : ''">
           <span class="about-us" @click="goAboutUs">{{ t("footer.item1") }}</span>
           <span class="about-us" @click="goContactUs">{{ t("footer.item2") }}</span>
-          <span class="about-us" @click="goShop">{{ t("footer.item10") }}</span>
+          <span class="about-us" @click="goNews">{{ t("footer.item10") }}</span>
         </div>
         <div class="footer-pc-info">
           <span class="info-li">{{ t("footer.item4") }}</span>
@@ -43,7 +43,7 @@
         <div class="box-top-us">
           <span class="about-us" @click="goAboutUs">{{ t("footer.item1") }}</span>
           <span class="about-us" @click="goContactUs">{{ t("footer.item2") }}</span>
-          <span class="about-us" @click="goShop">{{ t("footer.item10") }}</span>
+          <span class="about-us" @click="goNews">{{ t("footer.item10") }}</span>
           <div class="box-top-title" v-html="t('footer.item3')"></div>
         </div>
       </div>
@@ -128,6 +128,10 @@ const goAboutUs = () => {
 
 const goContactUs = () => {
   router.push("/contact-us")
+}
+
+const goNews = () => {
+  router.push("/news")
 }
 
 const goHome = () => {

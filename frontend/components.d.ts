@@ -12,5 +12,7 @@ declare module 'vue' {
     Header: typeof import('./src/components/Header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TraceBoard: typeof import('./src/components/TraceBoard.vue')['default']
+    TraceInfoBlock: typeof import('./src/components/TraceInfoBlock.vue')['default']
   }
 }

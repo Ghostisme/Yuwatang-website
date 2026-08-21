@@ -152,7 +152,35 @@ export default {
     item3: "工作日 9:00-18:00 专人接听，为您实时解答疑问",
     item4: "邮箱沟通",
     item5: "发送详细咨询或建议，我们将在24小时内回复",
-    item6: "联 系 我 们"
+    item6: "联 系 我 们",
+    feedbackTitle: "意见反馈",
+    namePlaceholder: "姓名",
+    phonePlaceholder: "电话",
+    storePlaceholder: "所属门店",
+    contentPlaceholder: "反馈内容（选填）",
+    submit: "提交反馈",
+    submitting: "提交中...",
+    required: "请填写姓名、电话和所属门店",
+    success: "提交成功，我们会尽快联系您",
+    fail: "提交失败，请稍后重试"
+  },
+  news: {
+    title: "新闻资讯",
+    loading: "加载中...",
+    empty: "暂无资讯",
+    prev: "上一页",
+    next: "下一页",
+    back: "返回列表"
+  },
+  nav: {
+    home: "首页",
+    feature: "服务",
+    base: "基地",
+    store: "门店",
+    news: "资讯",
+    trace: "溯源",
+    about: "关于",
+    contact: "联系"
   },
   footer: {
     item1: "关于我们",

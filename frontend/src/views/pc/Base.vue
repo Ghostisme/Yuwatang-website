@@ -1,4 +1,4 @@
-<template>
+﻿<template>
   <div class="base">
     <div class="base-banner">
       <img src="@/assets/img/base-banner.jpg" alt="" />
@@ -49,7 +49,7 @@ const { t } = useI18n()
   position: relative;
   width: 100%;
   overflow: hidden;
-  margin-top: 100px;
+  margin-top: 88px;
   &-banner {
     width: 100%;
     position: relative;

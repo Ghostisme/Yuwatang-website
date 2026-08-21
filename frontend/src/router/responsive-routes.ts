@@ -39,6 +39,18 @@ export const pageComponents = {
   contactUs: {
     desktop: () => import("@/views/pc/ContactUs.vue"),
     mobile: () => import("@/views/mobile/ContactUs.vue")
+  },
+  news: {
+    desktop: () => import("@/views/pc/News.vue"),
+    mobile: () => import("@/views/mobile/News.vue")
+  },
+  newsDetail: {
+    desktop: () => import("@/views/pc/NewsDetail.vue"),
+    mobile: () => import("@/views/mobile/NewsDetail.vue")
+  },
+  trace: {
+    desktop: () => import("@/views/pc/Trace.vue"),
+    mobile: () => import("@/views/mobile/Trace.vue")
   }
 } as const
 
@@ -176,6 +188,33 @@ export function createResponsiveRoutes(): RouteRecordRaw[] {
       component: createResponsiveWrapper("contactUs"),
       meta: {
         title: "裕和堂 Yu Health",
+        responsive: true
+      }
+    },
+    {
+      path: "/news",
+      name: "News",
+      component: createResponsiveWrapper("news"),
+      meta: {
+        title: "裕和堂 - 资讯",
+        responsive: true
+      }
+    },
+    {
+      path: "/news/:id",
+      name: "NewsDetail",
+      component: createResponsiveWrapper("newsDetail"),
+      meta: {
+        title: "裕和堂 - 资讯详情",
+        responsive: true
+      }
+    },
+    {
+      path: "/trace",
+      name: "Trace",
+      component: createResponsiveWrapper("trace"),
+      meta: {
+        title: "裕和堂 - 产品溯源",
         responsive: true
       }
     }
