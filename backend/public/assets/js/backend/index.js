@@ -72,28 +72,37 @@ define(['jquery', 'bootstrap', 'backend', 'addtabs', 'adminlte', 'form'], functi
                 e.stopPropagation();
             });
 
-            //清除缓存
+            //清除缓存（确认后执行）
             $(document).on('click', "ul.wipecache li a,a.wipecache", function () {
-                $.ajax({
-                    url: 'ajax/wipecache',
-                    dataType: 'json',
-                    data: {type: $(this).data("type")},
-                    cache: false,
-                    success: function (ret) {
-                        if (ret.hasOwnProperty("code")) {
-                            var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
-                            if (ret.code === 1) {
-                                Toastr.success(msg ? msg : __('Wipe cache completed'));
+                var type = $(this).data("type") || "all";
+                Layer.confirm(__('Wipe cache confirm'), {
+                    icon: 3,
+                    title: __('Wipe cache'),
+                    btn: [__('OK'), __('Cancel')]
+                }, function (index) {
+                    Layer.close(index);
+                    $.ajax({
+                        url: 'ajax/wipecache',
+                        dataType: 'json',
+                        data: {type: type},
+                        cache: false,
+                        success: function (ret) {
+                            if (ret.hasOwnProperty("code")) {
+                                var msg = ret.hasOwnProperty("msg") && ret.msg != "" ? ret.msg : "";
+                                if (ret.code === 1) {
+                                    Toastr.success(msg ? msg : __('Wipe cache completed'));
+                                } else {
+                                    Toastr.error(msg ? msg : __('Wipe cache failed'));
+                                }
                             } else {
-                                Toastr.error(msg ? msg : __('Wipe cache failed'));
+                                Toastr.error(__('Unknown data format'));
                             }
-                        } else {
-                            Toastr.error(__('Unknown data format'));
+                        }, error: function () {
+                            Toastr.error(__('Network error'));
                         }
-                    }, error: function () {
-                        Toastr.error(__('Network error'));
-                    }
+                    });
                 });
+                return false;
             });
 
             //全屏事件

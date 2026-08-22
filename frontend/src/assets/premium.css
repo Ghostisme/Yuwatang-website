@@ -1,0 +1,296 @@
+/* 裕和堂全站精品动效 / 视觉体系 — PC + Mobile */
+
+:root {
+  --pm-ink: #3c321c;
+  --pm-ink-soft: rgba(60, 50, 28, 0.55);
+  --pm-paper: #fffefa;
+  --pm-paper-warm: #fcf8f4;
+  --pm-line: rgba(60, 50, 28, 0.1);
+  --pm-gold: #c4a878;
+  --pm-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --pm-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --pm-duration: 0.7s;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+::selection {
+  background: rgba(196, 168, 120, 0.35);
+  color: var(--pm-ink);
+}
+
+/* ---------- 路由页切换 ---------- */
+.pm-page-enter-active,
+.pm-page-leave-active {
+  transition:
+    opacity 0.42s var(--pm-ease),
+    transform 0.42s var(--pm-ease);
+}
+.pm-page-enter-from {
+  opacity: 0;
+  transform: translateY(18px);
+}
+.pm-page-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* ---------- 滚动显现 ---------- */
+.pm-reveal {
+  opacity: 0;
+  transform: translate3d(0, 28px, 0);
+  transition:
+    opacity var(--pm-duration) var(--pm-ease-out),
+    transform var(--pm-duration) var(--pm-ease-out);
+  transition-delay: var(--pm-delay, 0ms);
+  will-change: opacity, transform;
+}
+.pm-reveal.is-in {
+  opacity: 1;
+  transform: none;
+  will-change: auto;
+}
+
+.pm-reveal-left {
+  opacity: 0;
+  transform: translate3d(-28px, 0, 0);
+  transition:
+    opacity var(--pm-duration) var(--pm-ease-out),
+    transform var(--pm-duration) var(--pm-ease-out);
+  transition-delay: var(--pm-delay, 0ms);
+}
+.pm-reveal-left.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+.pm-reveal-scale {
+  opacity: 0;
+  transform: scale(0.96);
+  transition:
+    opacity var(--pm-duration) var(--pm-ease-out),
+    transform var(--pm-duration) var(--pm-ease-out);
+  transition-delay: var(--pm-delay, 0ms);
+}
+.pm-reveal-scale.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* ---------- 全站内容区图片 ---------- */
+.app main img,
+.app .home img,
+.app .base img,
+.app .news img,
+.app .shop img,
+.app .store img,
+.app .feature img,
+.app .serve img,
+.app .about img,
+.app .contact img,
+.app .ppjs img,
+.app .zdfw img,
+.app .base-info img,
+.app .news-card img,
+.app .media-frame img {
+  transition:
+    transform 0.85s var(--pm-ease),
+    filter 0.45s ease;
+}
+
+.app .ppjs-list-item .item-img,
+.app .zdfw-content-img,
+.app .base-info-list .img,
+.app .news-card .card-img,
+.app .media-frame,
+.app .feature-left-img,
+.app .about-people,
+.app .shop-banner,
+.app .section img {
+  overflow: hidden;
+}
+
+.app .ppjs-list-item:hover .item-img img,
+.app .zdfw-content-img:hover img,
+.app .base-info-list .img:hover img,
+.app .news-card:hover .card-img img,
+.app .media-frame:hover img,
+.app .feature-left-img:hover img {
+  transform: scale(1.045);
+}
+
+/* ---------- 按钮 / 可点击 ---------- */
+.app .info-btn,
+.app .page-btn,
+.app button[type="submit"],
+.app .contact-form button {
+  position: relative;
+  overflow: hidden;
+  transition:
+    transform 0.35s var(--pm-ease),
+    box-shadow 0.35s var(--pm-ease),
+    opacity 0.25s ease,
+    background 0.35s ease,
+    color 0.35s ease !important;
+}
+.app .info-btn:hover,
+.app .page-btn:hover:not(:disabled),
+.app button[type="submit"]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(60, 50, 28, 0.12);
+}
+.app .info-btn:active,
+.app .page-btn:active,
+.app button[type="submit"]:active {
+  transform: translateY(0);
+}
+
+/* ---------- 列表项悬停 ---------- */
+.app .ppjs-list-item {
+  transition:
+    transform 0.45s var(--pm-ease),
+    opacity 0.35s ease;
+  cursor: pointer;
+}
+.app .ppjs-list-item:hover {
+  transform: translateY(-6px);
+}
+.app .ppjs-list-item .item-text {
+  transition: letter-spacing 0.35s var(--pm-ease), color 0.35s ease;
+}
+.app .ppjs-list-item:hover .item-text {
+  letter-spacing: 0.08em;
+}
+
+.app .news-card {
+  transition:
+    transform 0.45s var(--pm-ease),
+    box-shadow 0.45s var(--pm-ease) !important;
+}
+.app .news-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 36px rgba(60, 50, 28, 0.1);
+}
+
+/* ---------- Banner 标题 ---------- */
+.app .banner-tit {
+  text-shadow: 0 4px 28px rgba(0, 0, 0, 0.28);
+  letter-spacing: 0.18em;
+  animation: pmBannerTitle 0.95s var(--pm-ease-out) both;
+}
+
+@keyframes pmBannerTitle {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---------- 页面纸感氛围 ---------- */
+.app {
+  background:
+    radial-gradient(900px 420px at 50% -8%, rgba(196, 168, 120, 0.1), transparent 55%),
+    rgba(255, 252, 250, 1);
+}
+
+/* ---------- 顶栏微玻璃（滚动时由 Header 加 class） ---------- */
+.header-pc.pm-glass,
+.header-h5.pm-glass {
+  background: rgba(252, 248, 244, 0.82) !important;
+  backdrop-filter: blur(14px) saturate(1.15);
+  -webkit-backdrop-filter: blur(14px) saturate(1.15);
+  box-shadow: 0 1px 0 rgba(60, 50, 28, 0.06);
+}
+
+/* ---------- 页脚 ---------- */
+.app .footer-pc,
+.app .footer-h5 {
+  position: relative;
+}
+.app .footer-pc::before,
+.app .footer-h5::before {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  top: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(60, 50, 28, 0.12), transparent);
+  z-index: 1;
+}
+
+/* ---------- 表单微交互 ---------- */
+.app input,
+.app textarea,
+.app select {
+  transition:
+    border-color 0.3s var(--pm-ease),
+    box-shadow 0.3s var(--pm-ease),
+    background 0.3s ease !important;
+}
+.app input:focus,
+.app textarea:focus,
+.app select:focus {
+  border-color: rgba(60, 50, 28, 0.45) !important;
+  box-shadow: 0 0 0 3px rgba(196, 168, 120, 0.22);
+  outline: none;
+}
+
+/* ---------- 门店/服务区块 ---------- */
+.app .section,
+.app .store-item,
+.app .serve-item {
+  transition: transform 0.45s var(--pm-ease);
+}
+@media (min-width: 769px) {
+  .app .section:hover,
+  .app .store-item:hover {
+    transform: translateY(-4px);
+  }
+}
+
+/* ---------- 移动端微调 ---------- */
+@media (max-width: 768px) {
+  .pm-reveal {
+    transform: translate3d(0, 18px, 0);
+  }
+  .app .ppjs-list-item:hover {
+    transform: none;
+  }
+  .app .ppjs-list-item:active {
+    transform: scale(0.985);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .pm-page-enter-active,
+  .pm-page-leave-active,
+  .pm-reveal,
+  .pm-reveal-left,
+  .pm-reveal-scale,
+  .app .banner-tit,
+  .app img,
+  .app .info-btn,
+  .app .ppjs-list-item,
+  .app .news-card {
+    transition: none !important;
+    animation: none !important;
+  }
+  .pm-reveal,
+  .pm-reveal-left,
+  .pm-reveal-scale,
+  .pm-page-enter-from,
+  .pm-page-leave-to {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

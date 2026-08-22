@@ -123,7 +123,8 @@ class Index extends Backend
         if ($this->request->isPost()) {
             $this->auth->logout();
             Hook::listen("admin_logout_after", $this->request);
-            $this->success(__('Logout successful'), 'index/login');
+            // 直接跳转登录页，避免 success() 中间提示页倒计时
+            $this->redirect('index/login');
         }
         $html = "<form id='logout_submit' name='logout_submit' action='' method='post'>" . token() . "<input type='submit' value='ok' style='display:none;'></form>";
         $html .= "<script>document.forms['logout_submit'].submit();</script>";

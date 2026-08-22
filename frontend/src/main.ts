@@ -10,6 +10,8 @@ import "./utils/rem"
 import "./assets/main.css"
 import "./assets/base.css"
 import "./assets/font/font.css"
+import "./assets/premium.css"
+import { revealDirective } from "./utils/premium-motion"
 
 // 导入 Swiper 样式
 import "swiper/css"
@@ -23,6 +25,7 @@ app.use(pinia)
 pinia.use(piniaPluginPersistedstate)
 
 app.directive("lazy", lazyLoadDirective)
+app.directive("reveal", revealDirective)
 app.use(router)
 app.use(i18n)
 

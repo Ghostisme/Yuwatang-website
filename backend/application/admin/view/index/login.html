@@ -2,140 +2,275 @@
 <html>
 <head>
     {include file="common/meta" /}
-
     <style type="text/css">
-        body {
-            color: #999;
-            background-color: #f1f4fd;
-            background-size: cover;
+        html, body {
+            min-height: 100%;
         }
-
-        a {
-            color: #444;
+        body.yh-login {
+            margin: 0;
+            color: rgba(60, 50, 28, 0.72);
+            background:
+                radial-gradient(900px 480px at 50% -10%, rgba(196, 168, 120, 0.28), transparent 58%),
+                radial-gradient(700px 420px at 100% 100%, rgba(60, 50, 28, 0.08), transparent 50%),
+                linear-gradient(165deg, #fbf7f1 0%, #f3ebe0 48%, #faf6f0 100%);
+            background-attachment: fixed;
         }
-
-
+        body.yh-login::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(60, 50, 28, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(60, 50, 28, 0.03) 1px, transparent 1px);
+            background-size: 48px 48px;
+            pointer-events: none;
+            opacity: 0.55;
+        }
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+            position: relative;
+            z-index: 1;
+        }
         .login-screen {
-            max-width: 430px;
-            padding: 0;
-            margin: 100px auto 0 auto;
-
+            width: 100%;
+            max-width: 420px;
+            margin: 0 auto;
+            animation: yhLoginIn 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
-
+        @keyframes yhLoginIn {
+            from { opacity: 0; transform: translateY(18px) scale(0.98); }
+            to { opacity: 1; transform: none; }
+        }
         .login-screen .well {
-            border-radius: 3px;
-            -webkit-box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-            box-shadow: 0 0 30px rgba(0, 0, 0, 0.1);
-            background: rgba(255, 255, 255, 1);
+            border-radius: 20px;
+            box-shadow:
+                0 28px 64px rgba(60, 50, 28, 0.12),
+                0 0 0 1px rgba(60, 50, 28, 0.06);
+            background: rgba(255, 253, 249, 0.96);
             border: none;
             overflow: hidden;
             padding: 0;
+            backdrop-filter: blur(10px);
         }
-
-        @media (max-width: 767px) {
-            .login-screen {
-                padding: 0 20px;
-            }
-        }
-
-        .profile-img-card {
-            width: 100px;
-            height: 100px;
-            display: block;
-            -moz-border-radius: 50%;
-            -webkit-border-radius: 50%;
-            border-radius: 50%;
-            margin: -93px auto 30px;
-            border: 5px solid #fff;
-        }
-
-        .profile-name-card {
-            text-align: center;
-        }
-
         .login-head {
-            background: #899fe1;
-        }
-
-        .login-form {
-            padding: 40px 30px;
             position: relative;
-            z-index: 99;
+            padding: 36px 28px 28px;
+            background:
+                linear-gradient(145deg, rgba(47, 40, 28, 0.98) 0%, rgba(90, 74, 46, 0.95) 55%, rgba(60, 50, 28, 0.98) 100%);
+            color: #fff8ee;
+            text-align: center;
+            overflow: hidden;
         }
-
+        .login-head::before {
+            content: "";
+            position: absolute;
+            width: 180px;
+            height: 180px;
+            right: -40px;
+            top: -50px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(255, 214, 160, 0.22), transparent 68%);
+        }
+        .login-head::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(115deg, transparent 35%, rgba(255,255,255,0.08) 50%, transparent 65%);
+            transform: translateX(-120%);
+            animation: yhLoginSheen 4.2s ease-in-out infinite;
+        }
+        @keyframes yhLoginSheen {
+            0%, 45% { transform: translateX(-120%); }
+            70%, 100% { transform: translateX(120%); }
+        }
+        .login-brand {
+            position: relative;
+            z-index: 1;
+            letter-spacing: 0.36em;
+            text-indent: 0.36em;
+            font-size: 28px;
+            font-weight: 500;
+            margin: 0 0 10px;
+            line-height: 1.2;
+        }
+        .login-sub {
+            position: relative;
+            z-index: 1;
+            margin: 0;
+            font-size: 12px;
+            letter-spacing: 0.28em;
+            text-indent: 0.28em;
+            color: rgba(255, 248, 238, 0.72);
+        }
+        .login-form {
+            padding: 32px 28px 28px;
+            position: relative;
+            z-index: 2;
+        }
         #login-form {
-            margin-top: 20px;
+            margin-top: 0;
         }
-
-        #login-form .input-group {
-            margin-bottom: 15px;
+        #login-form .yh-field {
+            position: relative;
+            margin-bottom: 14px;
         }
-
-        #login-form .form-control {
+        #login-form .yh-field .glyphicon {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: rgba(60, 50, 28, 0.4);
+            z-index: 2;
             font-size: 13px;
+            pointer-events: none;
         }
-
+        #login-form .form-control {
+            height: 46px;
+            border-radius: 12px;
+            border: 1px solid rgba(60, 50, 28, 0.12);
+            background: #fff !important;
+            box-shadow: none !important;
+            padding-left: 42px;
+            font-size: 14px;
+            color: #3c321c;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
+        #login-form .form-control:focus {
+            border-color: rgba(60, 50, 28, 0.4);
+            box-shadow: 0 0 0 3px rgba(196, 168, 120, 0.25) !important;
+        }
+        /* 覆盖浏览器自动填充蓝底 */
+        #login-form input.form-control:-webkit-autofill,
+        #login-form input.form-control:-webkit-autofill:hover,
+        #login-form input.form-control:-webkit-autofill:focus {
+            -webkit-text-fill-color: #3c321c;
+            -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+            transition: background-color 99999s ease-in-out 0s;
+        }
+        #login-form .yh-captcha .form-control {
+            padding-right: 110px;
+        }
+        #login-form .yh-captcha-img {
+            position: absolute;
+            right: 6px;
+            top: 50%;
+            transform: translateY(-50%);
+            height: 34px;
+            border-radius: 8px;
+            cursor: pointer;
+            overflow: hidden;
+            border: 1px solid rgba(60, 50, 28, 0.1);
+        }
+        #login-form .yh-captcha-img img {
+            display: block;
+            height: 34px;
+            width: auto;
+        }
+        #login-form .checkbox {
+            margin: 8px 0 18px;
+        }
+        #login-form .checkbox label {
+            color: rgba(60, 50, 28, 0.55);
+            font-size: 13px;
+            font-weight: 400;
+            padding-left: 4px;
+        }
+        #login-form .btn-login {
+            height: 48px;
+            border: 0;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #5a4a2e, #3c321c);
+            color: #fff8ee;
+            font-size: 15px;
+            letter-spacing: 0.28em;
+            text-indent: 0.28em;
+            box-shadow: 0 12px 24px rgba(60, 50, 28, 0.22);
+            transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+        }
+        #login-form .btn-login:hover,
+        #login-form .btn-login:focus {
+            color: #fff;
+            filter: brightness(1.06);
+            transform: translateY(-1px);
+            box-shadow: 0 16px 28px rgba(60, 50, 28, 0.26);
+        }
+        #errtips {
+            margin-bottom: 12px;
+        }
+        .login-foot {
+            text-align: center;
+            margin-top: 18px;
+            font-size: 12px;
+            color: rgba(60, 50, 28, 0.38);
+            letter-spacing: 0.08em;
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .login-screen, .login-head::after { animation: none !important; }
+        }
     </style>
-    <!--@formatter:off-->
     {if $background}
-        <style type="text/css">
-            body{
-                background-image: url('{$background}');
-            }
-        </style>
+    <style type="text/css">
+        body.yh-login {
+            background-image:
+                linear-gradient(180deg, rgba(251, 247, 241, 0.88), rgba(243, 235, 224, 0.92)),
+                url('{$background}');
+            background-size: cover;
+            background-position: center;
+        }
+        body.yh-login::before { opacity: 0.2; }
+    </style>
     {/if}
-    <!--@formatter:on-->
 </head>
-<body>
-<div class="container">
-    <div class="login-wrapper">
-        <div class="login-screen">
-            <div class="well">
-                <div class="login-head">
-                    <img src="__CDN__/assets/img/login-head.png" style="width:100%;"/>
-                </div>
-                <div class="login-form">
-                    <!--<img id="profile-img" class="profile-img-card" src="__CDN__/assets/img/avatar.png"/>-->
-                    <p id="profile-name" class="profile-name-card"></p>
-
-                    <form action="" method="post" id="login-form">
-                        <!--@AdminLoginFormBegin-->
-                        <div id="errtips" class="hide"></div>
-                        {:token()}
-                        <div class="input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-user" aria-hidden="true"></span></div>
-                            <input type="text" class="form-control" id="pd-form-username" placeholder="{:__('Username')}" name="username" autocomplete="off" value="" data-rule="{:__('Username')}:required;username"/>
-                        </div>
-
-                        <div class="input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-lock" aria-hidden="true"></span></div>
-                            <input type="password" class="form-control" id="pd-form-password" placeholder="{:__('Password')}" name="password" autocomplete="off" value="" data-rule="{:__('Password')}:required;password"/>
-                        </div>
-                        <!--@CaptchaBegin-->
-                        {if $Think.config.fastadmin.login_captcha}
-                        <div class="input-group">
-                            <div class="input-group-addon"><span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span></div>
-                            <input type="text" name="captcha" class="form-control" placeholder="{:__('Captcha')}" data-rule="{:__('Captcha')}:required;length({$Think.config.captcha.length})" autocomplete="off"/>
-                            <span class="input-group-addon" style="padding:0;border:none;cursor:pointer;">
-                                    <img src="{:rtrim('__PUBLIC__', '/')}/index.php?s=/captcha" width="100" height="30" onclick="this.src = '{:rtrim('__PUBLIC__', '/')}/index.php?s=/captcha&r=' + Math.random();"/>
-                            </span>
-                        </div>
-                        {/if}
-                        <!--@CaptchaEnd-->
-                        <div class="form-group checkbox">
-                            <label class="inline" for="keeplogin">
-                                <input type="checkbox" name="keeplogin" id="keeplogin" value="1"/>
-                                {:__('Keep login')}
-                            </label>
-                        </div>
-                        <div class="form-group">
-                            <button type="submit" class="btn btn-success btn-lg btn-block" style="background:#708eea;">{:__('Sign in')}</button>
-                        </div>
-                        <!--@AdminLoginFormEnd-->
-                    </form>
-                </div>
+<body class="yh-login">
+<div class="login-wrapper">
+    <div class="login-screen">
+        <div class="well">
+            <div class="login-head">
+                <h1 class="login-brand">{$site.name|default='裕和堂'|htmlentities}</h1>
+                <p class="login-sub">ADMIN CONSOLE</p>
+            </div>
+            <div class="login-form">
+                <form action="" method="post" id="login-form">
+                    <!--@AdminLoginFormBegin-->
+                    <div id="errtips" class="hide"></div>
+                    {:token()}
+                    <div class="yh-field">
+                        <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                        <input type="text" class="form-control" id="pd-form-username" placeholder="{:__('Username')}" name="username" autocomplete="username" value="" data-rule="{:__('Username')}:required;username"/>
+                    </div>
+                    <div class="yh-field">
+                        <span class="glyphicon glyphicon-lock" aria-hidden="true"></span>
+                        <input type="password" class="form-control" id="pd-form-password" placeholder="{:__('Password')}" name="password" autocomplete="current-password" value="" data-rule="{:__('Password')}:required;password"/>
+                    </div>
+                    <!--@CaptchaBegin-->
+                    {if $Think.config.fastadmin.login_captcha}
+                    <div class="yh-field yh-captcha">
+                        <span class="glyphicon glyphicon-option-horizontal" aria-hidden="true"></span>
+                        <input type="text" name="captcha" class="form-control" placeholder="{:__('Captcha')}" data-rule="{:__('Captcha')}:required;length({$Think.config.captcha.length})" autocomplete="off"/>
+                        <span class="yh-captcha-img" title="{:__('Captcha')}">
+                            <img src="{:rtrim('__PUBLIC__', '/')}/index.php?s=/captcha" width="100" height="34" onclick="this.src = '{:rtrim('__PUBLIC__', '/')}/index.php?s=/captcha&r=' + Math.random();"/>
+                        </span>
+                    </div>
+                    {/if}
+                    <!--@CaptchaEnd-->
+                    <div class="form-group checkbox">
+                        <label class="inline" for="keeplogin">
+                            <input type="checkbox" name="keeplogin" id="keeplogin" value="1"/>
+                            {:__('Keep login')}
+                        </label>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <button type="submit" class="btn btn-block btn-login">{:__('Sign in')}</button>
+                    </div>
+                    <!--@AdminLoginFormEnd-->
+                </form>
             </div>
         </div>
+        <div class="login-foot">YUHE TANG · MANAGEMENT</div>
     </div>
 </div>
 {include file="common/script" /}

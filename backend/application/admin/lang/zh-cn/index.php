@@ -38,6 +38,7 @@ return [
     'Wipe cache completed'                                       => '清除缓存成功',
     'Wipe cache failed'                                          => '清除缓存失败',
     'Wipe cache'                                                 => '清除缓存',
+    'Wipe cache confirm'                                         => '确定要清除全部缓存吗？',
     'Wipe all cache'                                             => '一键清除缓存',
     'Wipe content cache'                                         => '清除内容缓存',
     'Wipe template cache'                                        => '清除模板缓存',

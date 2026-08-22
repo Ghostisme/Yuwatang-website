@@ -1,5 +1,11 @@
 <template>
-  <div :class="['header-pc', { 'header-show': headerVisible, 'header-scrolled': !headerVisible }]" v-if="!isMobile">
+  <div
+    :class="[
+      'header-pc',
+      { 'header-show': headerVisible, 'header-scrolled': !headerVisible, 'pm-glass': headerGlass }
+    ]"
+    v-if="!isMobile"
+  >
     <img class="header-pc-icon" @click="goTo('/')" src="@/assets/img/header-icon.png" alt="裕和堂" />
     <nav class="header-pc-nav">
       <span
@@ -25,7 +31,13 @@
     </div>
   </div>
 
-  <div :class="['header-h5', { 'header-show': headerVisible, 'header-scrolled': !headerVisible }]" v-else>
+  <div
+    :class="[
+      'header-h5',
+      { 'header-show': headerVisible, 'header-scrolled': !headerVisible, 'pm-glass': headerGlass }
+    ]"
+    v-else
+  >
     <img class="header-h5-icon" @click="goTo('/')" src="@/assets/img/header-icon.png" alt="裕和堂" />
     <div class="header-h5-right">
       <div class="header-h5-lang">
@@ -43,17 +55,20 @@
         <span :class="{ open: mobileOpen }"></span>
       </button>
     </div>
-    <div class="header-h5-drawer" v-if="mobileOpen">
-      <span
-        v-for="item in navItems"
-        :key="item.path"
-        class="drawer-item"
-        :class="{ active: isActive(item.path) }"
-        @click="goTo(item.path, true)"
-      >
-        {{ t(item.labelKey) }}
-      </span>
-    </div>
+    <Transition name="drawer">
+      <div class="header-h5-drawer" v-if="mobileOpen">
+        <span
+          v-for="(item, index) in navItems"
+          :key="item.path"
+          class="drawer-item"
+          :class="{ active: isActive(item.path) }"
+          :style="{ '--i': index }"
+          @click="goTo(item.path, true)"
+        >
+          {{ t(item.labelKey) }}
+        </span>
+      </div>
+    </Transition>
   </div>
 </template>
 <script lang="ts">
@@ -74,6 +89,7 @@ const menuIndex = ref(localStorage.getItem("user-locale") || "zh")
 const isMobile = ref(deviceDetector.getDeviceType() === "mobile")
 const mobileOpen = ref(false)
 const headerVisible = ref(true)
+const headerGlass = ref(false)
 const lastScrollY = ref(0)
 
 const langList = [
@@ -99,11 +115,22 @@ const isActive = (path: string) => {
 }
 
 const handleScroll = () => {
-  const currentScrollY = window.scrollY
-  const height = route.name === "Feature" ? 10 : window.innerHeight * 0.8
-  headerVisible.value = !(currentScrollY > height)
+  const currentScrollY = Math.max(0, window.scrollY)
+  const delta = currentScrollY - lastScrollY.value
+  const nearTop = currentScrollY < 24
+
+  // 顶部始终显示；向下滚隐藏；向上滚显示（忽略细微抖动）
+  if (nearTop) {
+    headerVisible.value = true
+  } else if (delta > 6) {
+    headerVisible.value = false
+    mobileOpen.value = false
+  } else if (delta < -6) {
+    headerVisible.value = true
+  }
+
+  headerGlass.value = currentScrollY > 16 && headerVisible.value
   lastScrollY.value = currentScrollY
-  if (!headerVisible.value) mobileOpen.value = false
 }
 
 const debouncedResize = () => {
@@ -163,6 +190,11 @@ onUnmounted(() => {
     display: block;
     cursor: pointer;
     object-fit: contain;
+    transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
+    &:hover {
+      transform: scale(1.03);
+      opacity: 0.92;
+    }
   }
 
   &-nav {
@@ -180,7 +212,7 @@ onUnmounted(() => {
       letter-spacing: 0.06em;
       color: rgba(60, 50, 28, 0.55);
       font-family: "LinHai";
-      transition: color 0.25s ease;
+      transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
       white-space: nowrap;
       &::after {
         content: "";
@@ -191,7 +223,8 @@ onUnmounted(() => {
         height: 1px;
         background: rgba(60, 50, 28, 1);
         transform: scaleX(0);
-        transition: transform 0.25s ease;
+        transform-origin: center;
+        transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
       }
       &:hover {
         color: rgba(60, 50, 28, 0.9);
@@ -413,22 +446,58 @@ onUnmounted(() => {
     top: 52px;
     left: 0;
     right: 0;
-    background: rgba(252, 248, 244, 0.98);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+    background: rgba(252, 248, 244, 0.94);
+    backdrop-filter: blur(16px) saturate(1.1);
+    -webkit-backdrop-filter: blur(16px) saturate(1.1);
+    box-shadow: 0 12px 28px rgba(60, 50, 28, 0.08);
     padding: 8px 0 12px;
     display: flex;
     flex-direction: column;
+    transform-origin: top center;
     .drawer-item {
       padding: 12px 20px;
       font-size: 14px;
       color: rgba(60, 50, 28, 0.75);
       font-family: "LinHai";
+      opacity: 0;
+      transform: translateY(8px);
+      animation: drawerItemIn 0.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+      animation-delay: calc(var(--i, 0) * 35ms + 40ms);
+      transition: background 0.25s ease, color 0.25s ease, padding-left 0.25s ease;
       &.active,
       &:active {
         color: rgba(19, 19, 19, 1);
         background: rgba(60, 50, 28, 0.04);
+        padding-left: 26px;
       }
     }
+  }
+}
+
+.drawer-enter-active,
+.drawer-leave-active {
+  transition:
+    opacity 0.28s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.drawer-enter-from,
+.drawer-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}
+
+@keyframes drawerItemIn {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drawer-item {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
   }
 }
 </style>
