@@ -25,6 +25,9 @@
 .main-header {
   max-height: none !important;
   box-shadow: 0 8px 24px rgba(60, 50, 28, 0.06) !important;
+  position: relative;
+  z-index: 1030; /* 高于 content-wrapper，保证 tabdrop 下拉不被遮挡 */
+  overflow: visible !important;
 }
 .main-header .navbar {
   background: rgba(255, 252, 248, 0.94) !important;
@@ -33,6 +36,7 @@
   min-height: 50px !important;
   height: 50px !important;
   border: 0 !important;
+  overflow: visible !important;
 }
 .main-header .logo {
   background: var(--yh-sidebar) !important;
@@ -153,6 +157,7 @@ body.sidebar-collapse .main-header .sidebar-toggle:hover:before {
   height: 50px;
   min-height: 50px;
   width: 100%;
+  overflow: visible; /* 允许 tabdrop 下拉溢出显示 */
 }
 #firstnav .sidebar-toggle {
   flex: 0 0 auto;
@@ -172,14 +177,11 @@ body.sidebar-collapse .main-header .sidebar-toggle:hover:before {
   align-items: stretch;
   gap: 0;
   flex-wrap: nowrap;
-  overflow-x: auto;
+  /* 勿用 overflow-x:auto，会裁切 tabdrop 下拉菜单；超出由 tabdrop 收入折叠 */
+  overflow: visible !important;
   max-width: none !important;
   height: 50px !important;
   float: none !important;
-  scrollbar-width: none; /* 顶栏 Tab 横向滚动条藏起，更干净 */
-}
-.nav-addtabs::-webkit-scrollbar {
-  display: none;
 }
 .nav-addtabs > li {
   margin: 0 !important;
@@ -194,6 +196,11 @@ body.sidebar-collapse .main-header .sidebar-toggle:hover:before {
 .nav-addtabs > li.tabdrop {
   order: 1000;
   margin-left: auto !important;
+  position: relative;
+  z-index: 1060;
+}
+.nav-addtabs > li.tabdrop.open {
+  z-index: 1070;
 }
 .nav-addtabs > li.tabdrop > a {
   padding: 0 10px !important;
@@ -205,6 +212,60 @@ body.sidebar-collapse .main-header .sidebar-toggle:hover:before {
 .nav-addtabs > li.hide,
 .nav-addtabs > li.tabdrop.hide {
   display: none !important;
+}
+/* tabdrop 下拉：盖过内容区，避免被顶栏高度裁切 */
+.nav-addtabs > li.tabdrop > .dropdown-menu {
+  position: absolute !important;
+  top: 100% !important;
+  right: 0 !important;
+  left: auto !important;
+  z-index: 1080 !important;
+  display: none;
+  min-width: 200px;
+  max-height: min(70vh, 420px);
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin: 0 !important;
+  padding: 6px 0 !important;
+  border: 1px solid rgba(60, 50, 28, 0.1) !important;
+  border-radius: 10px !important;
+  background: #fffdf9 !important;
+  box-shadow: 0 14px 36px rgba(60, 50, 28, 0.16) !important;
+}
+.nav-addtabs > li.tabdrop.open > .dropdown-menu {
+  display: block !important;
+}
+.nav-addtabs > li.tabdrop > .dropdown-menu > li {
+  float: none !important;
+  display: block !important;
+  height: auto !important;
+  margin: 0 !important;
+}
+.nav-addtabs > li.tabdrop > .dropdown-menu > li > a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px;
+  height: auto !important;
+  min-height: 0 !important;
+  padding: 9px 16px !important;
+  margin: 0 !important;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  color: rgba(60, 50, 28, 0.78) !important;
+  font-size: 13px !important;
+  font-weight: 400 !important;
+  line-height: 1.4 !important;
+  white-space: nowrap;
+  box-shadow: none !important;
+}
+.nav-addtabs > li.tabdrop > .dropdown-menu > li > a::after {
+  display: none !important;
+}
+.nav-addtabs > li.tabdrop > .dropdown-menu > li > a:hover,
+.nav-addtabs > li.tabdrop > .dropdown-menu > li.active > a {
+  background: rgba(60, 50, 28, 0.06) !important;
+  color: var(--yh-ink) !important;
 }
 .nav-addtabs > li > a {
   display: inline-flex !important;

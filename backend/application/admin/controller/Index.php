@@ -64,7 +64,11 @@ class Index extends Backend
     {
         $url = $this->request->get('url', 'index/index');
         if ($this->auth->isLogin()) {
-            $this->success(__("You've logged in, do not login again"), $url);
+            // 已登录直接进后台，不展示中间提示页
+            if ($this->request->isAjax()) {
+                $this->success(__("You've logged in, do not login again"), $url);
+            }
+            $this->redirect($url);
         }
         if ($this->request->isPost()) {
             $username = $this->request->post('username');
@@ -94,7 +98,11 @@ class Index extends Backend
             $result = $this->auth->login($username, $password, $keeplogin ? 86400 : 0);
             if ($result === true) {
                 Hook::listen("admin_login_after", $this->request);
-                $this->success(__('Login successful'), $url, ['url' => $url, 'id' => $this->auth->id, 'username' => $username, 'avatar' => $this->auth->avatar]);
+                // Ajax 返回 JSON 由前端跳转；非 Ajax 直接进后台，跳过「登录成功」倒计时页
+                if ($this->request->isAjax()) {
+                    $this->success(__('Login successful'), $url, ['url' => $url, 'id' => $this->auth->id, 'username' => $username, 'avatar' => $this->auth->avatar]);
+                }
+                $this->redirect($url);
             } else {
                 $msg = $this->auth->getError();
                 $msg = $msg ? $msg : __('Username or password is incorrect');

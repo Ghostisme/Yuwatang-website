@@ -7,6 +7,7 @@
 /public/uploads/*
 !/public/uploads/20251107/
 !/public/uploads/20251107/efe21b50abc626e20e8526f8f22850df.mp4
+!/public/uploads/20251209/
 .idea
 composer.lock
 *.log

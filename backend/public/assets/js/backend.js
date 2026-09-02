@@ -161,7 +161,7 @@ define(['fast', 'template', 'moment'], function (Fast, Template, Moment) {
                 var that = this;
                 var options = $.extend({}, $(that).data() || {});
                 var url = Backend.api.replaceids(that, $(that).data("url") || $(that).attr('href'));
-                var title = $(that).attr("title") || $(that).data("title") || $(that).data('original-title');
+                var title = $(that).attr("title") || $(that).data("title") || $(that).data('original-title') || $.trim($(that).text());
                 var icon = $(that).attr("icon") || $(that).data("icon");
                 if (typeof options.confirm !== 'undefined') {
                     Layer.confirm(options.confirm, function (index) {
