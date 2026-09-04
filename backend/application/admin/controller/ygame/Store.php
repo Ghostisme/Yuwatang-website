@@ -5,7 +5,7 @@ namespace app\admin\controller\ygame;
 use app\common\controller\Backend;
 
 /**
- * 轮播图
+ * 门店管理
  *
  * @icon fa fa-circle-o
  */

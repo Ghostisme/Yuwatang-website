@@ -1,377 +1,163 @@
-﻿<template>
+<template>
   <div class="about-us">
     <div class="about-banner">
-      <swiper
-        :modules="modules"
-        :slides-per-view="1"
-        :space-between="0"
-        :loop="true"
-        :pagination="paginationOptions"
-        :navigation="navigation"
-        :autoplay="autoplayOptions"
-        :effect="'fade'"
-      >
+      <img class="banner-poster" src="@/assets/img/home-banner.jpg" :alt="t('aboutV2.h1')" />
+      <swiper v-if="videoReady" :modules="modules" :slides-per-view="1" :loop="true" :autoplay="autoplayOptions" :effect="'fade'">
         <swiper-slide v-for="(item, index) in videoList" :key="index">
-          <video
-            class="video"
-            :src="item"
-            autoplay
-            muted
-            loop
-            playsinline
-            webkit-playsinline
-            preload="auto"
-            poster="@/assets/img/home-banner.jpg"
-          ></video>
+          <video class="video" :src="item" autoplay muted loop playsinline preload="none"></video>
         </swiper-slide>
       </swiper>
     </div>
-    <div class="about-title">{{ t("about.item1") }}</div>
-    <div class="about-subtit">{{ t("about.item13") }}</div>
-    <div class="about-subtext">{{ t("about.item14") }}</div>
-    <div class="about-subtext">{{ t("about.item15") }}</div>
-    <div class="about-subtext" style="margin-bottom: 15px">{{ t("about.item16") }}</div>
-    <!-- <div class="about-info">
-      <div class="info-item" v-for="(item, index) in aboutList" :key="index">
-        <div class="info-item-year">{{ item.year }}</div>
-        <div class="info-item-box">
-          <div class="box-title">{{ item.title }}</div>
-          <div class="box-info">
-            <div class="box-info-text">{{ item.text }}</div>
-            <div class="box-info-img">
-              <img :src="item.src" alt="" />
-            </div>
-          </div>
-        </div>
-      </div>
-    </div> -->
-    <div class="about-subtit sub-center">{{ t("about.item8") }}</div>
-    <div class="about-subtext">{{ t("about.item9") }}</div>
-    <div class="about-subtext">{{ t("about.item10") }}</div>
-    <div class="about-subtext">{{ t("about.item11") }}</div>
-    <div class="about-people">
-      <img src="@/assets/img/signature-icon.png" alt="" />
-      <div class="about-date">{{ t("about.item12") }}</div>
+    <div class="about-box">
+      <h1 class="page-h1">{{ t("aboutV2.h1") }}</h1>
+      <p class="lead">{{ t("aboutV2.lead") }}</p>
+
+      <h2 class="section-title">{{ t("aboutV2.storyTitle") }}</h2>
+      <article v-for="n in 4" :key="n" class="story-card">
+        <h3>{{ t(`aboutV2.story${n}Title`) }}</h3>
+        <p>{{ t(`aboutV2.story${n}Text`) }}</p>
+      </article>
+
+      <h2 class="section-title">{{ t("aboutV2.timelineTitle") }}</h2>
+      <ul class="timeline">
+        <li v-for="item in timeline" :key="item.year">
+          <strong class="year">{{ item.year }}</strong>
+          <span>{{ item.text }}</span>
+        </li>
+      </ul>
+
+      <h2 class="section-title">{{ t("aboutV2.mvvTitle") }}</h2>
+      <p class="block-text">{{ t("aboutV2.mission") }}</p>
+      <p class="block-text">{{ t("aboutV2.vision") }}</p>
+      <p class="block-text">{{ t("aboutV2.values") }}</p>
+
+      <h2 class="section-title">{{ t("aboutV2.honorsTitle") }}</h2>
+      <p class="block-text">{{ t("aboutV2.honors") }}</p>
     </div>
-    <div class="store">
-      <div class="store-title mt100">{{ t("store.item28") }}</div>
-      <div class="store-subtit">{{ t("store.item29") }}</div>
-      <div class="store-btn" @click="goContact">{{ t("store.item30") }}</div>
-    </div>
-    <img class="left-icon" src="@/assets/img/left-icon.png" alt="" />
-    <img class="right-icon" src="@/assets/img/right-icon.png" alt="" />
   </div>
 </template>
+
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from "vue"
-import { useRouter } from "vue-router"
+import { ref, computed, onMounted, watch } from "vue"
 import { useI18n } from "vue-i18n"
-// 导入 Swiper Vue.js 组件
 import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules"
-
+import { Autoplay, EffectFade } from "swiper/modules"
 import { getHomeBanner } from "@/api"
-import aboutPic1 from "@/assets/img/about-pic1.png"
-import aboutPic2 from "@/assets/img/about-pic2.png"
-import aboutPic3 from "@/assets/img/about-pic3.png"
+import { usePageSeo } from "@/composables/usePageSeo"
+import { rewriteMediaList } from "@/utils/mediaCdn"
+import { resolveI18nLeaf } from "@/utils/i18nSafe"
 
-const { t, locale } = useI18n()
-const router = useRouter()
-// Swiper 模块
-const modules = [Autoplay, Pagination, Navigation, EffectFade]
+const { t, locale, tm, rt } = useI18n()
+usePageSeo({ titleKey: "seo.about.title", descriptionKey: "seo.about.description", h1Key: "aboutV2.h1" })
 
-// 直接使用对象字面量，让 TypeScript 自动推断类型
-const paginationOptions = {
-  clickable: true
-} as any
+const modules = [Autoplay, EffectFade]
+const autoplayOptions = { delay: 5000, disableOnInteraction: false } as const
+const videoList = ref<string[]>([])
+const videoReady = ref(false)
 
-const autoplayOptions = {
-  delay: 4000,
-  disableOnInteraction: false
-} as any
-
-const navigation = false as any
-
-const aboutList = computed(() => [
-  {
-    year: "2009",
-    title: t("about.item2"),
-    text: t("about.item3"),
-    src: aboutPic1
-  },
-  {
-    year: "2017",
-    title: t("about.item4"),
-    text: t("about.item5"),
-    src: aboutPic2
-  },
-  {
-    year: "2022",
-    title: t("about.item6"),
-    text: t("about.item7"),
-    src: aboutPic3
-  }
-])
-
-const videoList = ref([""])
-
-// 监听 locale 变化
-watch(locale, (newLocale, oldLocale) => {
-  console.log(`语言从 ${oldLocale} 切换到 ${newLocale}`)
-  getBanner()
+const timeline = computed(() => {
+  void locale.value
+  const raw = tm("aboutV2.timeline") as Array<{ year: unknown; text: unknown }>
+  if (!Array.isArray(raw)) return []
+  return raw.map((item) => ({
+    year: resolveI18nLeaf(item?.year, rt),
+    text: resolveI18nLeaf(item?.text, rt)
+  }))
 })
 
 const getBanner = () => {
-  // 可以在这里调用获取首页banner的接口
   getHomeBanner().then((res: any) => {
-    console.log("关于我们banner数据：", res)
     if (res.code == 1) {
-      let array = res.data.data
-      array.map((item, index) => {
-        let videoUrl = ""
-        console.log(locale.value)
-        switch (locale.value) {
-          case "zh":
-            videoUrl = item.image
-            break
-          case "en":
-            videoUrl = item.image_en
-            break
-          case "jp":
-            videoUrl = item.image_jp
-            break
-        }
-        videoList.value[index] = videoUrl
-      })
-      // videoList.value[1] = "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4"
-      console.log("videoList.value:", videoList.value)
+      videoList.value = rewriteMediaList(
+        (res.data?.data || []).map((item: any) =>
+          locale.value === "en" ? item.image_en : locale.value === "jp" ? item.image_jp : item.image
+        )
+      )
+      videoReady.value = videoList.value.length > 0
     }
   })
 }
 
-const goContact = () => {
-  router.push({
-    path: "/contact-us"
-  })
-}
-
-onMounted(() => {
-  getBanner()
-})
+watch(locale, getBanner)
+onMounted(getBanner)
 </script>
+
 <style lang="scss" scoped>
 .about-us {
-  width: 100%;
-  min-height: calc(100vh - 240px);
   margin-top: 52px;
+  background: #fcf8f4;
+}
+.about-banner {
   position: relative;
-  z-index: 1;
-  overflow: hidden;
-  .about-banner {
+  .banner-poster,
+  .video {
     width: 100%;
-    .video {
-      width: 100%;
-      height: calc(100vh - 52px);
-      max-width: 100%;
-      object-fit: cover; /* 保持视频比例 */
-      display: block;
-    }
+    height: 40vh;
+    min-height: 220px;
+    object-fit: cover;
+    display: block;
   }
-  .about-title {
-    padding: 15px;
-    color: rgba(60, 50, 28, 1);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 19px;
-    letter-spacing: 0px;
-    text-align: center;
+  .video {
+    position: absolute;
+    inset: 0;
   }
-  .about-info {
-    padding: 0 15px;
-    position: relative;
-    z-index: 5;
-    .info-item {
-      display: flex;
-      justify-content: space-between;
-      margin-bottom: 20px;
-      position: relative;
-      &::before {
-        content: "";
-        position: absolute;
-        width: 1px;
-        height: calc(100% - 31px);
-        background: rgba(194, 153, 116, 1);
-        top: 31px;
-        left: 31px;
-      }
-      &::after {
-        content: "";
-        position: absolute;
-        width: 11px;
-        height: 11px;
-        background: url("@/assets/img/time-icon.svg") no-repeat;
-        background-size: 100% 100%;
-        background-position: center center;
-        top: calc(100% / 2 + 20px);
-        left: 26px;
-      }
-      &-year {
-        width: 61px;
-        height: 21px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background: rgba(194, 153, 116, 1);
-        color: rgba(255, 255, 255, 1);
-        font-size: 14px;
-        font-weight: 400;
-        line-height: 17px;
-        letter-spacing: 0px;
-        text-align: center;
-        position: relative;
-      }
-      &-box {
-        flex: 1;
-        padding: 15px;
-        border: 1px solid rgba(194, 153, 116, 1);
-        margin-left: 12px;
-        .box-title {
-          color: rgba(140, 65, 20, 1);
-          font-size: 16px;
-          font-weight: 500;
-          line-height: 19px;
-          letter-spacing: 0px;
-          text-align: left;
-        }
-        .box-info {
-          margin-top: 10px;
-          &-text {
-            color: rgba(60, 50, 28, 1);
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 20px;
-            letter-spacing: -1px;
-            text-align: justify;
-          }
-          &-img {
-            width: 100%;
-            margin-top: 10px;
-            img {
-              width: 100%;
-              display: block;
-            }
-          }
-        }
-      }
-    }
+}
+.about-box {
+  padding: 24px 15px 48px;
+}
+.page-h1 {
+  font-family: "LinHai";
+  font-size: 22px;
+  margin: 0 0 12px;
+  text-align: center;
+}
+.lead {
+  line-height: 1.75;
+  color: rgba(60, 50, 28, 0.78);
+  margin-bottom: 24px;
+}
+.section-title {
+  font-family: "LinHai";
+  font-size: 18px;
+  margin: 28px 0 12px;
+  color: rgba(60, 50, 28, 1);
+}
+.story-card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 14px;
+  margin-bottom: 12px;
+  h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
   }
-  .about-subtit {
-    // width: 100%;
-    // margin-top: -20px;
+  p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(60, 50, 28, 0.75);
+  }
+}
+.timeline {
+  margin: 0;
+  padding-left: 18px;
+  li {
     margin-bottom: 10px;
-    padding: 0 15px;
-    color: rgba(60, 50, 28, 1);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 22px;
-    letter-spacing: 0px;
-    text-align: left;
-    &.sub-center {
-      text-align: center;
-    }
-  }
-  .about-subtext {
-    margin-bottom: 10px;
-    padding: 0 15px;
-    color: rgba(60, 50, 28, 1);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 18px;
-    letter-spacing: -1px;
-    text-align: left;
-    text-indent: 2em;
-  }
-  .about-people {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    margin: 20px auto 30px;
-    img,
-    .about-date {
-      width: 54px;
-      display: block;
-      margin: 0 35px 0 0;
-      text-align: center;
-    }
-    .about-date {
-      width: auto;
-      font-size: 12px;
-      line-height: 18px;
-      margin-top: 4px;
-      white-space: nowrap;
-      text-align: center;
+    line-height: 1.55;
+    font-size: 13px;
+    color: rgba(60, 50, 28, 0.8);
+    .year {
+      display: inline-block;
+      min-width: 48px;
+      margin-right: 8px;
+      color: rgba(60, 50, 28, 1);
     }
   }
 }
-.store {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  &-title {
-    width: 100%;
-    padding: 15px 0;
-    text-align: center;
-    color: rgba(60, 50, 28, 1);
-    font-size: 24px;
-    font-weight: 500;
-    line-height: 1.5;
-    letter-spacing: 0px;
-    text-align: center;
-    &.mt100 {
-      margin-top: 100px;
-    }
-  }
-  &-subtit {
-    width: 100%;
-    color: rgba(60, 50, 28, 1);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    letter-spacing: 0px;
-    text-align: center;
-    padding: 0 10px;
-  }
-  &-btn {
-    padding: 15px 16px;
-    border-bottom: 1px solid rgba(194, 153, 116, 1);
-    background: rgba(255, 255, 255, 0);
-    color: rgba(194, 153, 116, 1);
-    font-size: 12px;
-    font-weight: 400;
-    line-height: 14px;
-    letter-spacing: 1px;
-    text-align: center;
-    margin: 15px auto 100px;
-    cursor: pointer;
-    display: inline-block;
-  }
-}
-.left-icon {
-  position: absolute;
-  top: 233px;
-  left: -31px;
-  width: 91px;
-  height: 91px;
-  display: block;
-  z-index: 1;
-}
-.right-icon {
-  position: absolute;
-  width: 133px;
-  height: 76px;
-  display: block;
-  right: -83px;
-  top: 726px;
-  z-index: 1;
+.block-text {
+  line-height: 1.7;
+  font-size: 13px;
+  margin-bottom: 10px;
+  color: rgba(60, 50, 28, 0.78);
 }
 </style>

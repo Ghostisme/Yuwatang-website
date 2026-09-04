@@ -161,7 +161,7 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'validator-lang'], functio
                 if ($(".datetimepicker", form).length > 0) {
                     require(['bootstrap-datetimepicker'], function () {
                         var options = {
-                            format: 'YYYY-MM-DD HH:mm:ss',
+                            format: 'YYYY-MM-DD',
                             icons: {
                                 time: 'fa fa-clock-o',
                                 date: 'fa fa-calendar',
@@ -197,11 +197,11 @@ define(['jquery', 'bootstrap', 'upload', 'validator', 'validator-lang'], functio
                         var options = {
                             timePicker: false,
                             autoUpdateInput: false,
-                            timePickerSeconds: true,
+                            timePickerSeconds: false,
                             timePicker24Hour: true,
                             autoApply: true,
                             locale: {
-                                format: 'YYYY-MM-DD HH:mm:ss',
+                                format: 'YYYY-MM-DD',
                                 customRangeLabel: __("Custom Range"),
                                 applyLabel: __("Apply"),
                                 cancelLabel: __("Clear"),

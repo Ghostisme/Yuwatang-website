@@ -18,16 +18,47 @@
 </template>
 
 <script setup lang="ts">
-import { onMounted, ref, watch } from "vue"
+import { computed, onMounted, ref, watch } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
 import { getArticleDetail } from "@/api/index"
+import {
+  articleSeoDescription,
+  articleSeoTitle,
+  useArticleJsonLd,
+  useDynamicPageSeo
+} from "@/composables/usePageSeo"
+import { useBreadcrumbJsonLd } from "@/composables/useStructuredData"
 
 const { t } = useI18n()
 const route = useRoute()
 const router = useRouter()
 const detail = ref<any>(null)
 const loading = ref(false)
+
+const pageMeta = computed(() => {
+  if (!detail.value) return { title: "", description: "" }
+  return {
+    title: articleSeoTitle(detail.value.article_title),
+    description: articleSeoDescription(detail.value.content)
+  }
+})
+useDynamicPageSeo(pageMeta)
+useArticleJsonLd(() => detail.value)
+useBreadcrumbJsonLd(
+  computed(() =>
+    detail.value
+      ? [
+          { name: t("nav.home"), path: "/" },
+          { name: t("nav.news"), path: "/news" },
+          { name: detail.value.article_title, path: `/news/${route.params.id}` }
+        ]
+      : [
+          { name: t("nav.home"), path: "/" },
+          { name: t("nav.news"), path: "/news" }
+        ]
+  )
+)
 
 const formatDate = (value: string | number) => {
   if (!value) return ""

@@ -822,6 +822,15 @@ body.inside-aside {
   overflow: hidden;
 }
 
+/* 列表长文本：铺满单元格后再省略（替代 require-table 默认 250px） */
+.bootstrap-table td .yh-ellipsis {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .form-control {
   border-radius: 10px !important;
   border-color: rgba(60, 50, 28, 0.14) !important;
@@ -1200,6 +1209,70 @@ body.yh-login .btn-success {
 .fixed-table-pagination .pagination-detail {
   color: var(--yh-ink-mute) !important;
   font-size: 12px;
+}
+
+/* 分页「每页 N 条」下拉 — 跟随暖色主题，去掉 Bootstrap 默认蓝底 */
+.fixed-table-pagination .page-list {
+  margin-left: 4px;
+}
+.fixed-table-pagination .page-list .btn-group > .btn,
+.fixed-table-pagination .page-list .dropdown-toggle {
+  background: #f7f1ea !important;
+  border: 1px solid rgba(60, 50, 28, 0.16) !important;
+  color: var(--yh-ink) !important;
+  border-radius: 8px !important;
+  box-shadow: 0 2px 8px rgba(60, 50, 28, 0.06) !important;
+  min-width: 52px;
+  height: 32px;
+  line-height: 20px;
+  padding: 5px 10px !important;
+  font-size: 13px !important;
+}
+.fixed-table-pagination .page-list .btn-group.open > .btn,
+.fixed-table-pagination .page-list .btn-group > .btn:hover,
+.fixed-table-pagination .page-list .btn-group > .btn:focus {
+  background: #efe6da !important;
+  border-color: rgba(60, 50, 28, 0.24) !important;
+  color: var(--yh-ink) !important;
+  box-shadow: 0 2px 10px rgba(60, 50, 28, 0.1) !important;
+}
+.fixed-table-pagination .page-list .btn .caret {
+  border-top-color: rgba(60, 50, 28, 0.55) !important;
+  margin-left: 6px;
+}
+.fixed-table-pagination .page-list .dropup .btn .caret {
+  border-top-color: transparent !important;
+  border-bottom-color: rgba(60, 50, 28, 0.55) !important;
+}
+.fixed-table-pagination .page-list .dropdown-menu {
+  background: #fffdf9 !important;
+  border: 1px solid rgba(60, 50, 28, 0.1) !important;
+  border-radius: 10px !important;
+  box-shadow: 0 12px 28px rgba(60, 50, 28, 0.14) !important;
+  padding: 6px 0 !important;
+  min-width: 72px;
+  overflow: hidden;
+  margin-bottom: 6px !important;
+}
+.fixed-table-pagination .page-list .dropdown-menu > li > a {
+  color: var(--yh-ink) !important;
+  padding: 8px 18px !important;
+  font-size: 13px !important;
+  line-height: 1.4 !important;
+  background: transparent !important;
+  text-align: center;
+}
+.fixed-table-pagination .page-list .dropdown-menu > li > a:hover,
+.fixed-table-pagination .page-list .dropdown-menu > li > a:focus {
+  background: rgba(196, 168, 120, 0.18) !important;
+  color: var(--yh-ink) !important;
+}
+.fixed-table-pagination .page-list .dropdown-menu > .active > a,
+.fixed-table-pagination .page-list .dropdown-menu > .active > a:hover,
+.fixed-table-pagination .page-list .dropdown-menu > .active > a:focus {
+  background: linear-gradient(135deg, #6a5638, #3c321c) !important;
+  color: #fff8ee !important;
+  outline: 0;
 }
 
 .btn-default,

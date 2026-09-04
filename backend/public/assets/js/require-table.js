@@ -805,7 +805,7 @@ define(['jquery', 'bootstrap', 'moment', 'moment/locale/zh-cn', 'bootstrap-table
                     return Table.api.formatter.flag.call(this, value, row, index);
                 },
                 datetime: function (value, row, index) {
-                    var datetimeFormat = typeof this.datetimeFormat === 'undefined' ? 'YYYY-MM-DD HH:mm:ss' : this.datetimeFormat;
+                    var datetimeFormat = typeof this.datetimeFormat === 'undefined' ? 'YYYY-MM-DD' : this.datetimeFormat;
                     if (isNaN(value)) {
                         return value ? Moment(value).format(datetimeFormat) : __('None');
                     } else {

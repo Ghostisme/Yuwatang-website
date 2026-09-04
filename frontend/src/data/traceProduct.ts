@@ -2,7 +2,8 @@
 
 export const traceAsset = (rel: string) => {
   const base = import.meta.env.BASE_URL || "/"
-  return `${base}trace/${rel}`.replace(/([^:]\/)\/+/g, "$1")
+  // 使用 /trace-assets，避免与 Vue 路由 /trace 的 public 目录冲突（刷新会丢路由）
+  return `${base}trace-assets/${rel}`.replace(/([^:]\/)\/+/g, "$1")
 }
 
 export const traceBanners = [

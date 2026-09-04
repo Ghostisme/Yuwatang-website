@@ -1,20 +1,23 @@
 /**
- * 响应式路由配置
+ * 响应式路由配置（需求2 路径）
  */
 import type { RouteRecordRaw } from "vue-router"
 import { deviceDetector } from "@/utils/device-detector"
-import { defineAsyncComponent, ref, onMounted, onUnmounted, watch, h } from "vue"
+import { defineAsyncComponent, ref, onMounted, onUnmounted, h } from "vue"
+import { legacyRedirects } from "@/config/navigation"
 
-// 页面组件映射
 export const pageComponents = {
   home: {
     desktop: () => import("@/views/pc/Home.vue"),
     mobile: () => import("@/views/mobile/Home.vue")
   },
-  // 其他页面...
-  feature: {
-    desktop: () => import("@/views/pc/Feature.vue"),
-    mobile: () => import("@/views/mobile/Feature.vue")
+  services: {
+    desktop: () => import("@/views/pc/Services.vue"),
+    mobile: () => import("@/views/mobile/Services.vue")
+  },
+  serviceDetail: {
+    desktop: () => import("@/views/pc/ServiceDetail.vue"),
+    mobile: () => import("@/views/mobile/ServiceDetail.vue")
   },
   base: {
     desktop: () => import("@/views/pc/Base.vue"),
@@ -28,17 +31,25 @@ export const pageComponents = {
     desktop: () => import("@/views/pc/Shop.vue"),
     mobile: () => import("@/views/mobile/Shop.vue")
   },
-  store: {
-    desktop: () => import("@/views/pc/Store.vue"),
-    mobile: () => import("@/views/mobile/Store.vue")
+  stores: {
+    desktop: () => import("@/views/pc/Stores.vue"),
+    mobile: () => import("@/views/mobile/Stores.vue")
   },
-  aboutUs: {
+  storeDetail: {
+    desktop: () => import("@/views/pc/StoreDetail.vue"),
+    mobile: () => import("@/views/mobile/StoreDetail.vue")
+  },
+  about: {
     desktop: () => import("@/views/pc/AboutUs.vue"),
     mobile: () => import("@/views/mobile/AboutUs.vue")
   },
-  contactUs: {
+  contact: {
     desktop: () => import("@/views/pc/ContactUs.vue"),
     mobile: () => import("@/views/mobile/ContactUs.vue")
+  },
+  reviews: {
+    desktop: () => import("@/views/pc/Reviews.vue"),
+    mobile: () => import("@/views/mobile/Reviews.vue")
   },
   news: {
     desktop: () => import("@/views/pc/News.vue"),
@@ -51,42 +62,42 @@ export const pageComponents = {
   trace: {
     desktop: () => import("@/views/pc/Trace.vue"),
     mobile: () => import("@/views/mobile/Trace.vue")
+  },
+  faq: {
+    desktop: () => import("@/views/pc/Faq.vue"),
+    mobile: () => import("@/views/mobile/Faq.vue")
+  },
+  guide: {
+    desktop: () => import("@/views/pc/Guide.vue"),
+    mobile: () => import("@/views/mobile/Guide.vue")
   }
 } as const
 
-/**
- * 创建响应式包装组件
- */
 const createResponsiveWrapper = (pageKey: keyof typeof pageComponents) =>
   defineAsyncComponent({
     loader: async () => {
-      const { defineComponent, ref, onMounted, onUnmounted, watch } = await import("vue")
+      const { defineComponent, ref, onMounted, onUnmounted } = await import("vue")
 
       return defineComponent({
         name: "ResponsiveWrapper",
         setup(props, { attrs, slots }) {
           const deviceType = ref(deviceDetector.getDeviceType())
-          console.log("触发！！！！！", deviceType.value)
           const CurrentComponent = ref<ReturnType<typeof defineAsyncComponent>>()
 
-          // 加载对应设备组件
           const loadComponent = () => {
             const componentMap = pageComponents[pageKey]
             const loader = deviceType.value === "mobile" ? componentMap.mobile : componentMap.desktop
             CurrentComponent.value = defineAsyncComponent(loader)
           }
 
-          // 监听窗口大小变化
           const handleResize = () => {
             const newDeviceType = deviceDetector.getDeviceType()
-            console.log(1111)
             if (newDeviceType !== deviceType.value) {
               deviceType.value = newDeviceType
               loadComponent()
             }
           }
 
-          // 防抖函数
           let resizeTimer: number
           const debouncedResize = () => {
             clearTimeout(resizeTimer)
@@ -94,7 +105,7 @@ const createResponsiveWrapper = (pageKey: keyof typeof pageComponents) =>
           }
 
           onMounted(() => {
-            loadComponent() // 初始加载
+            loadComponent()
             window.addEventListener("resize", debouncedResize)
           })
 
@@ -104,9 +115,7 @@ const createResponsiveWrapper = (pageKey: keyof typeof pageComponents) =>
           })
 
           return () => {
-            if (!CurrentComponent.value) {
-              return null
-            }
+            if (!CurrentComponent.value) return null
             return h(CurrentComponent.value, { ...attrs }, slots)
           }
         }
@@ -114,109 +123,98 @@ const createResponsiveWrapper = (pageKey: keyof typeof pageComponents) =>
     }
   })
 
-/**
- * 创建响应式路由
- */
+const legacyRedirectRoutes: RouteRecordRaw[] = Object.entries(legacyRedirects).map(([from, to]) => ({
+  path: from,
+  redirect: () => ({ path: to, replace: true })
+}))
+
 export function createResponsiveRoutes(): RouteRecordRaw[] {
   return [
+    ...legacyRedirectRoutes,
     {
       path: "/",
       name: "Home",
       component: createResponsiveWrapper("home"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      meta: { seoTitle: "seo.home.title", seoDesc: "seo.home.description", responsive: true }
     },
     {
-      path: "/feature",
-      name: "Feature",
-      component: createResponsiveWrapper("feature"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      path: "/about",
+      name: "About",
+      component: createResponsiveWrapper("about"),
+      meta: { seoTitle: "seo.about.title", seoDesc: "seo.about.description", responsive: true }
+    },
+    {
+      path: "/services",
+      name: "Services",
+      component: createResponsiveWrapper("services"),
+      meta: { seoTitle: "seo.services.title", seoDesc: "seo.services.description", responsive: true }
+    },
+    {
+      path: "/services/:slug",
+      name: "ServiceDetail",
+      component: createResponsiveWrapper("serviceDetail"),
+      meta: { responsive: true }
     },
     {
       path: "/base",
       name: "Base",
       component: createResponsiveWrapper("base"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      meta: { seoTitle: "seo.base.title", seoDesc: "seo.base.description", responsive: true }
     },
     {
-      path: "/serve",
-      name: "Serve",
-      component: createResponsiveWrapper("serve"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      path: "/stores",
+      name: "Stores",
+      component: createResponsiveWrapper("stores"),
+      meta: { seoTitle: "seo.stores.title", seoDesc: "seo.stores.description", responsive: true }
     },
     {
-      path: "/shop",
-      name: "Shop",
-      component: createResponsiveWrapper("shop"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      path: "/stores/:slug",
+      name: "StoreDetail",
+      component: createResponsiveWrapper("storeDetail"),
+      meta: { responsive: true }
     },
     {
-      path: "/store",
-      name: "Store",
-      component: createResponsiveWrapper("store"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      path: "/reviews",
+      name: "Reviews",
+      component: createResponsiveWrapper("reviews"),
+      meta: { seoTitle: "seo.reviews.title", seoDesc: "seo.reviews.description", responsive: true }
     },
     {
-      path: "/about-us",
-      name: "AboutUs",
-      component: createResponsiveWrapper("aboutUs"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
-    },
-    {
-      path: "/contact-us",
-      name: "ContactUs",
-      component: createResponsiveWrapper("contactUs"),
-      meta: {
-        title: "裕和堂 Yu Health",
-        responsive: true
-      }
+      path: "/contact",
+      name: "Contact",
+      component: createResponsiveWrapper("contact"),
+      meta: { seoTitle: "seo.contact.title", seoDesc: "seo.contact.description", responsive: true }
     },
     {
       path: "/news",
       name: "News",
       component: createResponsiveWrapper("news"),
-      meta: {
-        title: "裕和堂 - 资讯",
-        responsive: true
-      }
+      meta: { seoTitle: "seo.news.title", seoDesc: "seo.news.description", responsive: true }
     },
     {
       path: "/news/:id",
       name: "NewsDetail",
       component: createResponsiveWrapper("newsDetail"),
-      meta: {
-        title: "裕和堂 - 资讯详情",
-        responsive: true
-      }
+      meta: { responsive: true }
     },
     {
       path: "/trace",
       name: "Trace",
       component: createResponsiveWrapper("trace"),
-      meta: {
-        title: "裕和堂 - 产品溯源",
-        responsive: true
-      }
-    }
+      meta: { seoTitle: "seo.trace.title", seoDesc: "seo.trace.description", responsive: true }
+    },
+    {
+      path: "/faq",
+      name: "Faq",
+      component: createResponsiveWrapper("faq"),
+      meta: { seoTitle: "seo.faq.title", seoDesc: "seo.faq.description", responsive: true }
+    },
+    {
+      path: "/guide",
+      name: "Guide",
+      component: createResponsiveWrapper("guide"),
+      meta: { seoTitle: "seo.guide.title", seoDesc: "seo.guide.description", responsive: true }
+    },
+    { path: "/serve", redirect: "/services/traditional" }
   ]
 }

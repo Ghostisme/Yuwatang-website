@@ -30,6 +30,10 @@ require(['form'], function (Form) {
     var _bindevent = Form.events.bindevent;
     Form.events.bindevent = function (form) {
         _bindevent.apply(this, [form]);
+        // nkeditor 插件未启用/未装全时 Config.nkeditor 为空，避免读 classname 报错打断整页表单
+        if (typeof Config.nkeditor === 'undefined' || !Config.nkeditor) {
+            return;
+        }
         if ($(Config.nkeditor.classname || '.editor', form).length > 0) {
             require(['nkeditor', 'upload'], function (Nkeditor, Upload) {
                 var getFileFromBase64, uploadFiles;

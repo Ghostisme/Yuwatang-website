@@ -785,7 +785,7 @@ class Crud extends Command
                     } elseif ($inputType == 'datetime') {
                         $cssClassArr[] = 'datetimepicker';
                         $attrArr['class'] = implode(' ', $cssClassArr);
-                        $format = "YYYY-MM-DD HH:mm:ss";
+                        $format = "YYYY-MM-DD";
                         $phpFormat = "Y-m-d H:i:s";
                         $fieldFunc = '';
                         switch ($v['DATA_TYPE']) {
@@ -805,7 +805,7 @@ class Crud extends Command
                                 $fieldFunc = 'datetime';
                             // no break
                             case 'datetime':
-                                $format = "YYYY-MM-DD HH:mm:ss";
+                                $format = "YYYY-MM-DD";
                                 $phpFormat = 'Y-m-d H:i:s';
                                 break;
                             default:
@@ -823,7 +823,7 @@ class Crud extends Command
                     } elseif ($inputType == 'datetimerange') {
                         $cssClassArr[] = 'datetimerange';
                         $attrArr['class'] = implode(' ', $cssClassArr);
-                        $attrArr['data-locale'] = '{"format":"YYYY-MM-DD HH:mm:ss"}';
+                        $attrArr['data-locale'] = '{"format":"YYYY-MM-DD"}';
                         $fieldFunc = '';
                         $defaultDateTime = "";
                         $formAddElement = Form::text($fieldName, $defaultDateTime, $attrArr);

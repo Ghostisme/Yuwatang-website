@@ -1,0 +1,28 @@
+# 需求2-23：SPA History 模式 + 旧路径 301（站点根目录部署）
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # 旧 hash 外链可能带 index.html#/path，归一到 /
+  RewriteRule ^index\.html$ / [R=301,L]
+
+  # 旧路径永久重定向（需求2-3）
+  RewriteRule ^about-us/?$ /about [R=301,L,NC]
+  RewriteRule ^about_us/?$ /about [R=301,L,NC]
+  RewriteRule ^contact-us/?$ /contact [R=301,L,NC]
+  RewriteRule ^contact_us/?$ /contact [R=301,L,NC]
+  RewriteRule ^feature/?$ /services [R=301,L,NC]
+  RewriteRule ^store/?$ /stores [R=301,L,NC]
+  RewriteRule ^shop/?$ /stores [R=301,L,NC]
+  RewriteRule ^home/?$ / [R=301,L,NC]
+
+  # 静态资源放行（溯源素材在 /trace-assets，勿再占用 /trace 目录名）
+  RewriteCond %{REQUEST_URI} ^/(js|css|images|fonts|assets|trace-assets)/ [NC]
+  RewriteRule ^ - [L]
+
+  # SPA fallback：非文件请求回 index.html
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>

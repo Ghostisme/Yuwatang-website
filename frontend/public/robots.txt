@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# 需求2-8：允许收录；站点地图
+Sitemap: https://www.yuhetangtcm.com/sitemap.xml
+
+# 后台与接口不收录
+Disallow: /yuhetangAdmin.php
+Disallow: /api.php
+Disallow: /admin/

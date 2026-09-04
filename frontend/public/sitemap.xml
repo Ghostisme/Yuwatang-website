@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 需求2-8：前台站点地图。正式域名以生产为准；若仍挂在 /h5 子目录，请给 loc 加前缀。 -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://www.yuhetangtcm.com/</loc><changefreq>weekly</changefreq><priority>1.0</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/about</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/services</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/services/moxibustion</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/services/tuina</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/services/spa</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/services/foot</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/services/traditional</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/base</loc><changefreq>monthly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores</loc><changefreq>weekly</changefreq><priority>0.9</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/yuyao</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/bailemen</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/huashan</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/taiguhui</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/wujianglu</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/shanghai-center</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/meihua</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/sichuanbei</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/stores/changde</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/faq</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/news</loc><changefreq>weekly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/news/1001</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/news/1002</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/news/1003</loc><changefreq>yearly</changefreq><priority>0.6</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/reviews</loc><changefreq>weekly</changefreq><priority>0.7</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/contact</loc><changefreq>monthly</changefreq><priority>0.8</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/guide</loc><changefreq>monthly</changefreq><priority>0.5</priority></url>
+  <url><loc>https://www.yuhetangtcm.com/trace</loc><changefreq>monthly</changefreq><priority>0.6</priority></url>
+</urlset>

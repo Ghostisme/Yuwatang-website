@@ -1,8 +1,8 @@
 <template>
   <div class="news">
     <div class="news-banner">
-      <img src="@/assets/img/contact-banner.jpg" alt="" />
-      <div class="banner-tit">{{ t("news.title") }}</div>
+      <img src="@/assets/img/contact-banner.jpg" :alt="t('news.title')" />
+      <div class="banner-tit"><h1 class="banner-h1">{{ t("news.title") }}</h1></div>
     </div>
     <div class="news-content">
       <div v-if="loading" class="news-empty">{{ t("news.loading") }}</div>
@@ -34,8 +34,10 @@ import { computed, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
 import { getArticleList } from "@/api/index"
+import { usePageSeo } from "@/composables/usePageSeo"
 
 const { t } = useI18n()
+usePageSeo({ titleKey: "seo.news.title", descriptionKey: "seo.news.description", h1Key: "news.title" })
 const router = useRouter()
 const articleList = ref<any[]>([])
 const page = ref(1)
@@ -113,6 +115,11 @@ onMounted(fetchList)
       text-align: center;
       color: #fff;
       font-weight: 400;
+      .banner-h1 {
+        margin: 0;
+        font: inherit;
+        font-weight: inherit;
+      }
     }
   }
   &-content {

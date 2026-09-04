@@ -1,6 +1,9 @@
-import { createRouter, createWebHashHistory, type RouteRecordRaw } from "vue-router"
+import { createRouter, createWebHistory, type RouteRecordRaw } from "vue-router"
+import { migrateLegacyHashUrl } from "@/utils/hashMigration"
 import { createResponsiveRoutes } from "./responsive-routes"
 import { deviceDetector } from "@/utils/device-detector"
+
+migrateLegacyHashUrl(import.meta.env.BASE_URL)
 
 // 使用 Record 类型直接定义 meta
 type RouteMeta = Record<string, unknown> & {
@@ -34,9 +37,9 @@ const routes: RouteRecordRaw[] = [
   }
 ]
 
-// 创建路由实例
+// 需求2-23：History 模式，独立网址（无 #）
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from, savedPosition) {
     if (savedPosition) {
@@ -47,40 +50,49 @@ const router = createRouter({
   }
 })
 
-// 存储上一次的设备类型
+// 存储上一次的设备类型；路由就绪前忽略 resize，避免 redirect 落到默认 `/`
 let lastDeviceType = deviceDetector.getDeviceType()
-// 设备变化时重新加载页面
-deviceDetector.onResize((newDeviceType) => {
-  if (lastDeviceType !== newDeviceType) {
-    console.log(`设备类型变化: ${lastDeviceType} -> ${newDeviceType}`)
-    lastDeviceType = newDeviceType
+let deviceRedirectReady = false
 
-    // 如果当前页面是响应式页面，重新加载以切换组件
-    const currentRoute = router.currentRoute.value
-    const needsRefresh = currentRoute.meta?.responsive
-    if (needsRefresh) {
-      // 使用重定向页面平滑过渡
-      router.push({
-        path: "/device-redirect",
-        query: {
-          redirect: currentRoute.fullPath,
-          from: lastDeviceType,
-          to: newDeviceType
-        }
-      })
-    }
+router.isReady().then(() => {
+  // 首屏布局/滚动条引起的宽度抖动稍后再监听
+  window.setTimeout(() => {
+    deviceRedirectReady = true
+    lastDeviceType = deviceDetector.getDeviceType()
+  }, 800)
+})
+
+deviceDetector.onResize((newDeviceType) => {
+  if (!deviceRedirectReady) {
+    lastDeviceType = newDeviceType
+    return
   }
+  if (lastDeviceType === newDeviceType) return
+
+  console.log(`设备类型变化: ${lastDeviceType} -> ${newDeviceType}`)
+  lastDeviceType = newDeviceType
+
+  const currentRoute = router.currentRoute.value
+  if (!currentRoute.meta?.responsive) return
+  if (currentRoute.path === "/device-redirect") return
+
+  router.push({
+    path: "/device-redirect",
+    query: {
+      redirect: currentRoute.fullPath,
+      from: lastDeviceType,
+      to: newDeviceType
+    }
+  })
 })
 
 // 路由守卫
 router.beforeEach((to, from, next) => {
-  // 设置页面标题
   const meta = to.meta as RouteMeta
-  if (meta.title) {
+  if (meta.title && !meta.seoTitle) {
     document.title = meta.title as string
   }
 
-  // 检查是否需要认证
   if (meta.requiresAuth) {
     const token = localStorage.getItem("auth_token")
     if (!token) {

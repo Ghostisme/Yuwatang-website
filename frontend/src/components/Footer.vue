@@ -2,11 +2,14 @@
   <div class="footer-pc" v-if="!isMobile">
     <div class="footer-pc-box">
       <div class="footer-pc-box-left">
-        <div class="footer-pc-us" :class="locale == 'zh' ? 'fontzh' : ''">
-          <span class="about-us" @click="goAboutUs">{{ t("footer.item1") }}</span>
-          <span class="about-us" @click="goContactUs">{{ t("footer.item2") }}</span>
-          <span class="about-us" @click="goNews">{{ t("footer.item10") }}</span>
-        </div>
+        <nav class="footer-pc-us" :class="locale == 'zh' ? 'fontzh' : ''" aria-label="页脚导航">
+          <span
+            v-for="(item, index) in catalogItems"
+            :key="item.path"
+            class="about-us"
+            @click="goNav(item.path)"
+          >{{ t(item.labelKey) }}</span>
+        </nav>
         <div class="footer-pc-info">
           <span class="info-li">{{ t("footer.item4") }}</span>
           <span class="info-li">{{ t("footer.item7") }}</span>
@@ -40,12 +43,15 @@
   <div class="footer-h5" v-else>
     <div class="footer-h5-box">
       <div class="box-top" :class="locale !== 'jp' ? 'fontzh' : ''">
-        <div class="box-top-us">
-          <span class="about-us" @click="goAboutUs">{{ t("footer.item1") }}</span>
-          <span class="about-us" @click="goContactUs">{{ t("footer.item2") }}</span>
-          <span class="about-us" @click="goNews">{{ t("footer.item10") }}</span>
+        <nav class="box-top-us" aria-label="页脚导航">
+          <span
+            v-for="item in catalogItems"
+            :key="item.path"
+            class="about-us"
+            @click="goNav(item.path)"
+          >{{ t(item.labelKey) }}</span>
           <div class="box-top-title" v-html="t('footer.item3')"></div>
-        </div>
+        </nav>
       </div>
       <div class="box-btm">
         <span class="info-li">{{ t("footer.item4") }}</span>
@@ -99,6 +105,7 @@ import { ref, watch, onMounted, onUnmounted } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
 import { deviceDetector } from "@/utils/device-detector"
+import { catalogItems } from "@/config/navigation"
 
 const { t, locale } = useI18n()
 const route = useRoute()
@@ -120,26 +127,8 @@ const debouncedResize = () => {
   isMobile.value = deviceDetector.getDeviceType() === "mobile"
 }
 
-const goAboutUs = () => {
-  router.push({
-    path: "/about-us"
-  })
-}
-
-const goContactUs = () => {
-  router.push("/contact-us")
-}
-
-const goNews = () => {
-  router.push("/news")
-}
-
-const goHome = () => {
-  router.push("/")
-}
-
-const goShop = () => {
-  router.push("/shop")
+const goNav = (path: string) => {
+  router.push(path)
 }
 
 const makePhoneCall = (tel) => {
@@ -213,13 +202,14 @@ onUnmounted(() => {
   &-us {
     display: flex;
     align-items: center;
-    // padding: 46px 0 43px;
+    flex-wrap: wrap;
+    gap: 0.4rem 0;
     padding: 0 0 2rem;
+    max-width: 36rem;
     .about-us {
-      // margin: 0 30px;
-      margin: 0 1.9rem;
+      margin: 0 1.9rem 0.4rem 0;
       color: rgba(122, 86, 54, 1);
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 400;
       line-height: 24px;
       letter-spacing: 0px;
@@ -232,15 +222,12 @@ onUnmounted(() => {
         content: "";
         position: absolute;
         width: 2px;
-        height: 18px;
-        background: rgba(122, 86, 54, 1);
-        left: -2rem;
-        top: 4px;
+        height: 14px;
+        background: rgba(122, 86, 54, 0.35);
+        right: -1rem;
+        top: 5px;
       }
-      &:first-child {
-        margin-left: 0;
-      }
-      &:first-child::after {
+      &:last-child::after {
         display: none;
       }
     }
@@ -485,8 +472,8 @@ onUnmounted(() => {
       flex-flow: column;
       &-us {
         display: flex;
-        // align-items: center;
         flex-wrap: wrap;
+        gap: 4px 0;
         .about-us {
           color: rgba(122, 86, 54, 1);
           font-size: 11px;
@@ -494,25 +481,20 @@ onUnmounted(() => {
           line-height: 13px;
           letter-spacing: 0px;
           position: relative;
-          margin: 0 5px 5px;
+          margin: 0 10px 4px 0;
+          padding-right: 10px;
           cursor: pointer;
           &::after {
             content: "";
             position: absolute;
             width: 1px;
             height: 9px;
-            background: rgba(122, 86, 54, 1);
-            left: -5px;
+            background: rgba(122, 86, 54, 0.35);
+            right: 0;
             top: 2px;
           }
-          &:first-child {
-            margin-left: 0;
-          }
-          &:first-child::after {
+          &:last-child::after {
             display: none;
-          }
-          &:nth-child(3) {
-            margin-right: 20px;
           }
         }
       }

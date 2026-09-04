@@ -6,10 +6,32 @@
     ]"
     v-if="!isMobile"
   >
-    <img class="header-pc-icon" @click="goTo('/')" src="@/assets/img/header-icon.png" alt="裕和堂" />
+    <div class="header-pc-left">
+      <img class="header-pc-icon" @click="goTo('/')" src="@/assets/img/header-icon.png" alt="裕和堂" />
+      <div class="nav-catalog" @mouseenter="catalogOpen = true" @mouseleave="catalogOpen = false">
+        <span class="nav-catalog-trigger" :class="{ active: catalogOpen || isCatalogActive() }">
+          <span class="catalog-icon" aria-hidden="true"></span>
+          {{ t("nav.catalog") }}
+        </span>
+        <Transition name="catalog">
+          <div v-if="catalogOpen" class="nav-catalog-panel">
+            <div class="nav-catalog-panel-inner">
+              <span
+                v-for="(item, index) in catalogItems"
+                :key="item.path"
+                class="catalog-item"
+                :class="{ active: isActive(item.path) }"
+                :style="{ '--i': index }"
+                @click="goTo(item.path)"
+              >{{ t(item.labelKey) }}</span>
+            </div>
+          </div>
+        </Transition>
+      </div>
+    </div>
     <nav class="header-pc-nav">
       <span
-        v-for="item in navItems"
+        v-for="item in mainNavItems"
         :key="item.path"
         class="nav-item"
         :class="{ active: isActive(item.path) }"
@@ -57,12 +79,24 @@
     </div>
     <Transition name="drawer">
       <div class="header-h5-drawer" v-if="mobileOpen">
+        <div class="drawer-section-label">{{ t("nav.catalog") }}</div>
         <span
-          v-for="(item, index) in navItems"
+          v-for="(item, index) in catalogItems"
           :key="item.path"
           class="drawer-item"
           :class="{ active: isActive(item.path) }"
           :style="{ '--i': index }"
+          @click="goTo(item.path, true)"
+        >
+          {{ t(item.labelKey) }}
+        </span>
+        <div class="drawer-divider"></div>
+        <span
+          v-for="(item, index) in mainNavItems"
+          :key="item.path"
+          class="drawer-item"
+          :class="{ active: isActive(item.path) }"
+          :style="{ '--i': catalogItems.length + index + 1 }"
           @click="goTo(item.path, true)"
         >
           {{ t(item.labelKey) }}
@@ -82,12 +116,15 @@ import { useRoute, useRouter } from "vue-router"
 import { deviceDetector } from "@/utils/device-detector"
 import { useI18n } from "vue-i18n"
 
+import { catalogItems, mainNavItems } from "@/config/navigation"
+
 const { locale, t } = useI18n()
 const router = useRouter()
 const route = useRoute()
 const menuIndex = ref(localStorage.getItem("user-locale") || "zh")
 const isMobile = ref(deviceDetector.getDeviceType() === "mobile")
 const mobileOpen = ref(false)
+const catalogOpen = ref(false)
 const headerVisible = ref(true)
 const headerGlass = ref(false)
 const lastScrollY = ref(0)
@@ -98,21 +135,12 @@ const langList = [
   { key: "jp", value: "日本语" }
 ]
 
-const navItems = [
-  { path: "/", labelKey: "nav.home" },
-  { path: "/feature", labelKey: "nav.feature" },
-  { path: "/base", labelKey: "nav.base" },
-  { path: "/store", labelKey: "nav.store" },
-  { path: "/news", labelKey: "nav.news" },
-  { path: "/trace", labelKey: "nav.trace" },
-  { path: "/about-us", labelKey: "nav.about" },
-  { path: "/contact-us", labelKey: "nav.contact" }
-]
-
 const isActive = (path: string) => {
   if (path === "/") return route.path === "/"
   return route.path === path || route.path.startsWith(path + "/")
 }
+
+const isCatalogActive = () => catalogItems.some((item) => isActive(item.path))
 
 const handleScroll = () => {
   const currentScrollY = Math.max(0, window.scrollY)
@@ -125,6 +153,7 @@ const handleScroll = () => {
   } else if (delta > 6) {
     headerVisible.value = false
     mobileOpen.value = false
+    catalogOpen.value = false
   } else if (delta < -6) {
     headerVisible.value = true
   }
@@ -140,6 +169,7 @@ const debouncedResize = () => {
 
 const goTo = (path: string, closeDrawer = false) => {
   router.push(path)
+  catalogOpen.value = false
   if (closeDrawer) mobileOpen.value = false
 }
 
@@ -147,12 +177,16 @@ const switchLanguage = (key: string) => {
   menuIndex.value = key
   locale.value = key
   localStorage.setItem("user-locale", locale.value)
+  // 只更新 query，保留当前 path（深链安全）
+  const nextQuery = { ...route.query, lang: key }
+  router.replace({ query: nextQuery }).catch(() => undefined)
 }
 
 watch(
   () => route.path,
   () => {
     mobileOpen.value = false
+    catalogOpen.value = false
   }
 )
 
@@ -178,22 +212,94 @@ onUnmounted(() => {
   background: rgba(252, 248, 244, 1);
   z-index: 99;
   display: grid;
-  grid-template-columns: minmax(140px, 1fr) auto minmax(140px, 1fr);
+  grid-template-columns: minmax(200px, 1fr) auto minmax(140px, 1fr);
   align-items: center;
   column-gap: 24px;
   box-sizing: border-box;
 
+  &-left {
+    justify-self: start;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
   &-icon {
     width: 110px;
     height: auto;
-    justify-self: start;
     display: block;
     cursor: pointer;
     object-fit: contain;
+    flex-shrink: 0;
     transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.3s ease;
     &:hover {
       transform: scale(1.03);
       opacity: 0.92;
+    }
+  }
+
+  .nav-catalog {
+    position: relative;
+  }
+  .nav-catalog-trigger {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 15px;
+    font-family: "LinHai";
+    color: rgba(60, 50, 28, 0.65);
+    border: 1px solid rgba(60, 50, 28, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.45);
+    &.active {
+      color: rgba(60, 50, 28, 1);
+    }
+    .catalog-icon {
+      width: 14px;
+      height: 10px;
+      background: linear-gradient(currentColor, currentColor) center / 14px 1.5px no-repeat;
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        width: 14px;
+        height: 1.5px;
+        background: currentColor;
+      }
+    }
+  }
+  .nav-catalog-panel {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    padding-top: 10px;
+    z-index: 120;
+  }
+  .nav-catalog-panel-inner {
+    min-width: 220px;
+    padding: 10px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    background: rgba(252, 248, 244, 0.96);
+    border: 1px solid rgba(60, 50, 28, 0.08);
+    border-radius: 14px;
+    box-shadow: 0 16px 40px rgba(60, 50, 28, 0.12);
+    .catalog-item {
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 14px;
+      font-family: "LinHai";
+      color: rgba(60, 50, 28, 0.72);
+      &:hover,
+      &.active {
+        background: rgba(60, 50, 28, 0.06);
+        color: rgba(60, 50, 28, 1);
+      }
     }
   }
 
@@ -454,6 +560,17 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     transform-origin: top center;
+    .drawer-section-label {
+      padding: 8px 20px 4px;
+      font-size: 11px;
+      color: rgba(60, 50, 28, 0.38);
+      font-family: "LinHai";
+    }
+    .drawer-divider {
+      height: 1px;
+      margin: 6px 20px;
+      background: rgba(60, 50, 28, 0.08);
+    }
     .drawer-item {
       padding: 12px 20px;
       font-size: 14px;

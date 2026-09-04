@@ -1,7 +1,6 @@
 import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./router"
-// 显式导入 i18n 的 index 入口，确保使用带有 messages 和 globalInjection 配置的实例
 import i18n from "./i18n"
 import { createPinia } from "pinia"
 import piniaPluginPersistedstate from "pinia-plugin-persistedstate"
@@ -13,7 +12,6 @@ import "./assets/font/font.css"
 import "./assets/premium.css"
 import { revealDirective } from "./utils/premium-motion"
 
-// 导入 Swiper 样式
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
@@ -29,4 +27,11 @@ app.directive("reveal", revealDirective)
 app.use(router)
 app.use(i18n)
 
-app.mount("#app")
+/**
+ * 必须等首屏路由解析完成再 mount。
+ * 否则 App/useHreflang 会在默认 location `/` 上执行 router.replace(?lang=)，
+ * 把正在进行的 /trace、/faq 等深链导航冲掉，刷新后落到首页。
+ */
+router.isReady().then(() => {
+  app.mount("#app")
+})

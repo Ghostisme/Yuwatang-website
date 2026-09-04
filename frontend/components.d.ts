@@ -8,10 +8,12 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    FaqBody: typeof import('./src/components/FaqBody.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    StoreDetailBody: typeof import('./src/components/StoreDetailBody.vue')['default']
     TraceBoard: typeof import('./src/components/TraceBoard.vue')['default']
     TraceInfoBlock: typeof import('./src/components/TraceInfoBlock.vue')['default']
   }

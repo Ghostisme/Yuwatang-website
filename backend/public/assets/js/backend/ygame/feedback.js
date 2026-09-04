@@ -27,7 +27,17 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'name', title: __('Name'), operate: 'LIKE'},
                         {field: 'phone', title: __('Phone'), operate: 'LIKE'},
                         {field: 'store_name', title: __('Store_name'), operate: 'LIKE'},
-                        {field: 'content', title: __('Content'), operate: 'LIKE', formatter: Table.api.formatter.content},
+                        {
+                            field: 'content',
+                            title: __('Content'),
+                            operate: 'LIKE',
+                            // 不用 Table.api.formatter.content：其默认 max-width:250px，列更宽也会提前省略
+                            formatter: function (value) {
+                                value = value == null ? '' : String(value);
+                                var safe = $('<div/>').text(value).html();
+                                return '<div class="yh-ellipsis" title="' + safe.replace(/"/g, '&quot;') + '">' + safe + '</div>';
+                            }
+                        },
                         {field: 'ip', title: __('Ip'), operate: false},
                         {field: 'createtime', title: __('Createtime'), operate: 'RANGE', addclass: 'datetimerange', formatter: Table.api.formatter.datetime},
                         {
