@@ -77,9 +77,9 @@ export default {
     pillar3Text:
       "All 9 stores directly operated—fresh linens per guest, private treatment rooms, no hard selling, complimentary wellness tea and snacks.",
     storeList:
-      "Yuyao Rd · Caojiadu ｜ Paramount · Jing'an Temple ｜ Huashan Rd · Wukang Rd ｜ Taikoo Hui · Qinghai Rd ｜ Wujiang Rd · West Nanjing Rd ｜ Shanghai Tower · Lujiazui ｜ Meihua Rd · Century Park (TCM Clinic) ｜ North Sichuan Rd · North Bund ｜ Changde Rd · Jiangning / Changshou Rd",
+      "Yuyao Rd · Caojiadu ｜ Paramount · Jing'an Temple ｜ Huashan Rd · Wukang Rd ｜ Taikoo Hui · Qinghai Rd ｜ Wujiang Rd · West Nanjing Rd ｜ Shanghai Tower · Lujiazui ｜ Meihua Rd · Century Park ｜ North Sichuan Rd · North Bund ｜ Changde Rd · Jiangning / Changshou Rd",
     moreTraditional:
-      "More traditional care: pediatric tuina, cupping, gua sha, nail care, ear cleaning (pediatric tuina at Meihua Rd TCM Clinic).",
+      "More traditional care: pediatric tuina, cupping, gua sha, nail care, ear cleaning.",
     viewMore: "View More"
   },
   aboutV2: {
@@ -97,7 +97,7 @@ export default {
       "In 2017, to secure moxibustion quality from the source, Yuhetang built its own mugwort base in Qichun, Li Shizhen's hometown—planting, harvesting, aging and rolling in-house. \"Three-year mugwort at home, the doctor need not come.\"",
     story4Title: "At the top of Shanghai",
     story4Text:
-      "In 2022, Yuhetang entered Shanghai Tower—China's tallest building. Meihua Rd TCM Clinic, North Sichuan Rd and Changde Rd stores followed; Wujiang Rd and Paramount refreshed, Huashan Rd relocated—today 9 directly-run stores.",
+      "In 2022, Yuhetang entered Shanghai Tower—China's tallest building. Meihua Rd, North Sichuan Rd and Changde Rd stores followed; Wujiang Rd and Paramount refreshed, Huashan Rd relocated—today 9 directly-run stores.",
     timelineTitle: "Milestones",
     timeline: [
       { year: "2009", text: "First store on Yuyao Rd; Yuhetang founded" },
@@ -108,7 +108,7 @@ export default {
       { year: "2020", text: "Wujiang Rd store opens" },
       { year: "2022", text: "Opens in Shanghai Tower" },
       { year: "2024", text: "Paramount store refresh" },
-      { year: "2025", text: "Meihua Rd TCM Clinic; Wujiang Rd refresh; Huashan Rd relocation" },
+      { year: "2025", text: "Meihua Rd store opens; Wujiang Rd refresh; Huashan Rd relocation" },
       { year: "2026", text: "North Sichuan Rd & Changde Rd open; Shanghai Tower expansion; 17th anniversary" }
     ],
     mvvTitle: "Mission · Vision · Values",
@@ -151,7 +151,7 @@ export default {
     intro:
       "Four core services: signature moxibustion (three-year aged mugwort), TCM massage, herbal SPA, aromatherapy foot care, plus pediatric tuina, cupping, gua sha, ear cleaning and nail care. Senior / Master / Expert tiers; email booking available.",
     moreTraditional:
-      "More traditional care: pediatric tuina · cupping · gua sha · nail care · ear cleaning (pediatric tuina at Meihua Rd TCM Clinic).",
+      "More traditional care: pediatric tuina · cupping · gua sha · nail care · ear cleaning.",
     moreProjects: "More services",
     faqTitle: "FAQ for this service",
     back: "Back to Services",
@@ -178,7 +178,7 @@ export default {
     traditional: {
       name: "Traditional Care",
       summary: "Pediatric tuina, cupping, gua sha, ear cleaning, nail care and more.",
-      body: "<p>Gua sha and cupping for damp-cold relief, often paired with massage or moxibustion; professional ear cleaning and nail care. Pediatric tuina and TCM consultation at Meihua Rd Clinic with physician assessment; parents may accompany.</p>"
+      body: "<p>Gua sha and cupping for damp-cold relief, often paired with massage or moxibustion; professional ear cleaning and nail care. Pediatric tuina and other traditional therapies can be arranged when booking—ask any store; therapists assess on site.</p>"
     }
   },
   stores: {
@@ -195,7 +195,7 @@ export default {
     facilitiesTitle: "Facilities & Environment",
     directionsTitle: "Getting Here",
     servicesHint:
-      "All stores offer moxibustion, TCM massage, herbal SPA, foot care and traditional therapies; Meihua Rd also has a TCM clinic and pediatric tuina.",
+      "All stores offer moxibustion, TCM massage, herbal SPA, foot care and traditional therapies.",
     mapCta: "Open in Maps",
     callCta: "Call Store",
     facilities: {
@@ -213,9 +213,6 @@ export default {
       lunchPeak: "Lunch peak: booking recommended",
       rooms28: "28 treatment rooms",
       smartMoxa: "Smart smoke-control moxibustion",
-      clinic: "Licensed TCM clinic",
-      insurance: "Commercial insurance accepted (only store)",
-      pediatric: "Professional pediatric tuina",
       rooms14: "14 treatment rooms",
       rooms18: "18 treatment rooms",
       zen: "Zen-inspired quiet space"
@@ -270,11 +267,11 @@ export default {
     },
     meihua: {
       name: "Meihua Road Store",
-      tagline: "Our only TCM clinic—with physicians and commercial insurance.",
+      tagline: "Beside Century Park—wellness for Pudong families and expo visitors.",
       intro:
-        "Licensed TCM clinic: on-site physicians, commercial insurance (only among 9 stores), professional pediatric tuina. Near Century Park and SNIEC, serving families and expo visitors.",
+        "Opened 2025 on Meihua Road, Pudong—near Century Park and SNIEC. Private rooms, herbal tea, and the same direct-store standards: moxibustion, tuina, herbal SPA, foot care and traditional therapies for families and expo guests.",
       directions:
-        "Metro Line 7 Huamu Rd, Exit 4, ~200 m to 1019 Meihua Rd. Near Century Park and SNIEC—book pediatric tuina ahead."
+        "Metro Line 7 Huamu Rd, Exit 4, ~200 m to 1019 Meihua Rd. Near Century Park and SNIEC—book ahead at peak times."
     },
     sichuanbei: {
       name: "North Sichuan Road Store",
@@ -297,11 +294,36 @@ export default {
     h1: "Guest Reviews",
     lead: "Voices from guests worldwide. Real experiences from Yuhetang stores—you can share your story below.",
     formTitle: "Share Your Story",
-    nicknamePlaceholder: "Nickname (required)",
-    contentPlaceholder: "Your feedback (required)",
+    fields: {
+      name: "Name",
+      phone: "Mobile",
+      store: "Store",
+      content: "Feedback"
+    },
+    nicknamePlaceholder: "Your name (2–20 characters)",
+    phonePlaceholder: "11-digit China mobile number",
+    storePlaceholder: "Select a store",
+    contentPlaceholder: "Tell us about your visit (10–500 characters)",
+    hints: {
+      name: "Required, {min}–{max} characters",
+      phone: "Required, 11-digit mainland China mobile",
+      content: "Required, {min}–{max} characters; avoid medical claims"
+    },
+    errors: {
+      nameRequired: "Please enter your name",
+      nameMin: "Name must be at least {min} characters",
+      nameMax: "Name must be at most {max} characters",
+      phoneRequired: "Please enter your mobile number",
+      phoneInvalid: "Please enter a valid 11-digit mobile number",
+      storeRequired: "Please select a store",
+      storeMax: "Store name is too long",
+      contentRequired: "Please enter your feedback",
+      contentMin: "Feedback must be at least {min} characters",
+      contentMax: "Feedback must be at most {max} characters"
+    },
     submit: "Submit",
     submitting: "Submitting...",
-    required: "Please enter nickname and feedback",
+    required: "Please complete name, mobile, store and feedback",
     success: "Submitted. It will appear on the wall after review.",
     fail: "Submission failed. Please try again.",
     loading: "Loading...",

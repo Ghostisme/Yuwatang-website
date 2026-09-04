@@ -69,7 +69,7 @@ export const serviceFaqsZh: Record<string, ServiceFaqItem[]> = {
   traditional: [
     {
       q: "小儿推拿在哪里做？",
-      a: "小儿推拿及中医坐诊由梅花路店（中医诊所）提供，坐诊医师评估后进行，家长可同室陪同。"
+      a: "小儿推拿等传统项目可在预约时咨询各门店安排，到店由调理师评估后进行；家长可同室陪同。"
     },
     {
       q: "拔罐、刮痧一般怎么安排？",
@@ -77,7 +77,7 @@ export const serviceFaqsZh: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "能用商保 / 医保吗？",
-      a: "商保仅梅花路店（中医诊所）支持；医保暂不支持。"
+      a: "暂不支持商保与医保，具体以各门店说明为准。"
     },
     {
       q: "特殊身体状况能做吗？",
@@ -154,7 +154,7 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
   traditional: [
     {
       q: "Where is pediatric tuina offered?",
-      a: "Only at Meihua Road (TCM clinic), after doctor assessment; parents may stay in the room."
+      a: "Pediatric tuina and other traditional therapies can be arranged when booking—ask any store; therapists assess on site. Parents may stay in the room."
     },
     {
       q: "How are cupping / scraping arranged?",
@@ -162,7 +162,7 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "Commercial / public insurance?",
-      a: "Commercial insurance only at Meihua Road clinic; public medical insurance is not supported."
+      a: "Commercial and public medical insurance are not supported at this time; check with each store for details."
     },
     {
       q: "Special physical conditions?",
@@ -239,7 +239,7 @@ export const serviceFaqsJp: Record<string, ServiceFaqItem[]> = {
   traditional: [
     {
       q: "小児推拿はどこで？",
-      a: "梅花路店（中医クリニック）のみ。医師評価後に実施、保護者同席可。"
+      a: "小児推拿など伝統項目は予約時に各店舗へご相談ください。来店後セラピストが評価し実施、保護者同席可。"
     },
     {
       q: "抜罐・刮痧の受け方は？",
@@ -247,7 +247,7 @@ export const serviceFaqsJp: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "保険は使えますか？",
-      a: "民間保険は梅花路店のみ。公的医保は非対応。"
+      a: "民間保険・公的医保は現時点で非対応。詳細は各店舗にお問い合わせください。"
     },
     {
       q: "特別な体調でも大丈夫？",

@@ -11,13 +11,27 @@
           >{{ t(item.labelKey) }}</span>
         </nav>
         <div class="footer-pc-info">
-          <span class="info-li">{{ t("footer.item4") }}</span>
-          <span class="info-li">{{ t("footer.item7") }}</span>
           <span class="info-li">{{ t("footer.item5") }}</span>
           <span class="info-li">
             <img src="@/assets/img/tel-icon.svg" alt="" />
             {{ t("footer.item6") }}
           </span>
+          <div class="info-li beian-row">
+            <a
+              class="beian-link"
+              href="https://beian.miit.gov.cn/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ t("footer.item7") }}</a>
+          </div>
+          <div class="info-li beian-row">
+            <a
+              class="beian-link"
+              href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010402009419"
+              target="_blank"
+              rel="noopener noreferrer"
+            >{{ t("footer.item4") }}</a>
+          </div>
         </div>
       </div>
       <div class="footer-pc-box-right">
@@ -54,13 +68,27 @@
         </nav>
       </div>
       <div class="box-btm">
-        <span class="info-li">{{ t("footer.item4") }}</span>
         <span class="info-li">{{ t("footer.item5") }}</span>
-        <span class="info-li">{{ t("footer.item7") }}</span>
         <span class="info-li">
           <img src="@/assets/img/tel-icon.svg" alt="" />
           {{ t("footer.item6") }}
         </span>
+        <div class="info-li beian-row">
+          <a
+            class="beian-link"
+            href="https://beian.miit.gov.cn/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ t("footer.item7") }}</a>
+        </div>
+        <div class="info-li beian-row">
+          <a
+            class="beian-link"
+            href="https://www.beian.gov.cn/portal/registerSystemInfo?recordcode=31010402009419"
+            target="_blank"
+            rel="noopener noreferrer"
+          >{{ t("footer.item4") }}</a>
+        </div>
       </div>
     </div>
     <div class="logo-icon">
@@ -82,10 +110,10 @@
   <div class="popup-tel" v-if="isShow">
     <img class="popup-tel-head" src="@/assets/img/popup-head.svg" alt="" />
     <span class="popup-tel-text">{{ t("footer.item2") }}</span>
-    <span class="popup-tel-num">+86-18895366320</span>
+    <span class="popup-tel-num">+86-13816686069</span>
     <span class="popup-tel-num">{{ t("footer.item9") }} tty12138@foxmail.com</span>
 
-    <div class="popup-tel-btn" @click="makePhoneCall('18895366320')">
+    <div class="popup-tel-btn" @click="makePhoneCall('13816686069')">
       {{ t("footer.item8") }}
     </div>
     <div class="popup-tel-close" @click="isShow = false">
@@ -264,6 +292,19 @@ onUnmounted(() => {
       }
       &:last-child {
         margin-bottom: 0;
+      }
+    }
+    .beian-row {
+      white-space: normal;
+    }
+    .beian-link {
+      color: rgba(122, 86, 54, 1);
+      text-decoration: none;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.2s ease, opacity 0.2s ease;
+      &:hover {
+        border-bottom-color: rgba(122, 86, 54, 0.45);
+        opacity: 0.88;
       }
     }
   }
@@ -529,6 +570,14 @@ onUnmounted(() => {
           display: block;
           margin-right: 3px;
         }
+      }
+      .beian-row {
+        width: 100%;
+        white-space: normal;
+      }
+      .beian-link {
+        color: rgba(122, 86, 54, 1);
+        text-decoration: none;
       }
     }
   }

@@ -75,7 +75,7 @@ export default {
     },
     {
       q: `Can I use commercial / public medical insurance?`,
-      a: `Commercial insurance is supported only at Meihua Road (TCM clinic); public medical insurance is not supported. Meihua Road also has doctors on duty and pediatric tuina.`
+      a: `Commercial and public medical insurance are not supported at this time; check with each store for details.`
     },
     {
       q: `Can I franchise?`,
@@ -99,7 +99,7 @@ export default {
     },
     {
       q: `Which store is closest to the Bund / Yuyuan / Nanjing Road / Disney?`,
-      a: `Bund · North Bund → Sichuan North Road; Nanjing Road Pedestrian Street · People's Square → Wujiang / Taikoo Hui / Paramount in the West Nanjing Rd area; Yuyuan · Old Town → West Nanjing Rd stores, or cross the river to Shanghai Tower; Lujiazui · Oriental Pearl → Shanghai Tower; Jing'an Temple → Paramount; Wukang · Anfu Rd → Huashan Road; Disney · Century Park → Pudong Meihua Road (TCM clinic).`
+      a: `Bund · North Bund → Sichuan North Road; Nanjing Road Pedestrian Street · People's Square → Wujiang / Taikoo Hui / Paramount in the West Nanjing Rd area; Yuyuan · Old Town → West Nanjing Rd stores, or cross the river to Shanghai Tower; Lujiazui · Oriental Pearl → Shanghai Tower; Jing'an Temple → Paramount; Wukang · Anfu Rd → Huashan Road; Disney · Century Park → Pudong Meihua Road.`
     },
     {
       q: `Will first-time moxibustion / tuina feel uncomfortable?`,

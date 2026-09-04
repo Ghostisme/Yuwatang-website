@@ -7,6 +7,7 @@
       </Transition>
     </router-view>
     <Footer />
+    <BackToTop />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import { nextTick, onMounted, watch } from "vue"
 import { useRoute } from "vue-router"
 import Header from "@/components/Header.vue"
 import Footer from "@/components/Footer.vue"
+import BackToTop from "@/components/BackToTop.vue"
 import { useHreflang } from "@/composables/useHreflang"
 import { useOrganizationJsonLd } from "@/composables/useStructuredData"
 import { refreshPageMotion, startPremiumMotionWatch } from "@/utils/premium-motion"

@@ -21,12 +21,7 @@
       </div>
 
       <h2 class="section-title">{{ t("aboutV2.timelineTitle") }}</h2>
-      <ul class="timeline">
-        <li v-for="item in timeline" :key="item.year">
-          <strong class="year">{{ item.year }}</strong>
-          <span>{{ item.text }}</span>
-        </li>
-      </ul>
+      <BrandTimeline :items="timeline" />
 
       <h2 class="section-title">{{ t("aboutV2.mvvTitle") }}</h2>
       <p class="block-text">{{ t("aboutV2.mission") }}</p>
@@ -48,6 +43,7 @@ import { getHomeBanner } from "@/api"
 import { usePageSeo } from "@/composables/usePageSeo"
 import { rewriteMediaList } from "@/utils/mediaCdn"
 import { resolveI18nLeaf } from "@/utils/i18nSafe"
+import BrandTimeline from "@/components/BrandTimeline.vue"
 
 const { t, locale, tm, rt } = useI18n()
 usePageSeo({ titleKey: "seo.about.title", descriptionKey: "seo.about.description", h1Key: "aboutV2.h1" })
@@ -105,7 +101,7 @@ onMounted(getBanner)
   }
 }
 .about-box {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
   padding: 56px 24px 80px;
 }
@@ -147,22 +143,6 @@ onMounted(getBanner)
     line-height: 1.75;
     font-size: 15px;
     color: rgba(60, 50, 28, 0.75);
-  }
-}
-.timeline {
-  margin: 0;
-  padding-left: 20px;
-  list-style: none;
-  li {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 12px;
-    line-height: 1.6;
-    color: rgba(60, 50, 28, 0.8);
-    .year {
-      flex: 0 0 56px;
-      color: rgba(60, 50, 28, 1);
-    }
   }
 }
 .block-text {

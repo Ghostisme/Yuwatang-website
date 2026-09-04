@@ -8,30 +8,10 @@
   >
     <div class="header-pc-left">
       <img class="header-pc-icon" @click="goTo('/')" src="@/assets/img/header-icon.png" alt="裕和堂" />
-      <div class="nav-catalog" @mouseenter="catalogOpen = true" @mouseleave="catalogOpen = false">
-        <span class="nav-catalog-trigger" :class="{ active: catalogOpen || isCatalogActive() }">
-          <span class="catalog-icon" aria-hidden="true"></span>
-          {{ t("nav.catalog") }}
-        </span>
-        <Transition name="catalog">
-          <div v-if="catalogOpen" class="nav-catalog-panel">
-            <div class="nav-catalog-panel-inner">
-              <span
-                v-for="(item, index) in catalogItems"
-                :key="item.path"
-                class="catalog-item"
-                :class="{ active: isActive(item.path) }"
-                :style="{ '--i': index }"
-                @click="goTo(item.path)"
-              >{{ t(item.labelKey) }}</span>
-            </div>
-          </div>
-        </Transition>
-      </div>
     </div>
-    <nav class="header-pc-nav">
+    <nav class="header-pc-nav" aria-label="主导航">
       <span
-        v-for="item in mainNavItems"
+        v-for="item in topNavItems"
         :key="item.path"
         class="nav-item"
         :class="{ active: isActive(item.path) }"
@@ -79,24 +59,12 @@
     </div>
     <Transition name="drawer">
       <div class="header-h5-drawer" v-if="mobileOpen">
-        <div class="drawer-section-label">{{ t("nav.catalog") }}</div>
         <span
-          v-for="(item, index) in catalogItems"
+          v-for="(item, index) in topNavItems"
           :key="item.path"
           class="drawer-item"
           :class="{ active: isActive(item.path) }"
           :style="{ '--i': index }"
-          @click="goTo(item.path, true)"
-        >
-          {{ t(item.labelKey) }}
-        </span>
-        <div class="drawer-divider"></div>
-        <span
-          v-for="(item, index) in mainNavItems"
-          :key="item.path"
-          class="drawer-item"
-          :class="{ active: isActive(item.path) }"
-          :style="{ '--i': catalogItems.length + index + 1 }"
           @click="goTo(item.path, true)"
         >
           {{ t(item.labelKey) }}
@@ -116,22 +84,22 @@ import { useRoute, useRouter } from "vue-router"
 import { deviceDetector } from "@/utils/device-detector"
 import { useI18n } from "vue-i18n"
 
-import { catalogItems, mainNavItems } from "@/config/navigation"
+import { topNavItems } from "@/config/navigation"
+import { DEFAULT_LOCALE } from "@/utils/localeUrl"
 
 const { locale, t } = useI18n()
 const router = useRouter()
 const route = useRoute()
-const menuIndex = ref(localStorage.getItem("user-locale") || "zh")
+const menuIndex = ref(localStorage.getItem("user-locale") || DEFAULT_LOCALE)
 const isMobile = ref(deviceDetector.getDeviceType() === "mobile")
 const mobileOpen = ref(false)
-const catalogOpen = ref(false)
 const headerVisible = ref(true)
 const headerGlass = ref(false)
 const lastScrollY = ref(0)
 
 const langList = [
-  { key: "zh", value: "中文" },
   { key: "en", value: "English" },
+  { key: "zh", value: "中文" },
   { key: "jp", value: "日本语" }
 ]
 
@@ -140,20 +108,16 @@ const isActive = (path: string) => {
   return route.path === path || route.path.startsWith(path + "/")
 }
 
-const isCatalogActive = () => catalogItems.some((item) => isActive(item.path))
-
 const handleScroll = () => {
   const currentScrollY = Math.max(0, window.scrollY)
   const delta = currentScrollY - lastScrollY.value
   const nearTop = currentScrollY < 24
 
-  // 顶部始终显示；向下滚隐藏；向上滚显示（忽略细微抖动）
   if (nearTop) {
     headerVisible.value = true
   } else if (delta > 6) {
     headerVisible.value = false
     mobileOpen.value = false
-    catalogOpen.value = false
   } else if (delta < -6) {
     headerVisible.value = true
   }
@@ -169,7 +133,6 @@ const debouncedResize = () => {
 
 const goTo = (path: string, closeDrawer = false) => {
   router.push(path)
-  catalogOpen.value = false
   if (closeDrawer) mobileOpen.value = false
 }
 
@@ -177,7 +140,6 @@ const switchLanguage = (key: string) => {
   menuIndex.value = key
   locale.value = key
   localStorage.setItem("user-locale", locale.value)
-  // 只更新 query，保留当前 path（深链安全）
   const nextQuery = { ...route.query, lang: key }
   router.replace({ query: nextQuery }).catch(() => undefined)
 }
@@ -186,7 +148,6 @@ watch(
   () => route.path,
   () => {
     mobileOpen.value = false
-    catalogOpen.value = false
   }
 )
 
@@ -208,24 +169,23 @@ onUnmounted(() => {
   left: 0;
   right: 0;
   height: 88px;
-  padding: 0 48px;
+  padding: 0 28px;
   background: rgba(252, 248, 244, 1);
   z-index: 99;
   display: grid;
-  grid-template-columns: minmax(200px, 1fr) auto minmax(140px, 1fr);
+  grid-template-columns: auto minmax(0, 1fr) auto;
   align-items: center;
-  column-gap: 24px;
+  column-gap: 12px;
   box-sizing: border-box;
 
   &-left {
     justify-self: start;
     display: flex;
     align-items: center;
-    gap: 20px;
   }
 
   &-icon {
-    width: 110px;
+    width: 104px;
     height: auto;
     display: block;
     cursor: pointer;
@@ -238,84 +198,21 @@ onUnmounted(() => {
     }
   }
 
-  .nav-catalog {
-    position: relative;
-  }
-  .nav-catalog-trigger {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    cursor: pointer;
-    font-size: 15px;
-    font-family: "LinHai";
-    color: rgba(60, 50, 28, 0.65);
-    border: 1px solid rgba(60, 50, 28, 0.12);
-    border-radius: 999px;
-    background: rgba(255, 255, 255, 0.45);
-    &.active {
-      color: rgba(60, 50, 28, 1);
-    }
-    .catalog-icon {
-      width: 14px;
-      height: 10px;
-      background: linear-gradient(currentColor, currentColor) center / 14px 1.5px no-repeat;
-      &::before,
-      &::after {
-        content: "";
-        position: absolute;
-        left: 0;
-        width: 14px;
-        height: 1.5px;
-        background: currentColor;
-      }
-    }
-  }
-  .nav-catalog-panel {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    padding-top: 10px;
-    z-index: 120;
-  }
-  .nav-catalog-panel-inner {
-    min-width: 220px;
-    padding: 10px;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 4px;
-    background: rgba(252, 248, 244, 0.96);
-    border: 1px solid rgba(60, 50, 28, 0.08);
-    border-radius: 14px;
-    box-shadow: 0 16px 40px rgba(60, 50, 28, 0.12);
-    .catalog-item {
-      padding: 12px 14px;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 14px;
-      font-family: "LinHai";
-      color: rgba(60, 50, 28, 0.72);
-      &:hover,
-      &.active {
-        background: rgba(60, 50, 28, 0.06);
-        color: rgba(60, 50, 28, 1);
-      }
-    }
-  }
-
   &-nav {
-    justify-self: center;
+    justify-self: stretch;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 4px;
+    flex-wrap: nowrap;
+    gap: 2px;
+    min-width: 0;
     .nav-item {
       position: relative;
-      padding: 8px 18px;
+      padding: 8px 9px;
       cursor: pointer;
-      font-size: 15px;
-      line-height: 1;
-      letter-spacing: 0.06em;
+      font-size: 14px;
+      line-height: 1.2;
+      letter-spacing: 0.03em;
       color: rgba(60, 50, 28, 0.55);
       font-family: "LinHai";
       transition: color 0.35s cubic-bezier(0.22, 1, 0.36, 1);
@@ -323,9 +220,9 @@ onUnmounted(() => {
       &::after {
         content: "";
         position: absolute;
-        left: 18px;
-        right: 18px;
-        bottom: 2px;
+        left: 9px;
+        right: 9px;
+        bottom: 1px;
         height: 1px;
         background: rgba(60, 50, 28, 1);
         transform: scaleX(0);
@@ -348,6 +245,8 @@ onUnmounted(() => {
     justify-self: end;
     display: flex;
     align-items: center;
+    flex-shrink: 0;
+    white-space: nowrap;
     &-item {
       padding: 0 8px;
       cursor: pointer;
@@ -357,6 +256,8 @@ onUnmounted(() => {
       color: rgba(60, 50, 28, 0.4);
       font-family: "LinHai";
       transition: color 0.25s ease;
+      white-space: nowrap;
+      flex-shrink: 0;
       &:hover {
         color: rgba(60, 50, 28, 0.75);
       }
@@ -386,15 +287,36 @@ onUnmounted(() => {
   }
 }
 
-@media (max-width: 1200px) {
+@media (max-width: 1280px) {
   .header-pc {
-    padding: 0 28px;
+    padding: 0 16px;
+    &-icon {
+      width: 88px;
+    }
+    &-nav {
+      gap: 0;
+      .nav-item {
+        padding: 8px 6px;
+        font-size: 13px;
+        letter-spacing: 0.01em;
+        &::after {
+          left: 6px;
+          right: 6px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1100px) {
+  .header-pc {
     &-nav .nav-item {
-      padding: 8px 12px;
-      font-size: 14px;
+      padding: 8px 4px;
+      font-size: 12px;
+      letter-spacing: 0;
       &::after {
-        left: 12px;
-        right: 12px;
+        left: 4px;
+        right: 4px;
       }
     }
   }
@@ -560,17 +482,6 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     transform-origin: top center;
-    .drawer-section-label {
-      padding: 8px 20px 4px;
-      font-size: 11px;
-      color: rgba(60, 50, 28, 0.38);
-      font-family: "LinHai";
-    }
-    .drawer-divider {
-      height: 1px;
-      margin: 6px 20px;
-      background: rgba(60, 50, 28, 0.08);
-    }
     .drawer-item {
       padding: 12px 20px;
       font-size: 14px;

@@ -69,7 +69,12 @@ export const getFeedbackList = (params: { page?: number; limit?: number } = {}) 
   })
 }
 
-export const submitFeedback = (data: { name: string; content: string }) => {
+export const submitFeedback = (data: {
+  name: string
+  content: string
+  phone: string
+  store_name: string
+}) => {
   return request({
     url: "/api/ygame/feedback/submit",
     method: "post",

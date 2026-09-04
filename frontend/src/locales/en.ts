@@ -116,7 +116,7 @@ export default {
     item22: "Yunyao Road Store",
     item23: "2F, 790 Yunyao Road, Jing'an District, Shanghai",
     item24: "021-33533572 / 18017093319",
-    item25: "Meihua Road TCM Clinic",
+    item25: "Meihua Road Store",
     item26: "1019 Meihua Road, Pudong New Area, Shanghai",
     item27: "15000861919 / 021-58560050",
     item28: "Contact Us",
@@ -145,9 +145,9 @@ export default {
     item12: "May 8th, 2025",
     item13: "Yuhetang",
     item14:
-      "In 2009, Yuhetang was established. With the mission of inheriting and promoting TCM culture, and guided by TCM health preservation, we provide professional therapy to bring health experiences to our clients, allowing them to feel the remarkable effects of TCM physical therapy in an exquisite, elegant, ancient, and serene environment. Main services include moxibustion, Tui Na, essential oil SPA, foot reflexology, etc. The newly established Yuhetang TCM Clinic engages in TCM diagnosis and treatment, meeting broader health needs of clients.",
+      "In 2009, Yuhetang was established. With the mission of inheriting and promoting TCM culture, and guided by TCM health preservation, we provide professional therapy to bring health experiences to our clients, allowing them to feel the remarkable effects of TCM physical therapy in an exquisite, elegant, ancient, and serene environment. Main services include moxibustion, Tui Na, essential oil SPA, foot reflexology, and traditional care.",
     item15:
-      "As of May 2025, Yuhetang operates 6 directly-owned TCM wellness centers and 1 TCM clinic in Shanghai's core business districts, with nearly 200 employees. The existence of Yuhetang is not only to serve those with affinity but also to create a composed, tranquil lifestyle, enabling people to maintain composed peace amidst health and abundance, achieve overall well-being and tranquility of life.",
+      "As of May 2025, Yuhetang operates multiple directly-owned TCM wellness centers in Shanghai's core business districts, with nearly 200 employees. The existence of Yuhetang is not only to serve those with affinity but also to create a composed, tranquil lifestyle, enabling people to maintain composed peace amidst health and abundance, achieve overall well-being and tranquility of life.",
     item16:
       "As times develop and society progresses, TCM wellness and TCM diagnosis and treatment radiate new vitality, increasingly revered by the world and attracting more attention from overseas. After 16 years of solid cultivation, Yuhetang has become the premier health choice for diverse circles in Shanghai. Based in Shanghai, serving the world—this is Yuhetang's mission and a new starting point for embracing the future."
   },
@@ -194,7 +194,7 @@ export default {
     item3: "Promoting TCM Culture · Inheriting the Yuhe Way",
     item4: "沪公网安备 31010402009419号",
     item5: "上海御和堂健康科技有限公司",
-    item6: "Contact number: +86-18895366320",
+    item6: "Contact number: +86-13816686069",
     item7: "沪ICP备15021828号-2",
     item8: "Make a phone call",
     item9: "Email",

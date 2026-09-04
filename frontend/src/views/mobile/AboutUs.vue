@@ -19,12 +19,7 @@
       </article>
 
       <h2 class="section-title">{{ t("aboutV2.timelineTitle") }}</h2>
-      <ul class="timeline">
-        <li v-for="item in timeline" :key="item.year">
-          <strong class="year">{{ item.year }}</strong>
-          <span>{{ item.text }}</span>
-        </li>
-      </ul>
+      <BrandTimeline :items="timeline" mobile />
 
       <h2 class="section-title">{{ t("aboutV2.mvvTitle") }}</h2>
       <p class="block-text">{{ t("aboutV2.mission") }}</p>
@@ -46,6 +41,7 @@ import { getHomeBanner } from "@/api"
 import { usePageSeo } from "@/composables/usePageSeo"
 import { rewriteMediaList } from "@/utils/mediaCdn"
 import { resolveI18nLeaf } from "@/utils/i18nSafe"
+import BrandTimeline from "@/components/BrandTimeline.vue"
 
 const { t, locale, tm, rt } = useI18n()
 usePageSeo({ titleKey: "seo.about.title", descriptionKey: "seo.about.description", h1Key: "aboutV2.h1" })
@@ -136,22 +132,6 @@ onMounted(getBanner)
     font-size: 13px;
     line-height: 1.7;
     color: rgba(60, 50, 28, 0.75);
-  }
-}
-.timeline {
-  margin: 0;
-  padding-left: 18px;
-  li {
-    margin-bottom: 10px;
-    line-height: 1.55;
-    font-size: 13px;
-    color: rgba(60, 50, 28, 0.8);
-    .year {
-      display: inline-block;
-      min-width: 48px;
-      margin-right: 8px;
-      color: rgba(60, 50, 28, 1);
-    }
   }
 }
 .block-text {
