@@ -114,7 +114,14 @@ export default {
     values: "価値観：お客様第一 · 感謝 · 利他 · 担当 · 奮闘 · 極致。稲盛和夫経営哲学、毎年李時珍采薬路を歩く。",
     honorsTitle: "栄誉・資格",
     honors:
-      "美団×大衆点評 多年度五星人気店・養生標竿店；2019足療按摩金牌；大衆点評「中医養生調理人気ブランド」；複数店舗区域売上1位；2025上海按摩足療「想像力標竿店」、2025年Q4「百万店舗」。"
+      "美団×大衆点評 多年度五星人気店・養生標竿店；2019足療按摩金牌；大衆点評「中医養生調理人気ブランド」；複数店舗区域売上1位；2025上海按摩足療「想像力標竿店」、2025年Q4「百万店舗」。",
+    productTitle: "製品紹介",
+    productLead: "裕和堂専供の三年陳艾条。蕲春の道地原料、自社基地での陳化・製条、溯源可能で安心です。",
+    productImages: "製品画像",
+    productVideo: "製品動画",
+    productInfo: "製品情報",
+    productQualify: "資格紹介",
+    productUsage: "使用説明"
   },
   baseV2: {
     h1: "蕲春艾基地",
@@ -274,16 +281,19 @@ export default {
     fields: {
       name: "お名前",
       phone: "携帯番号",
+      email: "メール",
       store: "店舗",
       content: "フィードバック"
     },
     nicknamePlaceholder: "お名前（2–20文字）",
-    phonePlaceholder: "中国大陸11桁の携帯番号",
+    phonePlaceholder: "中国大陸11桁の携帯番号（任意）",
+    emailPlaceholder: "メールアドレス（任意）",
     storePlaceholder: "店舗を選択",
     contentPlaceholder: "体験を記入（10–500文字）",
     hints: {
       name: "必須、{min}–{max}文字",
-      phone: "必須、中国大陸11桁の携帯番号",
+      phone: "携帯番号またはメールのいずれかで可",
+      email: "携帯番号またはメールのいずれかで可",
       content: "必須、{min}–{max}文字；医療効能の表現は不可"
     },
     errors: {
@@ -292,6 +302,9 @@ export default {
       nameMax: "お名前は{max}文字以内",
       phoneRequired: "携帯番号を入力してください",
       phoneInvalid: "正しい11桁の携帯番号を入力してください",
+      emailInvalid: "正しいメールアドレスを入力してください",
+      emailMax: "メールは{max}文字以内",
+      contactRequired: "携帯番号またはメールのいずれかを入力してください",
       storeRequired: "店舗を選択してください",
       storeMax: "店舗名が長すぎます",
       contentRequired: "フィードバックを入力してください",
@@ -300,20 +313,23 @@ export default {
     },
     submit: "送信",
     submitting: "送信中...",
-    required: "お名前・携帯番号・店舗・内容をすべて入力してください",
+    required: "お名前・連絡先・店舗・内容をすべて入力してください",
     success: "送信完了。審査通過後、フィードバック墙に表示されます",
     fail: "送信失敗。しばらくして再試行してください",
     loading: "読み込み中...",
     empty: "審査済みフィードバックはまだありません",
     anonymous: "匿名",
-    compliance: "「治る」「疗效」など医療効能の表現はご遠慮ください"
+    compliance: "「治る」「疗效」など医療効能の表現はご遠慮ください",
+    prev: "前へ",
+    next: "次へ"
   },
   contactV2: {
     h1: "お問い合わせ",
     lead: "上海9店舗直営、全店23:00まで。海外・オンラインはメール予約が主。WeChat公式・小紅書DMも可。希望店舗・項目・時間をお知らせください。",
     emailLabel: "メール予約（主）",
     email: "tty12138{'@'}foxmail.com",
-    social: "WeChat公式アカウント / 小紅書DM",
+    emailHint: "希望店舗・項目・時間をお知らせください。速やかにご返信します",
+    social: "QRコードでフォロー / DM",
     walkin: "営業時間内は直接来店可、ピーク時は待ちの可能性あり",
     storePhones: "店舗電話一覧",
     emailSubject: "裕和堂予約お問い合わせ"

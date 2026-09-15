@@ -35,17 +35,20 @@ class Feedback extends Api
     }
 
     /**
-     * 已审核反馈列表（需求2：展示墙，先审后发）
+     * 官网反馈列表：仅「通过」，置顶优先
      */
     public function index()
     {
         $page = max(1, (int)$this->request->get('page', 1));
         $limit = min(50, max(1, (int)$this->request->get('limit', 20)));
 
-        $query = Db::name('ygame_feedback')->where('status', 1);
-        $total = $query->count();
-        $list = $query
-            ->field('id,name,content,createtime')
+        // count / select 分开查，避免 ThinkPHP 复用查询导致 where 丢失
+        $total = Db::name('ygame_feedback')->where('status', 1)->count();
+        $list = Db::name('ygame_feedback')
+            ->where('status', 1)
+            ->field('id,name,content,createtime,status,is_top')
+            ->order('is_top', 'desc')
+            ->order('weigh', 'desc')
             ->order('createtime', 'desc')
             ->page($page, $limit)
             ->select();
@@ -62,13 +65,14 @@ class Feedback extends Api
     }
 
     /**
-     * 提交反馈（姓名 / 手机号 / 门店 / 内容，待审核后展示）
+     * 提交反馈（姓名 / 手机或邮箱二选一 / 门店 / 内容，待审核后展示）
      */
     public function submit()
     {
         $name = trim((string)$this->request->post('name'));
         $content = trim((string)$this->request->post('content', ''));
         $phone = preg_replace('/\D+/', '', (string)$this->request->post('phone', ''));
+        $email = strtolower(trim((string)$this->request->post('email', '')));
         $storeName = trim((string)$this->request->post('store_name', ''));
 
         $nameLen = mb_strlen($name);
@@ -83,11 +87,19 @@ class Feedback extends Api
         if ($nameLen > 20) {
             $this->error('姓名不超过 20 个字');
         }
-        if ($phone === '') {
-            $this->error('请填写手机号');
+        if ($phone === '' && $email === '') {
+            $this->error('请填写手机号或邮箱（任选其一）');
         }
-        if (!preg_match('/^1[3-9]\d{9}$/', $phone)) {
+        if ($phone !== '' && !preg_match('/^1[3-9]\d{9}$/', $phone)) {
             $this->error('请填写正确的 11 位手机号');
+        }
+        if ($email !== '') {
+            if (mb_strlen($email) > 100) {
+                $this->error('邮箱不超过 100 个字符');
+            }
+            if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                $this->error('请填写正确的邮箱地址');
+            }
         }
         if ($storeName === '') {
             $this->error('请选择门店');
@@ -111,11 +123,14 @@ class Feedback extends Api
         $data = [
             'name'       => mb_substr($name, 0, 20),
             'phone'      => $phone,
+            'email'      => mb_substr($email, 0, 100),
             'store_name' => mb_substr($storeName, 0, 100),
             'content'    => mb_substr($content, 0, 500),
             'createtime' => time(),
             'ip'         => $this->request->ip(),
-            'status'     => 0,
+            'status'     => 0, // 进行中
+            'is_top'     => 0,
+            'weigh'      => 0,
         ];
 
         $result = Db::name('ygame_feedback')->insert($data);

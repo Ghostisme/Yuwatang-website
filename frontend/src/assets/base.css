@@ -1,6 +1,11 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --header-family: "Inter", "Noto Sans CJK SC Regular", "PingFangSC-Regular", sans-serif;
+  --font-pingfang: "PingFang SC", "PingFangSC-Regular", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-zh: "LinHai", "PingFang SC", "PingFangSC-Regular", sans-serif;
+  /* 日文：优先系统日文黑体，再回退项目内苹方 */
+  --font-jp: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "PingFang SC",
+    "PingFangSC-Regular", "Noto Sans JP", sans-serif;
+  --header-family: var(--font-zh);
 }
 
 *,
@@ -13,5 +18,43 @@
 
 body {
   margin: 0;
-  font-family: "Inter", "Noto Sans CJK SC Regular", "PingFangSC-Regular", sans-serif;
+  font-family: var(--font-zh);
+}
+
+/* ---------- 中文 zh-CN：品牌字林海 + 苹方回退 ---------- */
+html[lang="zh-CN"] {
+  --header-family: var(--font-zh);
+}
+
+html[lang="zh-CN"] body {
+  font-family: var(--font-zh);
+}
+
+/* ---------- 英文 en：全文苹方 PingFang SC ---------- */
+html[lang="en"] {
+  --header-family: var(--font-pingfang);
+}
+
+html[lang="en"] body {
+  font-family: var(--font-pingfang);
+}
+
+/* 覆盖页面内硬编码的 LinHai，保证英文统一苹方 */
+html[lang="en"] #app,
+html[lang="en"] #app * {
+  font-family: var(--font-pingfang) !important;
+}
+
+/* ---------- 日文 ja：系统日文字体 + 苹方回退 ---------- */
+html[lang="ja"] {
+  --header-family: var(--font-jp);
+}
+
+html[lang="ja"] body {
+  font-family: var(--font-jp);
+}
+
+html[lang="ja"] #app,
+html[lang="ja"] #app * {
+  font-family: var(--font-jp) !important;
 }

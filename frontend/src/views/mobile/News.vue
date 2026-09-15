@@ -31,15 +31,19 @@ import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
 import { getArticleList } from "@/api/index"
 import { usePageSeo } from "@/composables/usePageSeo"
+import { localizeArticle, type ArticleApiRow } from "@/utils/localizeArticle"
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 usePageSeo({ titleKey: "seo.news.title", descriptionKey: "seo.news.description", h1Key: "news.title" })
 const router = useRouter()
-const articleList = ref<any[]>([])
+const rawList = ref<ArticleApiRow[]>([])
 const page = ref(1)
 const limit = ref(10)
 const total = ref(0)
 const loading = ref(false)
+const articleList = computed(() =>
+  rawList.value.map((row) => localizeArticle(row, String(locale.value)))
+)
 const totalPages = computed(() => Math.max(1, Math.ceil(total.value / limit.value)))
 
 const stripHtml = (html = "") =>
@@ -67,7 +71,7 @@ const fetchList = () => {
   getArticleList({ project_id: -1, page: page.value, limit: limit.value })
     .then((res: any) => {
       if (res.code == 1) {
-        articleList.value = res.data?.data || []
+        rawList.value = res.data?.data || []
         total.value = res.data?.total || 0
       }
     })

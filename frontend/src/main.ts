@@ -11,11 +11,15 @@ import "./assets/base.css"
 import "./assets/font/font.css"
 import "./assets/premium.css"
 import { revealDirective } from "./utils/premium-motion"
+import { HTML_LANG_MAP, resolveInitialLocale } from "./utils/localeUrl"
 
 import "swiper/css"
 import "swiper/css/pagination"
 import "swiper/css/navigation"
 import "swiper/css/effect-fade"
+
+/** 首屏前同步 html[lang]，让语言字体 CSS 立刻生效 */
+document.documentElement.setAttribute("lang", HTML_LANG_MAP[resolveInitialLocale()])
 
 const app = createApp(App)
 const pinia = createPinia()

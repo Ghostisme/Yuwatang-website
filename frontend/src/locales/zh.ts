@@ -293,7 +293,14 @@ export default {
     values: "价值观：客户至上 · 感恩 · 利他 · 担当 · 奋斗 · 极致。深研稻盛和夫经营哲学，每年重走李时珍采药路。",
     honorsTitle: "荣誉资质",
     honors:
-      "美团 × 大众点评多年度「五星人气商户」「养生标杆商户」；2019足疗按摩金牌商户；入选大众点评「中医养生调理人气品牌」；多家门店位列区域销量榜第一；2025上海按摩足疗行业「想象力标杆门店」、2025年第四季度按摩足疗行业「百万门店」。"
+      "美团 × 大众点评多年度「五星人气商户」「养生标杆商户」；2019足疗按摩金牌商户；入选大众点评「中医养生调理人气品牌」；多家门店位列区域销量榜第一；2025上海按摩足疗行业「想象力标杆门店」、2025年第四季度按摩足疗行业「百万门店」。",
+    productTitle: "产品介绍",
+    productLead: "裕和堂专供三年陈艾条：道地蕲春原料、自有基地陈化与制条，品质可溯、安心可用。",
+    productImages: "产品图片",
+    productVideo: "产品视频",
+    productInfo: "产品信息",
+    productQualify: "资质介绍",
+    productUsage: "使用说明"
   },
   baseV2: {
     h1: "蕲春艾草基地",
@@ -468,16 +475,19 @@ export default {
     fields: {
       name: "姓名",
       phone: "手机号",
+      email: "邮箱",
       store: "门店",
       content: "反馈内容"
     },
     nicknamePlaceholder: "请输入姓名（2–20 字）",
-    phonePlaceholder: "请输入 11 位手机号",
+    phonePlaceholder: "请输入 11 位手机号（选填）",
+    emailPlaceholder: "请输入邮箱（选填）",
     storePlaceholder: "请选择门店",
     contentPlaceholder: "请描述你的体验（10–500 字）",
     hints: {
       name: "必填，{min}–{max} 个字",
-      phone: "必填，中国大陆 11 位手机号",
+      phone: "手机号与邮箱任填其一即可",
+      email: "手机号与邮箱任填其一即可",
       content: "必填，{min}–{max} 字；请勿填写医疗功效表述"
     },
     errors: {
@@ -486,6 +496,9 @@ export default {
       nameMax: "姓名不超过 {max} 个字",
       phoneRequired: "请填写手机号",
       phoneInvalid: "请填写正确的 11 位手机号",
+      emailInvalid: "请填写正确的邮箱地址",
+      emailMax: "邮箱不超过 {max} 个字符",
+      contactRequired: "请填写手机号或邮箱（任选其一）",
       storeRequired: "请选择门店",
       storeMax: "门店名称过长",
       contentRequired: "请填写反馈内容",
@@ -494,20 +507,23 @@ export default {
     },
     submit: "提交反馈",
     submitting: "提交中...",
-    required: "请完整填写姓名、手机号、门店和反馈内容",
+    required: "请完整填写姓名、联系方式、门店和反馈内容",
     success: "提交成功，审核通过后将展示在反馈墙",
     fail: "提交失败，请稍后重试",
     loading: "加载中...",
     empty: "暂无已审核反馈，欢迎成为第一位分享者",
     anonymous: "匿名用户",
-    compliance: "请勿填写「治好」「治愈」「疗效」等医疗功效表述"
+    compliance: "请勿填写「治好」「治愈」「疗效」等医疗功效表述",
+    prev: "上一页",
+    next: "下一页"
   },
   contactV2: {
     h1: "联系我们",
     lead: "裕和堂在上海共9家直营门店，全店营业至23:00。海外与线上咨询、预约以邮箱为主，也可通过微信公众号、小红书私信；来信请告知想去的门店、项目与时间，我们会尽快回复。",
     emailLabel: "邮箱预约（主）",
     email: "tty12138{'@'}foxmail.com",
-    social: "微信公众号 / 小红书私信",
+    emailHint: "来信请告知想去的门店、项目与时间，我们会尽快回复",
+    social: "扫码关注 / 私信",
     walkin: "营业时间内可直接到店，高峰时段可能等位",
     storePhones: "门店电话总表",
     emailSubject: "裕和堂预约咨询"

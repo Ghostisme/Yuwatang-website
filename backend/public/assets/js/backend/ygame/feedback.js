@@ -9,6 +9,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                     edit_url: 'ygame/feedback/edit',
                     del_url: 'ygame/feedback/del',
                     multi_url: 'ygame/feedback/multi',
+                    dragsort_url: 'ajax/weigh',
                     table: 'ygame_feedback',
                 }
             });
@@ -18,7 +19,7 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
             table.bootstrapTable({
                 url: $.fn.bootstrapTable.defaults.extend.index_url,
                 pk: 'id',
-                sortName: 'id',
+                sortName: 'is_top',
                 sortOrder: 'desc',
                 columns: [
                     [
@@ -26,12 +27,12 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'id', title: __('Id'), operate: false},
                         {field: 'name', title: __('Name'), operate: 'LIKE'},
                         {field: 'phone', title: __('Phone'), operate: 'LIKE'},
+                        {field: 'email', title: __('Email'), operate: 'LIKE'},
                         {field: 'store_name', title: __('Store_name'), operate: 'LIKE'},
                         {
                             field: 'content',
                             title: __('Content'),
                             operate: 'LIKE',
-                            // 不用 Table.api.formatter.content：其默认 max-width:250px，列更宽也会提前省略
                             formatter: function (value) {
                                 value = value == null ? '' : String(value);
                                 var safe = $('<div/>').text(value).html();
@@ -41,12 +42,26 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {field: 'ip', title: __('Ip'), operate: false},
                         {field: 'createtime', title: __('Createtime'), operate: 'RANGE', addclass: 'datetimerange', formatter: Table.api.formatter.datetime},
                         {
+                            field: 'is_top',
+                            title: __('Is_top'),
+                            searchList: {"1": __('Yes'), "0": __('No')},
+                            formatter: Table.api.formatter.toggle
+                        },
+                        {
                             field: 'status',
                             title: __('Status'),
-                            searchList: {"0": "未处理", "1": "已处理"},
+                            searchList: {"0": __('进行中'), "1": __('通过'), "2": __('拒绝')},
+                            custom: {0: 'info', 1: 'success', 2: 'danger'},
                             formatter: Table.api.formatter.status
                         },
-                        {field: 'operate', title: __('Operate'), table: table, events: Table.api.events.operate, formatter: Table.api.formatter.operate}
+                        {field: 'weigh', title: __('Weigh'), operate: false},
+                        {
+                            field: 'operate',
+                            title: __('Operate'),
+                            table: table,
+                            events: Table.api.events.operate,
+                            formatter: Table.api.formatter.operate
+                        }
                     ]
                 ]
             });

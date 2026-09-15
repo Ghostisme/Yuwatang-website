@@ -11,12 +11,6 @@ export const traceBanners = [
   traceAsset("upload/image/20250724/1753349208575061.jpg")
 ]
 
-export const traceTabs = [
-  { key: "verify", label: "防伪溯源" },
-  { key: "product", label: "产品介绍" },
-  { key: "company", label: "公司简介" }
-] as const
-
 export const verifyInfo = {
   code: "9383342624358434",
   scanCount: 1030,
@@ -70,25 +64,6 @@ export const qualifyImages = [
   traceAsset("upload/image/20260714/1783998286178786.jpg"),
   traceAsset("upload/image/20260714/1783998287128319.jpg"),
   traceAsset("upload/image/20260714/1783998287166646.jpg")
-]
-
-export const companyBlocks = [
-  {
-    title: "上海裕和堂中医养生简介",
-    text: "上海“裕和堂”创立于2009年，专注中医养生保健领域。 秉承传统中医理念，凝聚精湛技艺团队，在雅致古韵的环境中提供专业服务，让客户切身感受中医理疗卓效。目前在上海核心商圈拥有 9家直营五星门店（均为大众点评五星），累计收获上万条五星好评，深受包括运动员、明星在内的众多顾客青睐。自2011年深耕艾灸项目以来，稳居行业领先地位，每逢三伏天，艾灸顾客络绎不绝。",
-    images: [
-      traceAsset("upload/image/20250719/1752889421637913.jpg"),
-      traceAsset("upload/image/20250719/1752889425193459.jpg")
-    ]
-  },
-  {
-    title: "裕和堂艾草基地介绍",
-    text: "创始人汤伏平深知，艾灸功效之本，在于调理师技术与艾条品质的双重精粹。 《本草纲目》明载：“艾以蕲州者为胜”，且陈艾三年，药性更醇、挥发油更丰。为确保顾客所用皆为道地三年陈蕲艾，汤伏平决心深耕品质：2017年，于医圣故里蕲春自建裕和堂蕲艾种植基地，配套专属仓库保障艾草足期陈放三年，并设自有生产线严控每根艾条克重均匀。从种植、陈化到加工，全产业链坚守品控。 每年端午，更组织裕和家人共赴蕲春亲采艾草，传承灸道文化。",
-    images: [
-      traceAsset("upload/image/20250719/1752889479472261.jpg"),
-      traceAsset("upload/image/20250719/1752889484208881.jpg")
-    ]
-  }
 ]
 
 /** 使用说明结构化保留原文 */

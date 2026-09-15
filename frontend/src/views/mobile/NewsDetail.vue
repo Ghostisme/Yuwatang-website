@@ -28,12 +28,16 @@ import {
   useDynamicPageSeo
 } from "@/composables/usePageSeo"
 import { useBreadcrumbJsonLd } from "@/composables/useStructuredData"
+import { localizeArticle, type ArticleApiRow } from "@/utils/localizeArticle"
 
-const { t } = useI18n()
+const { t, locale } = useI18n()
 const route = useRoute()
 const router = useRouter()
-const detail = ref<any>(null)
+const rawDetail = ref<ArticleApiRow | null>(null)
 const loading = ref(false)
+const detail = computed(() =>
+  rawDetail.value ? localizeArticle(rawDetail.value, String(locale.value)) : null
+)
 
 const pageMeta = computed(() => {
   if (!detail.value) return { title: "", description: "" }
@@ -75,7 +79,7 @@ const fetchDetail = () => {
   getArticleDetail(id)
     .then((res: any) => {
       if (res.code == 1) {
-        detail.value = res.data
+        rawDetail.value = res.data
       }
     })
     .finally(() => {

@@ -1,6 +1,6 @@
 <template>
   <div class="trace" :class="[variant, { ready }]">
-    <section class="trace-hero">
+    <section class="trace-hero" aria-label="产品溯源">
       <swiper
         :modules="modules"
         :slides-per-view="1"
@@ -17,7 +17,7 @@
           </div>
         </swiper-slide>
       </swiper>
-      <div class="hero-veil"></div>
+      <div class="hero-veil" aria-hidden="true"></div>
       <div class="hero-copy">
         <p class="hero-eyebrow">YUHE TANG · TRACE</p>
         <h1 class="hero-title">产品溯源</h1>
@@ -26,174 +26,68 @@
     </section>
 
     <div class="trace-body">
-      <nav class="trace-tabs" aria-label="溯源分类">
-        <div
-          class="tab-ink"
-          :style="{
-            width: `${ink.width}px`,
-            transform: `translateX(${ink.x}px)`
-          }"
-        ></div>
-        <button
-          v-for="tab in traceTabs"
-          :key="tab.key"
-          :ref="(el) => setTabRef(tab.key, el)"
-          type="button"
-          class="tab-item"
-          :class="{ active: activeTab === tab.key }"
-          @click="onTab(tab)"
-        >
-          {{ tab.label }}
-        </button>
-      </nav>
+      <header class="body-head">
+        <h2 class="body-title">防伪溯源</h2>
+        <p class="body-desc">扫码核验真伪 · 追溯原料与生产信息</p>
+      </header>
 
-      <Transition name="panel" mode="out-in">
-        <!-- 防伪溯源 -->
-        <section v-if="activeTab === 'verify'" key="verify" class="panel">
-          <div class="verify-card reveal">
-            <div class="verify-glow"></div>
-            <div class="verify-top">
-              <div>
-                <div class="verify-label">您所查询的防伪码是</div>
-                <div class="verify-code">{{ verifyInfo.code }}</div>
-              </div>
-              <img class="verify-shield" :src="verifyInfo.shieldIcon" alt="" />
-            </div>
-            <div class="verify-bottom">
-              <div class="verify-sub">防伪验证信息</div>
-              <p>
-                您好，本次为您第<span class="hl">{{ verifyInfo.scanCount }}</span
-                >次扫描结果，首次查询时间为<span class="hl">{{ verifyInfo.firstQueryTime }}</span
-                >，感谢您的查询！如有疑问，请致电{{ verifyInfo.phone }}。
-              </p>
+      <article class="verify-card">
+        <div class="verify-glow" aria-hidden="true"></div>
+        <div class="verify-main">
+          <img class="verify-shield" :src="verifyInfo.shieldIcon" alt="" />
+          <div class="verify-code-block">
+            <div class="verify-label">您所查询的防伪码是</div>
+            <div class="verify-code" aria-label="防伪码">
+              <span v-for="(chunk, i) in codeChunks" :key="i" class="code-chunk">{{ chunk }}</span>
             </div>
           </div>
+          <div class="verify-divider" aria-hidden="true"></div>
+          <div class="verify-info-block">
+            <div class="verify-sub">防伪验证信息</div>
+            <p>
+              您好，本次为您第<span class="hl">{{ verifyInfo.scanCount }}</span
+              >次扫描结果，首次查询时间为<span class="hl">{{ verifyInfo.firstQueryTime }}</span
+              >，感谢您的查询！如有疑问，请致电
+              <a class="phone" :href="`tel:${verifyInfo.phone}`">{{ verifyInfo.phone }}</a>。
+            </p>
+          </div>
+        </div>
+      </article>
 
-          <InfoBlock title="原料信息" :rows="materialRows" :open="openMap.material" @toggle="toggle('material')" />
-          <InfoBlock title="生产信息" :rows="productionRows" :open="openMap.production" @toggle="toggle('production')" />
-          <InfoBlock title="储存信息" :rows="storageRows" :open="openMap.storage" @toggle="toggle('storage')" />
+      <div class="info-grid">
+        <InfoBlock title="原料信息" :rows="materialRows" appearance="card" :collapsible="false" />
+        <InfoBlock title="生产信息" :rows="productionRows" appearance="card" :collapsible="false" />
+        <InfoBlock title="储存信息" :rows="storageRows" appearance="card" :collapsible="false" />
+      </div>
 
-          <div class="block">
-            <button type="button" class="block-head" @click="toggle('report')">
-              <span>检验报告</span>
-              <i :class="{ open: openMap.report }"></i>
-            </button>
-            <div class="fold" :class="{ open: openMap.report }">
-              <div class="fold-inner">
-                <img
-                  v-for="(src, i) in reportImages"
-                  :key="i"
-                  :src="src"
-                  class="media-img"
-                  alt="检验报告"
-                />
-              </div>
+      <section class="report-block static">
+        <div class="report-head">
+          <span>检验报告</span>
+        </div>
+        <div class="fold open flat">
+          <div class="fold-inner">
+            <div class="report-gallery">
+              <figure v-for="(src, i) in reportImages" :key="i" class="report-frame">
+                <img :src="src" class="media-img" alt="检验报告" />
+              </figure>
             </div>
           </div>
-        </section>
-
-        <!-- 产品介绍 -->
-        <section v-else-if="activeTab === 'product'" key="product" class="panel">
-          <div class="block">
-            <button type="button" class="block-head" @click="toggle('productImg')">
-              <span>产品图片</span>
-              <i :class="{ open: openMap.productImg }"></i>
-            </button>
-            <div class="fold" :class="{ open: openMap.productImg }">
-              <div class="fold-inner">
-                <div class="media-frame" v-for="(src, i) in productImages" :key="i">
-                  <img :src="src" class="media-img" alt="产品图片" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="block">
-            <button type="button" class="block-head" @click="toggle('video')">
-              <span>产品视频</span>
-              <i :class="{ open: openMap.video }"></i>
-            </button>
-            <div class="fold" :class="{ open: openMap.video }">
-              <div class="fold-inner">
-                <div class="video-wrap">
-                  <video class="video" controls preload="metadata" :src="productVideo.src"></video>
-                </div>
-                <p class="video-cap">{{ productVideo.caption }}</p>
-              </div>
-            </div>
-          </div>
-
-          <InfoBlock title="产品信息" :rows="productRows" :open="openMap.productInfo" @toggle="toggle('productInfo')" />
-
-          <div class="block">
-            <button type="button" class="block-head" @click="toggle('qualify')">
-              <span>资质介绍</span>
-              <i :class="{ open: openMap.qualify }"></i>
-            </button>
-            <div class="fold" :class="{ open: openMap.qualify }">
-              <div class="fold-inner qualify-grid">
-                <div class="media-frame" v-for="(src, i) in qualifyImages" :key="i">
-                  <img :src="src" class="media-img" alt="资质" />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="block">
-            <button type="button" class="block-head" @click="toggle('usage')">
-              <span>使用说明</span>
-              <i :class="{ open: openMap.usage }"></i>
-            </button>
-            <div class="fold" :class="{ open: openMap.usage }">
-              <div class="fold-inner usage">
-                <h2 class="usage-main">艾条产品使用说明</h2>
-                <div v-for="(sec, si) in usageSections" :key="si" class="usage-sec">
-                  <h3>{{ sec.title }}</h3>
-                  <div v-for="(blk, bi) in sec.blocks" :key="bi" class="usage-blk">
-                    <h4>{{ blk.subtitle }}</h4>
-                    <p v-for="(p, pi) in blk.paragraphs" :key="pi">{{ p }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <!-- 公司简介 -->
-        <section v-else key="company" class="panel">
-          <article v-for="(block, i) in companyBlocks" :key="i" class="company-card" :style="{ '--d': `${i * 80}ms` }">
-            <div class="company-index">0{{ i + 1 }}</div>
-            <h3>{{ block.title }}</h3>
-            <p>{{ block.text }}</p>
-            <div class="company-gallery">
-              <div class="media-frame" v-for="(src, j) in block.images" :key="j">
-                <img :src="src" class="media-img" alt="" />
-              </div>
-            </div>
-          </article>
-        </section>
-      </Transition>
+        </div>
+      </section>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { nextTick, onMounted, onUnmounted, reactive, ref, watch } from "vue"
+import { computed, onMounted, ref } from "vue"
 import { Swiper, SwiperSlide } from "swiper/vue"
 import { Autoplay, Pagination, EffectFade } from "swiper/modules"
 import {
-  companyBlocks,
   materialRows,
   productionRows,
-  productImages,
-  productRows,
-  productVideo,
-  qualifyImages,
   reportImages,
   storageRows,
   traceBanners,
-  traceTabs,
-  usageSections,
   verifyInfo
 } from "@/data/traceProduct"
 import InfoBlock from "./TraceInfoBlock.vue"
@@ -201,62 +95,17 @@ import InfoBlock from "./TraceInfoBlock.vue"
 defineProps<{ variant: "pc" | "mobile" }>()
 
 const modules = [Autoplay, Pagination, EffectFade]
-const activeTab = ref<"verify" | "product" | "company">("verify")
 const ready = ref(false)
-const tabEls = reactive<Record<string, HTMLElement | null>>({})
-const ink = reactive({ x: 0, width: 28 })
 
-const openMap = reactive({
-  material: true,
-  production: true,
-  storage: true,
-  report: true,
-  productImg: true,
-  video: true,
-  productInfo: true,
-  qualify: false,
-  usage: false
+const codeChunks = computed(() => {
+  const raw = String(verifyInfo.code || "").replace(/\s+/g, "")
+  return raw.match(/.{1,4}/g) || [raw]
 })
 
-const setTabRef = (key: string, el: unknown) => {
-  tabEls[key] = (el as HTMLElement | null) || null
-}
-
-const updateInk = () => {
-  const el = tabEls[activeTab.value]
-  if (!el) return
-  const parent = el.parentElement
-  if (!parent) return
-  const pRect = parent.getBoundingClientRect()
-  const rect = el.getBoundingClientRect()
-  ink.width = Math.min(36, Math.max(24, rect.width * 0.28))
-  ink.x = rect.left - pRect.left + (rect.width - ink.width) / 2
-}
-
-const toggle = (key: keyof typeof openMap) => {
-  openMap[key] = !openMap[key]
-}
-
-const onTab = (tab: (typeof traceTabs)[number]) => {
-  activeTab.value = tab.key
-}
-
-watch(activeTab, async () => {
-  await nextTick()
-  updateInk()
-})
-
-onMounted(async () => {
-  await nextTick()
-  updateInk()
+onMounted(() => {
   requestAnimationFrame(() => {
     ready.value = true
   })
-  window.addEventListener("resize", updateInk)
-})
-
-onUnmounted(() => {
-  window.removeEventListener("resize", updateInk)
 })
 </script>
 
@@ -274,6 +123,7 @@ onUnmounted(() => {
     radial-gradient(1200px 480px at 50% -10%, rgba(196, 168, 120, 0.14), transparent 60%),
     linear-gradient(180deg, #fbf7f2 0%, var(--paper) 28%, #fff 100%);
   overflow: hidden;
+
   &.pc {
     margin-top: 88px;
   }
@@ -282,17 +132,19 @@ onUnmounted(() => {
   }
 }
 
+/* ---------- Hero ---------- */
 .trace-hero {
   position: relative;
   width: 100%;
-  min-height: 360px;
+  min-height: 380px;
   overflow: hidden;
+
   .hero-swiper,
   :deep(.swiper),
   :deep(.swiper-wrapper),
   :deep(.swiper-slide) {
     height: 100%;
-    min-height: 360px;
+    min-height: 380px;
   }
 }
 
@@ -300,6 +152,7 @@ onUnmounted(() => {
   position: absolute;
   inset: 0;
   overflow: hidden;
+
   img {
     width: 100%;
     height: 100%;
@@ -323,11 +176,13 @@ onUnmounted(() => {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 48px;
+  bottom: 52px;
   z-index: 2;
   text-align: center;
   color: #fff;
   pointer-events: none;
+  padding: 0 20px;
+
   .hero-eyebrow {
     margin: 0 0 10px;
     font-size: 11px;
@@ -338,6 +193,7 @@ onUnmounted(() => {
       opacity 0.8s var(--ease-out) 0.15s,
       transform 0.8s var(--ease-out) 0.15s;
   }
+
   .hero-title {
     margin: 0;
     font-family: "LinHai", serif;
@@ -351,6 +207,7 @@ onUnmounted(() => {
       opacity 0.9s var(--ease-out) 0.28s,
       transform 0.9s var(--ease-out) 0.28s;
   }
+
   .hero-sub {
     margin: 14px 0 0;
     font-size: 14px;
@@ -373,199 +230,168 @@ onUnmounted(() => {
   }
 }
 
-.trace.mobile .trace-hero,
-.trace.mobile .trace-hero .hero-swiper,
-.trace.mobile .trace-hero :deep(.swiper),
-.trace.mobile .trace-hero :deep(.swiper-slide) {
-  min-height: 240px;
-}
-.trace.mobile .hero-copy {
-  bottom: 28px;
-  .hero-title {
-    font-size: 28px;
-    letter-spacing: 0.2em;
-    text-indent: 0.2em;
-  }
-  .hero-sub {
-    font-size: 12px;
-    letter-spacing: 0.12em;
-  }
-}
-
+/* ---------- Body ---------- */
 .trace-body {
-  max-width: 920px;
+  width: 100%;
   margin: 0 auto;
-  padding: 36px 24px 96px;
+  box-sizing: border-box;
 }
 
-.trace.mobile .trace-body {
-  padding: 20px 16px 64px;
+.body-head {
+  text-align: center;
+  margin-bottom: 28px;
 }
 
-.trace-tabs {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  margin: 0 0 32px;
-  border-bottom: 1px solid var(--line);
-  .tab-ink {
-    position: absolute;
-    left: 0;
-    bottom: -1px;
-    height: 2px;
-    border-radius: 2px;
-    background: var(--ink);
-    transition:
-      transform 0.45s var(--ease),
-      width 0.45s var(--ease);
-    will-change: transform, width;
-  }
-  .tab-item {
-    position: relative;
-    flex: 1;
-    max-width: 180px;
-    padding: 16px 8px 18px;
-    border: 0;
-    background: transparent;
-    cursor: pointer;
-    color: rgba(60, 50, 28, 0.38);
-    font-size: 16px;
-    letter-spacing: 0.14em;
-    font-family: "LinHai", "PingFangSC-Regular", serif;
-    line-height: 1.2;
-    transition: color 0.35s var(--ease);
-    &:hover {
-      color: rgba(60, 50, 28, 0.78);
-    }
-    &.active {
-      color: var(--ink);
-    }
-  }
+.body-title {
+  margin: 0;
+  font-family: "LinHai", serif;
+  font-size: 28px;
+  font-weight: 400;
+  letter-spacing: 0.18em;
+  color: var(--ink);
 }
 
-.trace.mobile .trace-tabs {
-  margin-bottom: 22px;
-  .tab-item {
-    max-width: none;
-    padding: 12px 4px 14px;
-    font-size: 14px;
-    letter-spacing: 0.08em;
-  }
+.body-desc {
+  margin: 10px 0 0;
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  color: var(--ink-soft);
 }
 
-.panel {
-  display: flex;
-  flex-direction: column;
-  gap: 4px;
-}
-
-.panel-enter-active,
-.panel-leave-active {
-  transition:
-    opacity 0.38s var(--ease),
-    transform 0.38s var(--ease);
-}
-.panel-enter-from {
-  opacity: 0;
-  transform: translateY(14px);
-}
-.panel-leave-to {
-  opacity: 0;
-  transform: translateY(-8px);
-}
-
+/* ---------- Verify ---------- */
 .verify-card {
   position: relative;
   overflow: hidden;
-  margin-bottom: 18px;
+  margin-bottom: 28px;
   border-radius: 18px;
-  padding: 26px 28px 22px;
   color: #fff;
-  background:
-    linear-gradient(145deg, rgba(54, 44, 24, 0.96) 0%, rgba(98, 78, 42, 0.92) 55%, rgba(72, 58, 30, 0.95) 100%);
+  background: linear-gradient(
+    145deg,
+    rgba(54, 44, 24, 0.96) 0%,
+    rgba(98, 78, 42, 0.92) 55%,
+    rgba(72, 58, 30, 0.95) 100%
+  );
   box-shadow:
     0 18px 40px rgba(60, 50, 28, 0.18),
     inset 0 1px 0 rgba(255, 255, 255, 0.12);
   transform: translateY(10px);
   opacity: 0;
   animation: riseIn 0.7s var(--ease-out) 0.05s forwards;
-  .verify-glow {
-    position: absolute;
-    width: 220px;
-    height: 220px;
-    right: -40px;
-    top: -60px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(255, 214, 160, 0.28), transparent 68%);
-    pointer-events: none;
-    animation: glowPulse 4.5s ease-in-out infinite;
-  }
-  .verify-top {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
-  }
-  .verify-label {
-    font-size: 13px;
-    letter-spacing: 0.08em;
-    opacity: 0.82;
+}
+
+.verify-glow {
+  position: absolute;
+  width: 240px;
+  height: 240px;
+  right: -48px;
+  top: -72px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 214, 160, 0.28), transparent 68%);
+  pointer-events: none;
+  animation: glowPulse 4.5s ease-in-out infinite;
+}
+
+.verify-main {
+  position: relative;
+  padding: 26px 28px 24px;
+}
+
+.verify-shield {
+  position: absolute;
+  top: 22px;
+  right: 24px;
+  width: 72px;
+  height: auto;
+  z-index: 1;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
+  animation: floatY 3.6s ease-in-out infinite;
+}
+
+.verify-code-block {
+  position: relative;
+  z-index: 1;
+  padding-right: 88px;
+}
+
+.verify-label {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  opacity: 0.82;
+  margin-bottom: 12px;
+}
+
+.verify-code {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  font-size: 28px;
+  font-weight: 500;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.06em;
+  line-height: 1.25;
+}
+
+.code-chunk {
+  display: inline-block;
+}
+
+.verify-divider {
+  height: 1px;
+  margin: 22px 0 18px;
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0.28),
+    rgba(255, 255, 255, 0.12) 60%,
+    transparent
+  );
+}
+
+.verify-info-block {
+  position: relative;
+  z-index: 1;
+  font-size: 14px;
+  line-height: 1.85;
+  max-width: 52em;
+
+  .verify-sub {
+    font-weight: 600;
+    letter-spacing: 0.06em;
     margin-bottom: 10px;
   }
-  .verify-code {
-    font-size: 28px;
-    letter-spacing: 0.12em;
-    font-weight: 500;
-    font-variant-numeric: tabular-nums;
+
+  p {
+    margin: 0;
+    opacity: 0.95;
   }
-  .verify-shield {
-    width: 76px;
-    height: auto;
-    flex-shrink: 0;
-    filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.25));
-    animation: floatY 3.6s ease-in-out infinite;
+
+  .hl {
+    color: #ffd7a8;
+    margin: 0 4px;
+    font-weight: 600;
   }
-  .verify-bottom {
-    position: relative;
-    padding-top: 16px;
-    font-size: 14px;
-    line-height: 1.8;
-    .verify-sub {
-      font-weight: 600;
-      letter-spacing: 0.06em;
-      margin-bottom: 8px;
-    }
-    .hl {
-      color: #ffd7a8;
-      margin: 0 4px;
-      font-weight: 600;
-    }
+
+  .phone {
+    color: #ffd7a8;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 215, 168, 0.45);
+    margin-left: 2px;
   }
 }
 
-.trace.mobile .verify-card {
-  padding: 18px 16px 16px;
-  border-radius: 14px;
-  .verify-code {
-    font-size: 20px;
-    letter-spacing: 0.06em;
-  }
-  .verify-shield {
-    width: 56px;
-  }
-  .verify-bottom {
-    font-size: 13px;
-  }
+/* ---------- Info grid ---------- */
+.info-grid {
+  display: grid;
+  gap: 0;
+  margin-bottom: 8px;
 }
 
-.block {
-  border-bottom: 1px solid var(--line);
+/* ---------- Report ---------- */
+.report-block {
+  border-top: 1px solid var(--line);
+  margin-top: 8px;
 }
 
-.block-head {
+.report-head {
   width: 100%;
   display: flex;
   align-items: center;
@@ -578,10 +404,13 @@ onUnmounted(() => {
   letter-spacing: 0.12em;
   cursor: pointer;
   font-family: "LinHai", "PingFangSC-Regular", serif;
-  transition: color 0.25s ease;
-  &:hover {
-    color: rgba(60, 50, 28, 0.75);
+  box-sizing: border-box;
+  text-align: left;
+
+  .report-block.static & {
+    cursor: default;
   }
+
   i {
     width: 8px;
     height: 8px;
@@ -600,27 +429,32 @@ onUnmounted(() => {
   display: grid;
   grid-template-rows: 0fr;
   transition: grid-template-rows 0.45s var(--ease);
-  &.open {
+  &.open,
+  &.flat {
     grid-template-rows: 1fr;
   }
-  .fold-inner {
-    overflow: hidden;
-    min-height: 0;
-    padding: 0 0 18px;
+  &.flat {
+    transition: none;
   }
 }
 
-.media-frame {
+.fold-inner {
+  overflow: hidden;
+  min-height: 0;
+  padding: 0 0 18px;
+}
+
+.report-gallery {
+  display: grid;
+  gap: 12px;
+}
+
+.report-frame {
+  margin: 0;
   overflow: hidden;
   border-radius: 12px;
-  margin-top: 10px;
   background: var(--paper-deep);
-  img {
-    transition: transform 0.8s var(--ease);
-  }
-  &:hover img {
-    transform: scale(1.03);
-  }
+  box-shadow: 0 8px 20px rgba(60, 50, 28, 0.06);
 }
 
 .media-img {
@@ -629,101 +463,213 @@ onUnmounted(() => {
   max-width: 100%;
 }
 
-.qualify-grid {
-  display: grid;
-  gap: 12px;
-}
+/* ========== PC ========== */
+.trace.pc {
+  .trace-body {
+    max-width: 1080px;
+    padding: 48px 32px 100px;
+  }
 
-.video-wrap {
-  overflow: hidden;
-  border-radius: 12px;
-  background: #111;
-  box-shadow: 0 12px 28px rgba(60, 50, 28, 0.12);
-}
-.video {
-  width: 100%;
-  display: block;
-}
-.video-cap {
-  text-align: center;
-  margin: 12px 0 0;
-  color: var(--ink-soft);
-  font-size: 13px;
-  letter-spacing: 0.12em;
-}
+  .body-head {
+    margin-bottom: 36px;
+  }
 
-.usage {
-  padding-top: 4px !important;
-  .usage-main {
-    margin: 4px 0 18px;
-    font-family: "LinHai", serif;
-    font-size: 22px;
-    color: var(--ink);
-    font-weight: 400;
+  .body-title {
+    font-size: 32px;
+  }
+
+  .verify-card {
+    margin-bottom: 36px;
+  }
+
+  .verify-main {
+    padding: 32px 40px 30px;
+  }
+
+  .verify-shield {
+    top: 28px;
+    right: 36px;
+    width: 84px;
+  }
+
+  .verify-code-block {
+    padding-right: 108px;
+  }
+
+  .verify-label {
+    font-size: 14px;
+  }
+
+  .verify-code {
+    font-size: 34px;
+    gap: 10px 16px;
     letter-spacing: 0.08em;
   }
-  .usage-sec {
-    margin-bottom: 20px;
-    h3 {
-      margin: 0 0 12px;
-      font-size: 16px;
-      letter-spacing: 0.06em;
-      color: var(--ink);
-    }
-  }
-  .usage-blk {
-    margin-bottom: 14px;
-    h4 {
-      margin: 0 0 8px;
-      font-size: 14px;
-      color: rgba(60, 50, 28, 0.88);
-    }
-    p {
-      margin: 0 0 8px;
-      font-size: 14px;
-      line-height: 1.85;
-      color: rgba(60, 50, 28, 0.78);
-    }
-  }
-}
 
-.company-card {
-  position: relative;
-  padding: 12px 2px 32px;
-  border-bottom: 1px solid var(--line);
-  opacity: 0;
-  transform: translateY(16px);
-  animation: riseIn 0.7s var(--ease-out) var(--d, 0ms) forwards;
-  &:last-child {
-    border-bottom: 0;
+  .verify-divider {
+    margin: 26px 0 20px;
   }
-  .company-index {
-    font-family: "LinHai", serif;
-    font-size: 13px;
-    letter-spacing: 0.2em;
-    color: rgba(60, 50, 28, 0.35);
-    margin-bottom: 8px;
-  }
-  h3 {
-    margin: 0 0 14px;
-    font-family: "LinHai", serif;
-    font-size: 22px;
-    color: var(--ink);
-    font-weight: 400;
-    letter-spacing: 0.08em;
-  }
-  p {
-    margin: 0 0 18px;
+
+  .verify-info-block {
     font-size: 15px;
     line-height: 1.9;
-    color: rgba(60, 50, 28, 0.8);
+  }
+
+  .info-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+
+  .report-block {
+    border: 1px solid rgba(60, 50, 28, 0.08);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(60, 50, 28, 0.05);
+    overflow: hidden;
+  }
+
+  .report-head {
+    padding: 18px 22px;
+    background: rgba(252, 248, 244, 0.65);
+  }
+
+  .fold-inner {
+    padding: 0 22px 22px;
+  }
+
+  .report-gallery {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  @media (max-width: 900px) {
+    .trace-body {
+      padding: 36px 20px 80px;
+    }
+
+    .verify-main {
+      padding: 24px 22px 22px;
+    }
+
+    .verify-code {
+      font-size: 26px;
+    }
+
+    .info-grid {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
   }
 }
-.company-gallery {
-  display: grid;
-  gap: 12px;
-  @media (min-width: 768px) {
-    grid-template-columns: 1fr 1fr;
+
+/* ========== Mobile ========== */
+.trace.mobile {
+  .trace-hero,
+  .trace-hero .hero-swiper,
+  .trace-hero :deep(.swiper),
+  .trace-hero :deep(.swiper-slide) {
+    min-height: 220px;
+  }
+
+  .hero-copy {
+    bottom: 26px;
+
+    .hero-title {
+      font-size: 26px;
+      letter-spacing: 0.18em;
+      text-indent: 0.18em;
+    }
+
+    .hero-sub {
+      font-size: 12px;
+      letter-spacing: 0.1em;
+    }
+  }
+
+  .trace-body {
+    max-width: 100%;
+    padding: 22px 16px 72px;
+  }
+
+  .body-head {
+    margin-bottom: 18px;
+  }
+
+  .body-title {
+    font-size: 22px;
+    letter-spacing: 0.14em;
+  }
+
+  .body-desc {
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+
+  .verify-card {
+    border-radius: 16px;
+    margin-bottom: 14px;
+  }
+
+  .verify-main {
+    padding: 18px 16px 16px;
+  }
+
+  .verify-shield {
+    top: 14px;
+    right: 14px;
+    width: 48px;
+  }
+
+  .verify-code-block {
+    padding-right: 56px;
+  }
+
+  .verify-code {
+    font-size: 18px;
+    gap: 6px 8px;
+    letter-spacing: 0.04em;
+  }
+
+  .verify-divider {
+    margin: 16px 0 14px;
+  }
+
+  .verify-info-block {
+    font-size: 13px;
+    line-height: 1.75;
+  }
+
+  .info-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .report-block {
+    margin-top: 0;
+    border: 1px solid rgba(60, 50, 28, 0.08);
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 6px 18px rgba(60, 50, 28, 0.05);
+    overflow: hidden;
+
+    &.static .report-head {
+      cursor: default;
+      padding: 14px 16px;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      background: rgba(252, 248, 244, 0.65);
+    }
+  }
+
+  .fold-inner {
+    padding: 0 16px 16px;
+  }
+
+  .report-frame {
+    border-radius: 10px;
   }
 }
 
@@ -736,6 +682,7 @@ onUnmounted(() => {
     width 0.35s var(--ease),
     background 0.35s ease;
 }
+
 :deep(.swiper-pagination-bullet-active) {
   width: 18px;
   border-radius: 999px;
@@ -750,12 +697,14 @@ onUnmounted(() => {
     transform: scale(1.14) translate3d(-1.2%, -0.8%, 0);
   }
 }
+
 @keyframes riseIn {
   to {
     opacity: 1;
     transform: none;
   }
 }
+
 @keyframes floatY {
   0%,
   100% {
@@ -765,6 +714,7 @@ onUnmounted(() => {
     transform: translateY(-6px);
   }
 }
+
 @keyframes glowPulse {
   0%,
   100% {
@@ -781,23 +731,20 @@ onUnmounted(() => {
   .hero-media img,
   .verify-shield,
   .verify-glow,
-  .company-card,
   .verify-card {
     animation: none !important;
   }
+
   .hero-copy .hero-eyebrow,
   .hero-copy .hero-title,
   .hero-copy .hero-sub,
-  .verify-card,
-  .company-card {
+  .verify-card {
     opacity: 1 !important;
     transform: none !important;
   }
-  .panel-enter-active,
-  .panel-leave-active,
+
   .fold,
-  .tab-ink,
-  .media-frame img {
+  .report-head i {
     transition: none !important;
   }
 }

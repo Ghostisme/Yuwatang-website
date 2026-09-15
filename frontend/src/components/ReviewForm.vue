@@ -33,6 +33,22 @@
       <p class="field-hint">{{ t("reviews.hints.phone") }}</p>
     </div>
 
+    <div class="field" :class="{ invalid: !!errors.email }">
+      <label class="label" for="review-email">{{ t("reviews.fields.email") }}</label>
+      <input
+        id="review-email"
+        v-model="form.email"
+        type="email"
+        autocomplete="email"
+        :maxlength="REVIEW_LIMITS.emailMax"
+        :placeholder="t('reviews.emailPlaceholder')"
+        @blur="touch('email')"
+        @input="onEmailInput"
+      />
+      <p v-if="errors.email" class="field-error">{{ errors.email }}</p>
+      <p class="field-hint">{{ t("reviews.hints.email") }}</p>
+    </div>
+
     <div class="field" :class="{ invalid: !!errors.store_name }">
       <label class="label" for="review-store">{{ t("reviews.fields.store") }}</label>
       <select
@@ -89,6 +105,7 @@ import { submitFeedback } from "@/api/index"
 import { loadStoreRows, localizeStore } from "@/config/stores"
 import {
   REVIEW_LIMITS,
+  normalizeEmail,
   normalizePhone,
   validateReviewField,
   validateReviewForm,
@@ -112,6 +129,7 @@ const { t, locale } = useI18n()
 const form = reactive<ReviewFormValues>({
   name: "",
   phone: "",
+  email: "",
   store_name: "",
   content: ""
 })
@@ -119,6 +137,7 @@ const form = reactive<ReviewFormValues>({
 const touched = reactive<Record<ReviewField, boolean>>({
   name: false,
   phone: false,
+  email: false,
   store_name: false,
   content: false
 })
@@ -130,7 +149,7 @@ const storeOptions = ref<Array<{ slug: string; name: string }>>([])
 
 const errors = computed(() => {
   const next: Partial<Record<ReviewField, string>> = {}
-  ;(["name", "phone", "store_name", "content"] as ReviewField[]).forEach((field) => {
+  ;(["name", "phone", "email", "store_name", "content"] as ReviewField[]).forEach((field) => {
     if (!touched[field]) return
     const msg = validateReviewField(field, form, t)
     if (msg) next[field] = msg
@@ -153,8 +172,10 @@ const touch = (field: ReviewField) => {
 }
 
 const onInput = (field: ReviewField) => {
-  if (touched[field]) {
-    // trigger computed recompute via reactive form
+  // 手机/邮箱联动：改其中一个时刷新另一个的错误态
+  if (field === "phone" || field === "email") {
+    if (touched.phone) touched.phone = true
+    if (touched.email) touched.email = true
   }
   if (message.value && isError.value) message.value = ""
 }
@@ -164,9 +185,15 @@ const onPhoneInput = () => {
   onInput("phone")
 }
 
+const onEmailInput = () => {
+  form.email = normalizeEmail(form.email).slice(0, REVIEW_LIMITS.emailMax)
+  onInput("email")
+}
+
 const resetTouched = () => {
   touched.name = false
   touched.phone = false
+  touched.email = false
   touched.store_name = false
   touched.content = false
 }
@@ -175,13 +202,13 @@ const onSubmit = async () => {
   message.value = ""
   touched.name = true
   touched.phone = true
+  touched.email = true
   touched.store_name = true
   touched.content = true
 
   const result = validateReviewForm(form, t)
   if (!result.ok) {
-    // 仅字段下方提示，避免按钮上方重复同一句
-    const firstField = (["name", "phone", "store_name", "content"] as ReviewField[]).find(
+    const firstField = (["name", "phone", "email", "store_name", "content"] as ReviewField[]).find(
       (f) => result.errors[f]
     )
     if (firstField) {
@@ -195,6 +222,7 @@ const onSubmit = async () => {
     const payload = {
       name: form.name.trim(),
       phone: normalizePhone(form.phone),
+      email: normalizeEmail(form.email),
       store_name: form.store_name.trim(),
       content: form.content.trim()
     }
@@ -204,6 +232,7 @@ const onSubmit = async () => {
       message.value = t("reviews.success")
       form.name = ""
       form.phone = ""
+      form.email = ""
       form.store_name = ""
       form.content = ""
       resetTouched()

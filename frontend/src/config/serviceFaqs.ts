@@ -90,11 +90,11 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
   moxibustion: [
     {
       q: "Is the mugwort really three-year aged?",
-      a: "Yes. It comes from Yuhetang's own 100-mu base in Qichun (built 2017), naturally aged three years before rolling. Sticks carry traceability codes; warehouses tag harvest years; a documentary is available."
+      a: "Yes. It comes from Yu Health's own 100-mu base in Qichun (built 2017), naturally aged three years before rolling. Sticks carry traceability codes; warehouses tag harvest years; a documentary is available."
     },
     {
       q: "How is hand-held moxibustion different?",
-      a: "Yuhetang only does hand-held suspended moxibustion—therapists select points by constitution and control distance/heat for gentle penetration, unlike machine or casual grilling."
+      a: "Yu Health only does hand-held suspended moxibustion—therapists select points by constitution and control distance/heat for gentle penetration, unlike machine or casual grilling."
     },
     {
       q: "What are Sanfu / Sanjiu moxibustion?",
@@ -144,17 +144,17 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "Parking / showers?",
-      a: "Most stores reimburse parking (per store rules) and have showers; free herbal tea & snacks at all stores."
+      a: "Most branches reimburse parking (per branch rules) and have showers; free herbal tea & snacks at all branches."
     },
     {
       q: "Opening hours?",
-      a: "All stores open until 23:00 with no midday break. Some open at 9:00, others at 9:30—see store pages."
+      a: "All branches open until 23:00 with no midday break. Some open at 9:00, others at 9:30—see branch pages."
     }
   ],
   traditional: [
     {
       q: "Where is pediatric tuina offered?",
-      a: "Pediatric tuina and other traditional therapies can be arranged when booking—ask any store; therapists assess on site. Parents may stay in the room."
+      a: "Pediatric tuina and other traditional therapies can be arranged when booking—ask any branch; therapists assess on site. Parents may stay in the room."
     },
     {
       q: "How are cupping / scraping arranged?",
@@ -162,7 +162,7 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "Commercial / public insurance?",
-      a: "Commercial and public medical insurance are not supported at this time; check with each store for details."
+      a: "Commercial and public medical insurance are not supported at this time; check with each branch for details."
     },
     {
       q: "Special physical conditions?",

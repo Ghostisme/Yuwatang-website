@@ -34,6 +34,8 @@ define(['jquery', 'bootstrap', 'backend', 'table', 'form'], function ($, undefin
                         {checkbox: true},
                         {field: 'id', title: __('Id'), operate: false},
                         {field: 'article_title', title: __('Article_title'), operate: 'LIKE'},
+                        {field: 'article_title_en', title: __('Article_title_en'), operate: 'LIKE'},
+                        {field: 'article_title_jp', title: __('Article_title_jp'), operate: 'LIKE'},
                         {field: 'image', title: __('Image'), operate: false, events: Table.api.events.image, formatter: Table.api.formatter.image},
                         {field: 'datetime', title: __('Datetime'), operate: false, formatter: Table.api.formatter.datetime},
                         // {field: 'author', title: __('Author'),operate: false},

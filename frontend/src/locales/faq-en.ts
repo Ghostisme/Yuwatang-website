@@ -1,7 +1,7 @@
 /** FAQ 需求2-17 附录定稿 */
 export default {
   h1: "FAQ",
-  intro: "Common questions on booking, stores, services and overseas guests — 25 answers.",
+  intro: "Common questions on booking, branches, services and overseas guests — 25 answers.",
   groupGeneral: "General",
   groupOverseas: "For overseas guests",
   items: [
@@ -11,7 +11,7 @@ export default {
     },
     {
       q: `What are opening / closing hours?`,
-      a: `All stores are open until 23:00 with no midday break. Taikoo Hui, Shanghai Tower, Sichuan North Road and Meihua Road open at 9:00; Yuyao Road, Paramount, Huashan Road, Wujiang Road and Changde Road open at 9:30.`
+      a: `All branches are open until 23:00 with no midday break. Taikoo Hui, Shanghai Tower, Sichuan North Road and Meihua Road open at 9:00; Yuyao Road, Paramount, Huashan Road, Wujiang Road and Changde Road open at 9:30.`
     },
     {
       q: `What should I try first?`,
@@ -31,7 +31,7 @@ export default {
     },
     {
       q: `What's the average spend?`,
-      a: `About RMB 200–300 per person; varies by store and service. Please check current in-store prices.`
+      a: `About RMB 200–300 per person; varies by branch and service. Please check current in-branch prices.`
     },
     {
       q: `What's the difference between Advanced / Special / Expert?`,
@@ -39,19 +39,19 @@ export default {
     },
     {
       q: `What are membership card benefits?`,
-      a: `Prepaid discounts: RMB 3,000 → 20% off; 5,000 → 25% off; 10,000 → 30% off; valid at all 9 stores. Monday Member Day is 10% off sitewide and stacks. Completely optional.`
+      a: `Prepaid discounts: RMB 3,000 → 20% off; 5,000 → 25% off; 10,000 → 30% off; valid at all 9 branches. Monday Member Day is 10% off sitewide and stacks. Completely optional.`
     },
     {
       q: `Will you push me to buy a card?`,
-      a: `No. Zero hard-selling is a Yuhetang service baseline—enjoy your session in peace.`
+      a: `No. Zero hard-selling is a Yu Health service baseline—enjoy your session in peace.`
     },
     {
       q: `Is the mugwort really three-year aged? How do you prove it?`,
-      a: `Yes. Mugwort comes from Yuhetang's own 100-mu base in Qichun, Hubei (built 2017), naturally aged three full years before rolling. Store sticks carry traceability codes; warehouses tag harvest years; a full documentary is available.`
+      a: `Yes. Mugwort comes from Yu Health's own 100-mu base in Qichun, Hubei (built 2017), naturally aged three full years before rolling. In-branch sticks carry traceability codes; warehouses tag harvest years; a full documentary is available.`
     },
     {
       q: `How is hand-held moxibustion different from ordinary moxibustion?`,
-      a: `Yuhetang only does hand-held suspended moxibustion: therapists hold the stick, select points by constitution, and control distance/heat for gentle penetration—unlike machine or casual grilling.`
+      a: `Yu Health only does hand-held suspended moxibustion: therapists hold the stick, select points by constitution, and control distance/heat for gentle penetration—unlike machine or casual grilling.`
     },
     {
       q: `What are Sanfu / Sanjiu moxibustion? When?`,
@@ -71,35 +71,35 @@ export default {
     },
     {
       q: `Is there parking / showers?`,
-      a: `Most stores reimburse parking (per store rules) and have showers; all offer free herbal tea & snacks.`
+      a: `Most branches reimburse parking (per branch rules) and have showers; all offer free herbal tea & snacks.`
     },
     {
       q: `Can I use commercial / public medical insurance?`,
-      a: `Commercial and public medical insurance are not supported at this time; check with each store for details.`
+      a: `Commercial and public medical insurance are not supported at this time; check with each branch for details.`
     },
     {
       q: `Can I franchise?`,
-      a: `No. Yuhetang stays fully directly operated with unified management—all stores are company-owned.`
+      a: `No. Yu Health stays fully directly operated with unified management—all branches are company-owned.`
     },
     {
-      q: `There are other 'Yuhetang' online—are they the same?`,
-      a: `This site's Yuhetang (YU HEALTH) is the Shanghai TCM wellness chain founded in 2009. Official info is this website and verified accounts.`
+      q: `There are other 'Yu Health' online—are they the same?`,
+      a: `This site's Yu Health is the Shanghai TCM wellness chain founded in 2009. Official info is this website and verified accounts.`
     },
     {
       q: `Do therapists speak English?`,
-      a: `Most therapists serve mainly in Chinese; English is limited but translation apps work well. Most stores regularly host international guests. Email or DM your needs before visiting so we can prepare.`
+      a: `Most therapists serve mainly in Chinese; English is limited but translation apps work well. Most branches regularly host international guests. Email or DM your needs before visiting so we can prepare.`
     },
     {
       q: `I'm abroad / how do I book before coming to Shanghai?`,
-      a: `Book by email, or DM via Rednote / WeChat Official Account. Include preferred store, service and time—we'll confirm ASAP.`
+      a: `Book by email, or DM via Rednote / WeChat Official Account. Include preferred branch, service and time—we'll confirm ASAP.`
     },
     {
       q: `What payment methods are supported?`,
-      a: `Alipay, WeChat Pay, cash; most overseas cards also work (confirm at the store).`
+      a: `Alipay, WeChat Pay, cash; most overseas cards also work (confirm at the branch).`
     },
     {
-      q: `Which store is closest to the Bund / Yuyuan / Nanjing Road / Disney?`,
-      a: `Bund · North Bund → Sichuan North Road; Nanjing Road Pedestrian Street · People's Square → Wujiang / Taikoo Hui / Paramount in the West Nanjing Rd area; Yuyuan · Old Town → West Nanjing Rd stores, or cross the river to Shanghai Tower; Lujiazui · Oriental Pearl → Shanghai Tower; Jing'an Temple → Paramount; Wukang · Anfu Rd → Huashan Road; Disney · Century Park → Pudong Meihua Road.`
+      q: `Which branch is closest to the Bund / Yuyuan / Nanjing Road / Disney?`,
+      a: `Bund · North Bund → Sichuan North Road; Nanjing Road Pedestrian Street · People's Square → Wujiang / Taikoo Hui / Paramount in the West Nanjing Rd area; Yuyuan · Old Town → West Nanjing Rd branches, or cross the river to Shanghai Tower; Lujiazui · Oriental Pearl → Shanghai Tower; Jing'an Temple → Paramount; Wukang · Anfu Rd → Huashan Road; Disney · Century Park → Pudong Meihua Road.`
     },
     {
       q: `Will first-time moxibustion / tuina feel uncomfortable?`,

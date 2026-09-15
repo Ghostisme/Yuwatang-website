@@ -12,6 +12,12 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Email')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input class="form-control" type="text" value="{$row.email|default=''|htmlentities}" disabled>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">{:__('Store_name')}:</label>
         <div class="col-xs-12 col-sm-8">
             <input class="form-control" type="text" value="{$row.store_name|htmlentities}" disabled>
@@ -27,9 +33,23 @@
         <label class="control-label col-xs-12 col-sm-2">{:__('Status')}:</label>
         <div class="col-xs-12 col-sm-8">
             <select id="c-status" class="form-control" name="row[status]">
-                <option value="0" {if $row.status == 0}selected{/if}>未处理</option>
-                <option value="1" {if $row.status == 1}selected{/if}>已处理</option>
+                <option value="0" {if $row.status == 0}selected{/if}>{:__('进行中')}</option>
+                <option value="1" {if $row.status == 1}selected{/if}>{:__('通过')}</option>
+                <option value="2" {if $row.status == 2}selected{/if}>{:__('拒绝')}</option>
             </select>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Is_top')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            {:build_radios('row[is_top]', ['1'=>__('Yes'), '0'=>__('No')], $row.is_top)}
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">{:__('Weigh')}:</label>
+        <div class="col-xs-12 col-sm-8">
+            <input id="c-weigh" class="form-control" name="row[weigh]" type="number" value="{$row.weigh|default='0'}">
+            <span class="help-block">数值越大越靠前；也可在列表操作列拖拽排序</span>
         </div>
     </div>
     <div class="form-group layer-footer">

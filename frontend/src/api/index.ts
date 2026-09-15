@@ -73,6 +73,7 @@ export const submitFeedback = (data: {
   name: string
   content: string
   phone: string
+  email: string
   store_name: string
 }) => {
   return request({

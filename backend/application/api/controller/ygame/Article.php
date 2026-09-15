@@ -49,8 +49,10 @@ class Article extends Api
         $service = new \addons\ygame\service\Article();
         $data = $service->getArticleInfo($id);
         $data['image'] = $this->toPublicUrl($data['image'] ?? '');
-        if (!empty($data['content'])) {
-            $data['content'] = $this->rewriteContentSrc($data['content']);
+        foreach (['content', 'content_en', 'content_jp'] as $field) {
+            if (!empty($data[$field])) {
+                $data[$field] = $this->rewriteContentSrc($data[$field]);
+            }
         }
         $this->success('请求成功', $data);
     }
