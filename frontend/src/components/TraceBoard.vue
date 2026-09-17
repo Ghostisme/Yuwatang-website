@@ -403,7 +403,7 @@ onMounted(() => {
   font-size: 17px;
   letter-spacing: 0.12em;
   cursor: pointer;
-  font-family: "LinHai", "PingFangSC-Regular", serif;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
   box-sizing: border-box;
   text-align: left;
 

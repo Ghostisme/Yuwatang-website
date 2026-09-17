@@ -32,6 +32,13 @@ INSERT INTO `fa_ygame_store` (`slug`, `title`, `title_en`, `title_jp`, `tagline`
 INSERT INTO `fa_ygame_store` (`slug`, `title`, `title_en`, `title_jp`, `tagline`, `tagline_en`, `tagline_jp`, `intro`, `intro_en`, `intro_jp`, `directions`, `directions_en`, `directions_jp`, `address`, `address_en`, `address_jp`, `phone`, `hours`, `metro`, `metro_en`, `metro_jp`, `image`, `image_en`, `image_jp`, `services`, `facilities`, `status`, `weigh`, `createtime`) VALUES
 ('changde', '常德路店', 'Changde Road Branch', '常徳路店', '东方禅意的静养空间——新店，老手艺。', 'Zen quiet space—new branch, timeless craft.', '東方禅意の静養空間—新店、老い手艺。', '2026年开业，是9家店里最「静」的一家：深色木饰面、微水泥墙面、枯山水造景。服务同乐坊、江宁路一带社区，18间理疗房，没有商圈店的匆忙。', 'Opened 2026—our quietest branch: dark wood, micro-cement walls, dry landscape. Serves Tonglefang and Jiangning Rd community, 18 rooms, unhurried unlike mall locations.', '2026年開業、最も「静」な店。ダークウッド、微水泥、枯山水。同楽坊・江寧路コミュニティ、18間、商圈店の慌ただしさなし。', '地铁7号线昌平路站5口出站步行约340米至常德路1010号2层。近同乐坊、江宁路社区，环境安静，适合周末慢调理。', 'Metro Line 7 Changping Rd, Exit 5, ~340 m to 1010 Changde Rd, 2F. Near Tonglefang and Jiangning Rd—ideal for slow weekend care.', '地下鉄7号線昌平路駅5出口約340m、常徳路1010号2階。週末のゆっくり調理に。', '静安区常德路1010号2层', '2F, 1010 Changde Rd, Jing''an', '静安区常徳路1010号2階', '021-62078806', '9:30–23:00', '昌平路站5口约340m', 'Changping Rd Exit 5 ~340m', '昌平路駅5出口約340m', '/uploads/20251209/cb710396e6a751be57336c79cf692915.jpg', '/uploads/20251209/bfdf2cec8b897522d945c80215dc2f0f.jpg', '/uploads/20251209/a95293cf372117e949c83383b88ef997.jpg', 'moxibustion,tuina,spa,foot,traditional', 'privateRoom,tea,hygienic,rooms18,zen', 1, 9, UNIX_TIMESTAMP());
 
+UPDATE `fa_ygame_store`
+SET
+  `map_image` = '/uploads/20251209/changde-map-zh.png',
+  `map_image_en` = '/uploads/20251209/changde-map-en.png',
+  `map_image_jp` = '/uploads/20251209/changde-map-zh.png'
+WHERE `slug` = 'changde';
+
 -- slug 唯一索引
 SET @idx := (SELECT COUNT(1) FROM information_schema.STATISTICS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'fa_ygame_store' AND INDEX_NAME = 'uk_slug');
 SET @sql := IF(@idx = 0, 'ALTER TABLE `fa_ygame_store` ADD UNIQUE KEY `uk_slug` (`slug`)', 'SELECT 1');

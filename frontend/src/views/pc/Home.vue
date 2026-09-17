@@ -7,30 +7,16 @@
         src="@/assets/img/home-banner.jpg"
         :alt="t('homeV2.heroTitle')"
       />
-      <swiper
+      <video
         v-if="videoReady"
-        class="banner-swiper"
-        :modules="modules"
-        :slides-per-view="1"
-        :space-between="0"
-        :loop="true"
-        :pagination="paginationOptions"
-        :navigation="navigation"
-        :autoplay="autoplayOptions"
-        :effect="'fade'"
-      >
-        <swiper-slide v-for="(item, index) in videoList" :key="index">
-          <video
-            class="video"
-            :src="item"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-          ></video>
-        </swiper-slide>
-      </swiper>
+        class="video banner-video"
+        :src="bannerVideoSrc"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      ></video>
       <div class="hero-overlay">
         <h1 class="hero-title">{{ t("homeV2.heroTitle") }}</h1>
         <p class="hero-lead">{{ t("homeV2.heroLead") }}</p>
@@ -147,17 +133,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from "vue"
+import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
-// 导入 Swiper Vue.js 组件
-import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, Pagination, Navigation, EffectFade } from "swiper/modules"
 
-import { getHomeBanner, getArticleList, getFeedbackList } from "@/api"
+import { getArticleList, getFeedbackList } from "@/api"
 import { services as serviceList } from "@/config/services"
 import { useStoreList } from "@/composables/useStores"
-import { rewriteMediaList } from "@/utils/mediaCdn"
 import homePic2 from "@/assets/img/home-pic2.jpg"
 import homePic3 from "@/assets/img/home-pic3.jpg"
 import homePic4 from "@/assets/img/home-pic4.jpg"
@@ -165,23 +147,10 @@ import homePic5 from "@/assets/img/home-pic5.jpg"
 
 import { usePageSeo } from "@/composables/usePageSeo"
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 usePageSeo({ titleKey: "seo.home.title", descriptionKey: "seo.home.description", h1Key: "homeV2.heroTitle" })
 const router = useRouter()
-// Swiper 模块
-const modules = [Autoplay, Pagination, Navigation, EffectFade]
-
-// 直接使用对象字面量，让 TypeScript 自动推断类型
-const paginationOptions = {
-  clickable: true
-} as any
-
-const autoplayOptions = {
-  delay: 4000,
-  disableOnInteraction: false
-} as any
-
-const navigation = false as any
+const bannerVideoSrc = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/home-banner.mp4`
 
 const homeServiceCards = [
   { slug: "moxibustion", img: homePic5 },
@@ -206,7 +175,6 @@ const prodList = computed(() =>
 
 const shopOneList = ref(t("home.item16").split(","))
 const shopTwoList = ref(t("home.item17").split(","))
-const videoList = ref<string[]>([])
 const videoReady = ref(false)
 const newsPreview = ref<any[]>([])
 const reviewPreview = ref<any[]>([])
@@ -231,12 +199,6 @@ const loadFeed = () => {
 
 const goNews = (id: number) => router.push(`/news/${id}`)
 
-// 监听 locale 变化
-watch(locale, (newLocale, oldLocale) => {
-  console.log(`语言从 ${oldLocale} 切换到 ${newLocale}`)
-  getBanner()
-})
-
 const goServe = () => {
   router.push({
     path: "/serve"
@@ -259,27 +221,24 @@ const goFeature = (index: number) => {
   router.push({ path: `/services/${slug}` })
 }
 
-const getBanner = () => {
-  // 可以在这里调用获取首页banner的接口
-  getHomeBanner().then((res: any) => {
-    console.log("首页banner数据：", res)
-    if (res.code == 1) {
-      let array = res.data.data
-      videoList.value = rewriteMediaList(
-        array.map((item: any) => {
-          if (locale.value === "en") return item.image_en
-          if (locale.value === "jp") return item.image_jp
-          return item.image
-        })
-      )
-      videoReady.value = videoList.value.length > 0
-    }
-  })
+const scheduleBannerVideo = () => {
+  const enable = () => {
+    videoReady.value = true
+  }
+  const w = window as Window & {
+    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+  }
+  if (typeof w.requestIdleCallback === "function") {
+    w.requestIdleCallback(enable, { timeout: 2500 })
+  } else {
+    setTimeout(enable, 2000)
+  }
 }
 
 onMounted(() => {
-  getBanner()
-  loadFeed()
+  scheduleBannerVideo()
+  // 次要接口错峰，减轻首屏带宽争抢
+  setTimeout(loadFeed, 1200)
 })
 </script>
 
@@ -312,20 +271,11 @@ onMounted(() => {
       pointer-events: none;
     }
   }
-  .banner-swiper {
+  .banner-video,
+  .video {
     position: absolute;
     inset: 0;
     z-index: 1;
-    width: 100%;
-    height: 100%;
-  }
-  :deep(.swiper),
-  :deep(.swiper-wrapper),
-  :deep(.swiper-slide) {
-    width: 100%;
-    height: 100%;
-  }
-  .video {
     width: 100%;
     height: 100%;
     object-fit: cover;

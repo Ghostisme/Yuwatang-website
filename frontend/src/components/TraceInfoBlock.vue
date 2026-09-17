@@ -88,7 +88,7 @@ const onHeadClick = () => {
   font-size: 16px;
   letter-spacing: 0.1em;
   cursor: pointer;
-  font-family: "LinHai", "PingFangSC-Regular", serif;
+  font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", serif;
   text-align: left;
   box-sizing: border-box;
 

@@ -42,7 +42,7 @@ class Store extends Api
 
     private function formatRow(array $row)
     {
-        foreach (['image', 'image_en', 'image_jp'] as $field) {
+        foreach (['image', 'image_en', 'image_jp', 'map_image', 'map_image_en', 'map_image_jp'] as $field) {
             $row[$field] = $this->absoluteMedia($row[$field] ?? '');
         }
         $row['services'] = $this->splitCsv($row['services'] ?? '');

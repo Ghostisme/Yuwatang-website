@@ -1,25 +1,17 @@
-@font-face {
-  font-family: "LinHai";
-  src: url("./linhai.ttf") format("truetype");
-  font-style: normal;
-  font-display: swap;
-  text-rendering: optimizeLegibility;
-}
-
-/* 系统名 PingFang SC + 项目内嵌 PingFangSC-Regular */
+/*
+ * 首屏不再下载内嵌 TTF（原 PingFang ~11MB、LinHai ~2.7MB 会导致标签栏长时间转圈）。
+ * 中文/英文优先系统字体；LinHai 在空闲时异步加载（见 main.ts）。
+ */
 @font-face {
   font-family: "PingFang SC";
-  src: url("./PingFangSC-Regular.ttf") format("truetype");
+  src: local("PingFang SC"), local("PingFangSC-Regular"), local("Helvetica Neue"), local("Arial");
   font-style: normal;
   font-display: swap;
-  text-rendering: optimizeLegibility;
 }
 
 @font-face {
   font-family: "PingFangSC-Regular";
-  src: url("./PingFangSC-Regular.ttf") format("truetype");
+  src: local("PingFang SC"), local("PingFangSC-Regular"), local("Helvetica Neue"), local("Arial");
   font-style: normal;
   font-display: swap;
-  text-rendering: optimizeLegibility;
 }
-

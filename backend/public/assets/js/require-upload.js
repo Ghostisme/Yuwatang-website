@@ -7,6 +7,91 @@ define(['jquery', 'bootstrap', 'dropzone', 'template'], function ($, undefined, 
                 classname: '.plupload:not([initialized]),.faupload:not([initialized])',
                 previewtpl: '<li class="col-xs-3"><a href="<%=fullurl%>" data-url="<%=url%>" target="_blank" class="thumbnail"><img src="<%=fullurl%>" onerror="this.src=\'' + Fast.api.fixurl("ajax/icon") + '?suffix=<%=suffix%>\';this.onerror=null;" class="img-responsive"></a><a href="javascript:;" class="btn btn-danger btn-xs btn-trash"><i class="fa fa-trash"></i></a></li>',
             },
+            /**
+             * 浏览器端压缩图片（Canvas），不依赖服务器 GD
+             */
+            compressImage: function (file, done) {
+                var cfg = (typeof Config !== 'undefined' && Config.upload && Config.upload.browser_compress)
+                    ? Config.upload.browser_compress
+                    : {};
+                if (cfg.enable === false) {
+                    done(file);
+                    return;
+                }
+                if (!file || !file.type || file.type.indexOf('image/') !== 0 || file.type === 'image/gif' || file.type === 'image/svg+xml') {
+                    done(file);
+                    return;
+                }
+
+                var maxWidth = parseInt(cfg.max_width, 10) || 1600;
+                var maxBytes = parseInt(cfg.max_bytes, 10) || (200 * 1024);
+                var quality = typeof cfg.quality === 'number' ? cfg.quality : 0.72;
+                if (quality > 1) {
+                    quality = quality / 100;
+                }
+
+                var skipIfSmall = file.size <= maxBytes;
+                var img = new Image();
+                var url = URL.createObjectURL(file);
+                img.onload = function () {
+                    URL.revokeObjectURL(url);
+                    var w = img.width;
+                    var h = img.height;
+                    if (!w || !h) {
+                        done(file);
+                        return;
+                    }
+                    if (skipIfSmall && w <= maxWidth) {
+                        done(file);
+                        return;
+                    }
+                    if (w > maxWidth) {
+                        h = Math.round(h * (maxWidth / w));
+                        w = maxWidth;
+                    }
+                    var canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    var ctx = canvas.getContext('2d');
+                    if (!ctx || !canvas.toBlob) {
+                        done(file);
+                        return;
+                    }
+                    ctx.fillStyle = '#fff';
+                    ctx.fillRect(0, 0, w, h);
+                    ctx.drawImage(img, 0, 0, w, h);
+
+                    var tryQuality = quality;
+                    var attempt = function () {
+                        canvas.toBlob(function (blob) {
+                            if (!blob) {
+                                done(file);
+                                return;
+                            }
+                            if (blob.size > maxBytes && tryQuality > 0.42) {
+                                tryQuality = Math.max(0.42, tryQuality - 0.1);
+                                attempt();
+                                return;
+                            }
+                            if (blob.size >= file.size) {
+                                done(file);
+                                return;
+                            }
+                            var name = (file.name || 'image.jpg').replace(/\.(png|bmp|webp|jpeg|jpg)$/i, '.jpg');
+                            if (!/\.jpe?g$/i.test(name)) {
+                                name += '.jpg';
+                            }
+                            done(new File([blob], name, {type: 'image/jpeg', lastModified: Date.now()}));
+                        }, 'image/jpeg', tryQuality);
+                    };
+                    attempt();
+                };
+                img.onerror = function () {
+                    URL.revokeObjectURL(url);
+                    done(file);
+                };
+                img.src = url;
+            },
             events: {
                 //初始化
                 onInit: function () {
@@ -208,6 +293,10 @@ define(['jquery', 'bootstrap', 'dropzone', 'template'], function ($, undefined, 
                             timeout: timeout,
                             parallelUploads: 1,
                             previewsContainer: false,
+                            // 上传前浏览器压缩图片
+                            transformFile: function (file, done) {
+                                Upload.compressImage(file, done);
+                            },
                             dictDefaultMessage: __("Drop files here to upload"),
                             dictFallbackMessage: __("Your browser does not support drag'n'drop file uploads"),
                             dictFallbackText: __("Please use the fallback form below to upload your files like in the olden days"),

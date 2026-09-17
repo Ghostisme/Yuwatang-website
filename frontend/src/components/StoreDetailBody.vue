@@ -14,6 +14,11 @@
       <p><strong>{{ t("stores.hours") }}</strong>{{ store.hours }}</p>
     </div>
 
+    <section class="block store-map" v-if="store.mapImage">
+      <h2>{{ t("stores.mapTitle") }}</h2>
+      <img :src="store.mapImage" :alt="t('stores.mapTitle')" />
+    </section>
+
     <section class="block">
       <h2>{{ t("stores.servicesTitle") }}</h2>
       <div class="chip-row">
@@ -104,6 +109,18 @@ const mailtoHref = computed(() => {
   color: rgba(60, 50, 28, 0.72);
   margin: 0 0 28px;
   line-height: 1.6;
+}
+.store-map {
+  img {
+    display: block;
+    width: 100%;
+    max-width: 360px;
+    max-height: 360px;
+    margin: 0 auto;
+    object-fit: contain;
+    border-radius: 12px;
+    background: #f6ecd9;
+  }
 }
 .info-card {
   background: #fff;

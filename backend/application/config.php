@@ -295,7 +295,7 @@ return [
         //插件纯净模式，插件启用后是否删除插件目录的application、public和assets文件夹
         'addon_pure_mode'       => true,
         //允许跨域的域名,多个以,分隔
-        'cors_request_domain'   => 'localhost,10.101.3.197,117.78.2.231,chinesethought-cert.unipus.cn',
+        'cors_request_domain'   => 'localhost,127.0.0.1,http://127.0.0.1:8080,http://localhost:8080,8.210.181.83,http://8.210.181.83:8080,http://8.210.181.83:8090,10.101.3.197,117.78.2.231,chinesethought-cert.unipus.cn',
         //版本号
         'version'               => '1.3.5.20221214',
         //API接口地址

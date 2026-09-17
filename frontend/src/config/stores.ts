@@ -27,6 +27,9 @@ export type StoreApiRow = {
   image?: string
   image_en?: string
   image_jp?: string
+  map_image?: string
+  map_image_en?: string
+  map_image_jp?: string
   services?: string[] | string
   facilities?: string[] | string
   status?: number
@@ -46,6 +49,7 @@ export type StoreInfo = {
   hours: string
   metro: string
   image: string
+  mapImage: string
   serviceSlugs: string[]
   facilityKeys: string[]
 }
@@ -103,6 +107,12 @@ export function resolveStoreImage(path: string | undefined | null, locale = "zh"
   return assetModules["../assets/img/store-banner.png"] || raw
 }
 
+function resolveOptionalStoreImage(path: string | undefined | null, locale = "zh"): string {
+  const raw = String(path || "").trim()
+  if (!raw) return ""
+  return resolveStoreImage(raw, locale)
+}
+
 export function localizeStore(row: StoreApiRow, locale: string): StoreInfo {
   const lang = locale === "en" || locale === "jp" ? locale : "zh"
   const imageField =
@@ -119,6 +129,7 @@ export function localizeStore(row: StoreApiRow, locale: string): StoreInfo {
     hours: row.hours || "",
     metro: pickLocaleField(row, "metro", lang),
     image: resolveStoreImage(imageField, lang),
+    mapImage: resolveOptionalStoreImage(pickLocaleField(row, "map_image", lang), lang),
     serviceSlugs: toList(row.services),
     facilityKeys: toList(row.facilities)
   }

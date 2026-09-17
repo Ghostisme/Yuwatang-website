@@ -1,10 +1,10 @@
 /* color palette from <https://github.com/vuejs/theme> */
 :root {
-  --font-pingfang: "PingFang SC", "PingFangSC-Regular", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-zh: "LinHai", "PingFang SC", "PingFangSC-Regular", sans-serif;
-  /* 日文：优先系统日文黑体，再回退项目内苹方 */
+  --font-pingfang: "PingFang SC", -apple-system, BlinkMacSystemFont, "Helvetica Neue", Arial, sans-serif;
+  /* 首屏不用 LinHai（原 TTF ~2.7MB）；系统苹方 / 黑体即可 */
+  --font-zh: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
   --font-jp: "Hiragino Sans", "Hiragino Kaku Gothic ProN", "Yu Gothic", "YuGothic", "PingFang SC",
-    "PingFangSC-Regular", "Noto Sans JP", sans-serif;
+    "Noto Sans JP", sans-serif;
   --header-family: var(--font-zh);
 }
 

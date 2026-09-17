@@ -7,20 +7,16 @@
         src="@/assets/img/home-banner.jpg"
         :alt="t('homeV2.heroTitle')"
       />
-      <swiper
+      <video
         v-if="videoReady"
-        class="banner-swiper"
-        :modules="modules"
-        :slides-per-view="1"
-        :loop="true"
-        :pagination="paginationOptions"
-        :autoplay="autoplayOptions"
-        :effect="'fade'"
-      >
-        <swiper-slide v-for="(item, index) in videoList" :key="index">
-          <video class="video" :src="item" autoplay muted loop playsinline preload="metadata"></video>
-        </swiper-slide>
-      </swiper>
+        class="video banner-video"
+        :src="bannerVideoSrc"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="metadata"
+      ></video>
       <div class="hero-overlay">
         <h1 class="hero-title">{{ t("homeV2.heroTitle") }}</h1>
         <p class="hero-lead">{{ t("homeV2.heroLead") }}</p>
@@ -126,27 +122,22 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, watch, computed } from "vue"
+import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
-import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, Pagination, EffectFade } from "swiper/modules"
-import { getHomeBanner, getArticleList, getFeedbackList } from "@/api"
+import { getArticleList, getFeedbackList } from "@/api"
 import { services as serviceList } from "@/config/services"
 import { useStoreList } from "@/composables/useStores"
-import { rewriteMediaList } from "@/utils/mediaCdn"
 import { usePageSeo } from "@/composables/usePageSeo"
 import homePic2 from "@/assets/img/home-pic2.jpg"
 import homePic3 from "@/assets/img/home-pic3.jpg"
 import homePic4 from "@/assets/img/home-pic4.jpg"
 import homePic5 from "@/assets/img/home-pic5.jpg"
 
-const { t, locale } = useI18n()
+const { t } = useI18n()
 usePageSeo({ titleKey: "seo.home.title", descriptionKey: "seo.home.description", h1Key: "homeV2.heroTitle" })
 const router = useRouter()
-const modules = [Autoplay, Pagination, EffectFade]
-const paginationOptions = { clickable: true } as any
-const autoplayOptions = { delay: 4000, disableOnInteraction: false } as any
+const bannerVideoSrc = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/home-banner.mp4`
 
 const homeServiceCards = [
   { slug: "moxibustion", img: homePic5 },
@@ -169,7 +160,6 @@ const prodList = computed(() =>
   })
 )
 
-const videoList = ref<string[]>([])
 const videoReady = ref(false)
 const newsPreview = ref<any[]>([])
 const reviewPreview = ref<any[]>([])
@@ -183,8 +173,6 @@ const formatDate = (value: string | number) => {
   return String(value).slice(0, 10)
 }
 
-watch(locale, () => getBanner())
-
 const goBase = () => router.push({ path: "/base" })
 const goStore = () => router.push({ path: "/stores" })
 const goStoreDetail = (slug: string) => router.push(`/stores/${slug}`)
@@ -193,19 +181,6 @@ const goFeature = (index: number) => {
   router.push({ path: `/services/${slug}` })
 }
 const goNews = (id: number) => router.push(`/news/${id}`)
-
-const getBanner = () => {
-  getHomeBanner().then((res: any) => {
-    if (res.code == 1) {
-      videoList.value = rewriteMediaList(
-        (res.data?.data || []).map((item: any) =>
-          locale.value === "en" ? item.image_en : locale.value === "jp" ? item.image_jp : item.image
-        )
-      )
-      videoReady.value = videoList.value.length > 0
-    }
-  })
-}
 
 const loadFeed = () => {
   getArticleList({ project_id: -1, page: 1, limit: 3 }).then((res: any) => {
@@ -216,9 +191,23 @@ const loadFeed = () => {
   })
 }
 
+const scheduleBannerVideo = () => {
+  const enable = () => {
+    videoReady.value = true
+  }
+  const w = window as Window & {
+    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
+  }
+  if (typeof w.requestIdleCallback === "function") {
+    w.requestIdleCallback(enable, { timeout: 2500 })
+  } else {
+    setTimeout(enable, 2000)
+  }
+}
+
 onMounted(() => {
-  getBanner()
-  loadFeed()
+  scheduleBannerVideo()
+  setTimeout(loadFeed, 1200)
 })
 </script>
 
@@ -246,20 +235,11 @@ onMounted(() => {
       pointer-events: none;
     }
   }
-  .banner-swiper {
+  .banner-video,
+  .video {
     position: absolute;
     inset: 0;
     z-index: 1;
-    width: 100%;
-    height: 100%;
-  }
-  :deep(.swiper),
-  :deep(.swiper-wrapper),
-  :deep(.swiper-slide) {
-    width: 100%;
-    height: 100%;
-  }
-  .video {
     width: 100%;
     height: 100%;
     object-fit: cover;

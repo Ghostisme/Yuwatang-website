@@ -75,6 +75,15 @@ BEGIN
   IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'fa_ygame_store' AND COLUMN_NAME = 'status') THEN
     ALTER TABLE `fa_ygame_store` ADD COLUMN `status` tinyint(1) NOT NULL DEFAULT 1 COMMENT '1显示 0隐藏' AFTER `facilities`;
   END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'fa_ygame_store' AND COLUMN_NAME = 'map_image') THEN
+    ALTER TABLE `fa_ygame_store` ADD COLUMN `map_image` varchar(255) NOT NULL DEFAULT '' COMMENT '到店地图中文' AFTER `image_jp`;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'fa_ygame_store' AND COLUMN_NAME = 'map_image_en') THEN
+    ALTER TABLE `fa_ygame_store` ADD COLUMN `map_image_en` varchar(255) NOT NULL DEFAULT '' COMMENT '到店地图英文' AFTER `map_image`;
+  END IF;
+  IF NOT EXISTS (SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = DATABASE() AND TABLE_NAME = 'fa_ygame_store' AND COLUMN_NAME = 'map_image_jp') THEN
+    ALTER TABLE `fa_ygame_store` ADD COLUMN `map_image_jp` varchar(255) NOT NULL DEFAULT '' COMMENT '到店地图日文' AFTER `map_image_en`;
+  END IF;
   -- uk_slug 在 seed 清空旧轮播行后再加，避免空 slug 冲突
 END $$
 DELIMITER ;

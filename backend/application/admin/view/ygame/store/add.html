@@ -181,6 +181,46 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">地图(中):</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-map_image" class="form-control" size="50" name="row[map_image]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-map_image" class="btn btn-danger plupload" data-input-id="c-map_image" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-map_image"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-map_image" class="btn btn-primary fachoose" data-input-id="c-map_image" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-map_image"></ul>
+            <span class="help-block">店铺详情「门店服务」上方展示；留空则不显示</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">地图(英):</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-map_image_en" class="form-control" size="50" name="row[map_image_en]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-map_image_en" class="btn btn-danger plupload" data-input-id="c-map_image_en" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-map_image_en"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-map_image_en" class="btn btn-primary fachoose" data-input-id="c-map_image_en" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-map_image_en"></ul>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-12 col-sm-2">地图(日):</label>
+        <div class="col-xs-12 col-sm-8">
+            <div class="input-group">
+                <input id="c-map_image_jp" class="form-control" size="50" name="row[map_image_jp]" type="text" value="">
+                <div class="input-group-addon no-border no-padding">
+                    <span><button type="button" id="plupload-map_image_jp" class="btn btn-danger plupload" data-input-id="c-map_image_jp" data-mimetype="image/gif,image/jpeg,image/png,image/jpg,image/bmp" data-multiple="false" data-preview-id="p-map_image_jp"><i class="fa fa-upload"></i> {:__('Upload')}</button></span>
+                    <span><button type="button" id="fachoose-map_image_jp" class="btn btn-primary fachoose" data-input-id="c-map_image_jp" data-mimetype="image/*" data-multiple="false"><i class="fa fa-list"></i> {:__('Choose')}</button></span>
+                </div>
+            </div>
+            <ul class="row list-inline plupload-preview" id="p-map_image_jp"></ul>
+        </div>
+    </div>
+    <div class="form-group">
         <label class="control-label col-xs-12 col-sm-2">状态:</label>
         <div class="col-xs-12 col-sm-8">
             <select id="c-status" class="form-control" name="row[status]">

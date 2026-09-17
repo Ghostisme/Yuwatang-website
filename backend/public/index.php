@@ -10,11 +10,6 @@
 // | Author: liu21st <liu21st@gmail.com>
 // +----------------------------------------------------------------------
 // [ 应用入口文件 ]
-// 定义应用目录
-header("Location: /h5/");
+// 8091 仅部署 PHP：官网在 8090，根路径不再跳 /h5/，改为进后台登录。
+header('Location: /yuhetangAdmin.php/index/login');
 exit;
-define('APP_PATH', __DIR__ . '/../application/');
-
-
-// 加载框架引导文件
-require __DIR__ . '/../thinkphp/start.php';

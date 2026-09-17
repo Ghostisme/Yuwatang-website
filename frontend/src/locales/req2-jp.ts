@@ -195,6 +195,7 @@ export default {
     servicesTitle: "店舗サービス",
     facilitiesTitle: "施設と環境",
     directionsTitle: "到店案内",
+    mapTitle: "店舗地図",
     servicesHint: "全店で扶陽灸、中医推拿、草本精油SPA、香薰足療、伝統調理。",
     mapCta: "地図で案内",
     callCta: "電話する",

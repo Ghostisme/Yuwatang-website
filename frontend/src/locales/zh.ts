@@ -374,6 +374,7 @@ export default {
     servicesTitle: "门店服务",
     facilitiesTitle: "设施与环境",
     directionsTitle: "到店指引",
+    mapTitle: "到店地图",
     servicesHint: "全店提供扶阳艾灸、中医推拿、草本精油SPA、香薰足疗及传统调理。",
     mapCta: "地图导航",
     callCta: "电话咨询",

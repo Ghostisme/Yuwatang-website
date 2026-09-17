@@ -202,6 +202,7 @@ export default {
     servicesTitle: "Branch Services",
     facilitiesTitle: "Facilities & Environment",
     directionsTitle: "Getting Here",
+    mapTitle: "Location Map",
     servicesHint:
       "All branches offer moxibustion, TCM massage, herbal SPA, foot care and traditional therapies.",
     mapCta: "Open in Maps",
