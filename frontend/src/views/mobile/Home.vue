@@ -108,15 +108,6 @@
         <h3>{{ item.article_title }}</h3>
         <time>{{ formatDate(item.datetime || item.createtime) }}</time>
       </article>
-
-      <div class="feed-head mt">
-        <h2>{{ t("homeV2.latestReviews") }}</h2>
-        <router-link to="/reviews">{{ t("homeV2.viewMore") }}</router-link>
-      </div>
-      <article v-for="item in reviewPreview" :key="item.id" class="feed-item">
-        <h3>{{ item.name || t("reviews.anonymous") }}</h3>
-        <p>{{ item.content }}</p>
-      </article>
     </section>
   </div>
 </template>
@@ -125,7 +116,7 @@
 import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
-import { getArticleList, getFeedbackList } from "@/api"
+import { getArticleList } from "@/api"
 import { services as serviceList } from "@/config/services"
 import { useStoreList } from "@/composables/useStores"
 import { usePageSeo } from "@/composables/usePageSeo"
@@ -162,7 +153,6 @@ const prodList = computed(() =>
 
 const videoReady = ref(false)
 const newsPreview = ref<any[]>([])
-const reviewPreview = ref<any[]>([])
 
 const formatDate = (value: string | number) => {
   if (!value) return ""
@@ -185,9 +175,6 @@ const goNews = (id: number) => router.push(`/news/${id}`)
 const loadFeed = () => {
   getArticleList({ project_id: -1, page: 1, limit: 3 }).then((res: any) => {
     if (res.code == 1) newsPreview.value = res.data?.data || []
-  })
-  getFeedbackList({ page: 1, limit: 3 }).then((res: any) => {
-    reviewPreview.value = res?.data?.list || []
   })
 }
 
@@ -463,9 +450,6 @@ onMounted(() => {
   justify-content: space-between;
   align-items: baseline;
   margin-bottom: 10px;
-  &.mt {
-    margin-top: 24px;
-  }
   h2 {
     margin: 0;
     font-size: 18px;

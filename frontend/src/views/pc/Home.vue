@@ -115,17 +115,6 @@
         </article>
         <p v-if="!newsPreview.length" class="feed-empty">—</p>
       </div>
-      <div class="feed-col">
-        <div class="feed-head">
-          <h2>{{ t("homeV2.latestReviews") }}</h2>
-          <router-link to="/reviews">{{ t("homeV2.viewMore") }}</router-link>
-        </div>
-        <article v-for="item in reviewPreview" :key="item.id" class="feed-item">
-          <h3>{{ item.name || t("reviews.anonymous") }}</h3>
-          <p>{{ item.content }}</p>
-        </article>
-        <p v-if="!reviewPreview.length" class="feed-empty">—</p>
-      </div>
     </section>
     <img class="left-icon" src="@/assets/img/left-icon.png" alt="" role="presentation" />
     <img class="right-icon" src="@/assets/img/right-icon.png" alt="" role="presentation" />
@@ -137,7 +126,7 @@ import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
 
-import { getArticleList, getFeedbackList } from "@/api"
+import { getArticleList } from "@/api"
 import { services as serviceList } from "@/config/services"
 import { useStoreList } from "@/composables/useStores"
 import homePic2 from "@/assets/img/home-pic2.jpg"
@@ -177,7 +166,6 @@ const shopOneList = ref(t("home.item16").split(","))
 const shopTwoList = ref(t("home.item17").split(","))
 const videoReady = ref(false)
 const newsPreview = ref<any[]>([])
-const reviewPreview = ref<any[]>([])
 
 const formatDate = (value: string | number) => {
   if (!value) return ""
@@ -191,9 +179,6 @@ const formatDate = (value: string | number) => {
 const loadFeed = () => {
   getArticleList({ project_id: -1, page: 1, limit: 3 }).then((res: any) => {
     if (res.code == 1) newsPreview.value = res.data?.data || []
-  })
-  getFeedbackList({ page: 1, limit: 3 }).then((res: any) => {
-    reviewPreview.value = res?.data?.list || []
   })
 }
 
@@ -453,7 +438,7 @@ onMounted(() => {
 .feed-section {
   margin: 0 auto 70px;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 40px;
 }
 .feed-head {

@@ -115,11 +115,17 @@ const mailtoHref = computed(() => {
     display: block;
     width: 100%;
     max-width: 360px;
-    max-height: 360px;
+    height: auto;
     margin: 0 auto;
     object-fit: contain;
     border-radius: 12px;
     background: #f6ecd9;
+  }
+  @media (min-width: 769px) {
+    img {
+      max-width: none;
+      margin: 0;
+    }
   }
 }
 .info-card {
