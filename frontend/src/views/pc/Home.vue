@@ -89,7 +89,7 @@
 
     <HomeHonors />
 
-    <div class="zdfw" style="max-width: 1407px; padding: 0 25px">
+    <div class="zdfw home-tea" style="max-width: 1407px; padding: 0 25px">
       <div class="zdfw-title">
         <img src="@/assets/img/htn-logo.svg" alt="Hetuonian" />
       </div>

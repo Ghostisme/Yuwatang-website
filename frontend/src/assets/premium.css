@@ -281,6 +281,15 @@ html {
   transform: none;
 }
 
+/* 首页茶水图片静态展示，关闭缩放及图片容器的滚动位移。 */
+.app .home .home-tea .zdfw-content,
+.app .home .home-tea .zdfw-content-img,
+.app .home .home-tea .zdfw-content-img img {
+  opacity: 1;
+  transform: none;
+  transition: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;

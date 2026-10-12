@@ -85,7 +85,7 @@
 
     <HomeHonors />
 
-    <div class="zdfw">
+    <div class="zdfw home-tea">
       <div class="zdfw-title">
         <img src="@/assets/img/htn-text.png" alt="Hetuonian" />
       </div>
