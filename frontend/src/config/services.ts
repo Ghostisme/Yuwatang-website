@@ -46,14 +46,14 @@ export const services: ServiceInfo[] = [
   }
 ]
 
-/** 更多项目的展示顺序；收到照片后填写对应 image 文件名即可。 */
+/** 更多传统调理项目：展示顺序与对应项目照片。 */
 export const traditionalServices: ServiceInfo[] = [
   {
     slug: "cupping",
     nameKey: "services.cupping.name",
     summaryKey: "services.cupping.summary",
     bodyKey: "services.cupping.body",
-    image: "",
+    image: "traditional-cupping.jpg",
     parentSlug: "traditional"
   },
   {
@@ -61,7 +61,7 @@ export const traditionalServices: ServiceInfo[] = [
     nameKey: "services.guaSha.name",
     summaryKey: "services.guaSha.summary",
     bodyKey: "services.guaSha.body",
-    image: "",
+    image: "traditional-gua-sha.jpg",
     parentSlug: "traditional"
   },
   {
@@ -69,7 +69,7 @@ export const traditionalServices: ServiceInfo[] = [
     nameKey: "services.earCare.name",
     summaryKey: "services.earCare.summary",
     bodyKey: "services.earCare.body",
-    image: "",
+    image: "traditional-ear-care.jpg",
     parentSlug: "traditional"
   },
   {
@@ -77,7 +77,7 @@ export const traditionalServices: ServiceInfo[] = [
     nameKey: "services.pedicure.name",
     summaryKey: "services.pedicure.summary",
     bodyKey: "services.pedicure.body",
-    image: "",
+    image: "traditional-pedicure.jpg",
     parentSlug: "traditional"
   },
   {
@@ -85,7 +85,7 @@ export const traditionalServices: ServiceInfo[] = [
     nameKey: "services.pediatricTuina.name",
     summaryKey: "services.pediatricTuina.summary",
     bodyKey: "services.pediatricTuina.body",
-    image: "",
+    image: "traditional-pediatric-tuina.jpg",
     parentSlug: "traditional"
   }
 ]
