@@ -146,16 +146,18 @@ export default {
     whyTitle: "Why Three-Year Aged Mugwort",
     whyLead:
       "Tracing herbs to truth. Since 2017, our 100-mu base in Qichun: spring planting, Dragon Boat harvest, three-year natural aging, triple screening, standardized rolling and humidity control. Finished sticks are delivered to Shanghai branches with trace codes.",
+    whyQiaiTitle: "Why Qiai",
     whyQiai:
-      "Why Qiai: Qichun is Li Shizhen's hometown; Bencao Gangmu praises Qiai—thick leaves, rich fuzz, mild nature, regarded as premium mugwort.",
+      "Qichun is Li Shizhen's hometown; Bencao Gangmu praises Qiai—thick leaves, rich fuzz, mild nature, regarded as premium mugwort.",
+    whyThreeTitle: "Why three years",
     whyThree:
-      "Why three years: Mencius said, \"For a seven-year illness, seek three-year mugwort.\" Fresh mugwort is harsh; after three years, fluff is soft, heat is mild and penetrating—ideal for manual suspended moxibustion. Three years cannot be rushed.",
+      "Mencius said, \"For a seven-year illness, seek three-year mugwort.\" Fresh mugwort is harsh; after three years, fluff is soft, heat is mild and penetrating—ideal for manual suspended moxibustion. Three years cannot be rushed.",
     processTitle: "Full Process · Quality Assurance",
-    processLead: "From plant to stick: fresh leaves dried on site, aged three years; each harvest, three-year mugwort is processed—",
-    process1: "① Triple screening",
-    process2: "② Standardized rolling",
-    process3: "③ Humidity control throughout",
-    process4: "④ Sealed delivery to Shanghai branches",
+    processLead: "From plant to stick: fresh leaves dried on site, aged three years; each harvest, three-year mugwort is processed.",
+    process1: "Triple screening",
+    process2: "Standardized rolling",
+    process3: "Humidity control throughout",
+    process4: "Sealed delivery to Shanghai branches",
     qualityTitle: "Quality you can verify",
     qualityText:
       "In-branch sticks carry trace codes; warehouses labeled by harvest year; on-site monitoring at the base; full-process documentary available in branches.",

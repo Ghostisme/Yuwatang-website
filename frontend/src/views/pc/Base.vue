@@ -5,30 +5,7 @@
       <h1 class="banner-tit">{{ t("baseV2.h1") }}</h1>
     </div>
     <div class="base-body">
-      <section>
-        <h2>{{ t("baseV2.moxibustionTitle") }}</h2>
-        <p class="lead">{{ t("baseV2.moxibustionIntro") }}</p>
-      </section>
-      <section>
-        <h2>{{ t("baseV2.whyTitle") }}</h2>
-        <p>{{ t("baseV2.whyLead") }}</p>
-        <p>{{ t("baseV2.whyQiai") }}</p>
-        <p>{{ t("baseV2.whyThree") }}</p>
-      </section>
-      <section class="process">
-        <h2>{{ t("baseV2.processTitle") }}</h2>
-        <p>{{ t("baseV2.processLead") }}</p>
-        <ol>
-          <li>{{ t("baseV2.process1") }}</li>
-          <li>{{ t("baseV2.process2") }}</li>
-          <li>{{ t("baseV2.process3") }}</li>
-          <li>{{ t("baseV2.process4") }}</li>
-        </ol>
-      </section>
-      <section>
-        <h2>{{ t("baseV2.qualityTitle") }}</h2>
-        <p>{{ t("baseV2.qualityText") }}</p>
-      </section>
+      <BaseStory />
       <section class="film">
         <h2>{{ t("baseV2.filmTitle") }}</h2>
         <p>{{ t("baseV2.filmLead") }}</p>
@@ -65,6 +42,7 @@
 <script setup lang="ts">
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
+import BaseStory from "@/components/BaseStory.vue"
 import { usePageSeo } from "@/composables/usePageSeo"
 
 const { t } = useI18n()
@@ -107,29 +85,29 @@ const isDirectVideo = computed(() => /\.(mp4|webm|ogg)([?#]|$)/i.test(documentar
   }
 }
 .base-body {
-  max-width: 900px;
+  max-width: 1120px;
   margin: 0 auto;
-  padding: 48px 24px 80px;
-  section {
-    margin-bottom: 36px;
-    h2 {
-      font-family: "LinHai";
-      font-size: 22px;
-      margin: 0 0 16px;
-      color: rgba(60, 50, 28, 1);
-    }
-    p,
-    li {
-      line-height: 1.85;
-      color: rgba(60, 50, 28, 0.78);
-      margin-bottom: 12px;
-    }
-    .lead {
-      font-size: 17px;
-    }
+  padding: 64px 32px 88px;
+  font-family: "Microsoft YaHei", var(--font-zh);
+}
+.film {
+  padding-top: 44px;
+  margin-bottom: 32px;
+
+  h2 {
+    margin: 0 0 16px;
+    color: #3c321c;
+    font-family: "LinHai", "Microsoft YaHei", var(--font-zh);
+    font-size: 28px;
+    font-weight: 600;
+    line-height: 1.5;
   }
-  .process ol {
-    padding-left: 20px;
+
+  p {
+    margin: 0;
+    color: rgba(60, 50, 28, 0.74);
+    font-size: 16px;
+    line-height: 1.95;
   }
 }
 .film-frame {

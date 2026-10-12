@@ -10,6 +10,7 @@ declare module 'vue' {
   export interface GlobalComponents {
     AboutProductSection: typeof import('./src/components/AboutProductSection.vue')['default']
     BackToTop: typeof import('./src/components/BackToTop.vue')['default']
+    BaseStory: typeof import('./src/components/BaseStory.vue')['default']
     BrandTimeline: typeof import('./src/components/BrandTimeline.vue')['default']
     FaqBody: typeof import('./src/components/FaqBody.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
