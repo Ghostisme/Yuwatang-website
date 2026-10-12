@@ -48,7 +48,7 @@ export const productImages = [traceAsset("upload/image/20250724/1753348714774743
 export const qualifyImages = [
   traceAsset("upload/image/20250808/1754621220296629.png"),
   traceAsset("upload/image/20250718/1752829546207910.jpg"),
-  traceAsset("upload/image/20250718/1752829581175927.jpg"),
+  traceAsset("upload/image/20261012/picc-insurance.png"),
   traceAsset("upload/image/20250718/1752829756809601.jpg"),
   traceAsset("upload/image/20260714/1783998286726932.jpg"),
   traceAsset("upload/image/20260714/1783998286178786.jpg"),
