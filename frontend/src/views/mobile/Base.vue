@@ -33,7 +33,15 @@
         <h2>{{ t("baseV2.filmTitle") }}</h2>
         <p>{{ t("baseV2.filmLead") }}</p>
         <div class="film-frame">
-          <video v-if="isDirectVideo" :src="documentaryUrl" controls playsinline preload="metadata" :title="t('baseV2.filmWatch')" />
+          <video
+            v-if="isDirectVideo"
+            :src="documentaryUrl"
+            :poster="documentaryPoster"
+            controls
+            playsinline
+            preload="none"
+            :title="t('baseV2.filmWatch')"
+          />
           <iframe
             v-else-if="documentaryUrl"
             :src="documentaryUrl"
@@ -62,8 +70,13 @@ import { usePageSeo } from "@/composables/usePageSeo"
 const { t } = useI18n()
 usePageSeo({ titleKey: "seo.base.title", descriptionKey: "seo.base.description", h1Key: "baseV2.h1" })
 
-const documentaryUrl = computed(() => String(import.meta.env.VITE_DOCUMENTARY_URL || "").trim())
-const isDirectVideo = computed(() => /\.(mp4|webm|ogg)(\?|$)/i.test(documentaryUrl.value))
+const mediaBaseUrl = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/`
+const defaultDocumentaryUrl = `${mediaBaseUrl}base-documentary.mp4`
+const documentaryUrl = computed(() => String(import.meta.env.VITE_DOCUMENTARY_URL || "").trim() || defaultDocumentaryUrl)
+const documentaryPoster = computed(() =>
+  documentaryUrl.value === defaultDocumentaryUrl ? `${mediaBaseUrl}base-documentary.jpg` : undefined
+)
+const isDirectVideo = computed(() => /\.(mp4|webm|ogg)([?#]|$)/i.test(documentaryUrl.value))
 </script>
 
 <style lang="scss" scoped>

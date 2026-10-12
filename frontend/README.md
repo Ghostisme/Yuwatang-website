@@ -36,3 +36,20 @@ npm run dev
 ```sh
 npm run build
 ```
+
+### 艾草基地介绍视频
+
+电脑端和手机端的 `/base` 页面默认播放约 94 秒的基地介绍片：
+
+- 视频：`public/media/base-documentary.mp4`（1080p，保留原片声音）
+- 封面：`public/media/base-documentary.jpg`
+
+视频地址会跟随 `VITE_BASE_URL`，支持网站根目录和 `/h5/` 等子目录部署。页面先展示封面，点击播放后加载视频。
+
+如需换成 CDN 上的视频，可在对应环境文件中设置 `VITE_DOCUMENTARY_URL`，例如：
+
+```dotenv
+VITE_DOCUMENTARY_URL=https://cdn.example.com/base-documentary.mp4
+```
+
+该配置优先于内置视频；留空时使用内置视频。MP4、WebM、OGG 地址使用视频播放器，嵌入式播放页面地址使用 iframe。修改环境配置后，需要重启开发服务或重新构建。
