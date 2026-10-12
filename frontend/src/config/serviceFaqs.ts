@@ -1,12 +1,5 @@
 /** 需求2-13：各服务子页 FAQ（附录相关问答提炼，避免走 vue-i18n tm 编译函数） */
-import { VISIT_FAQ_TOPICS, type FaqItem } from "@/config/faq"
-import { getServiceBySlug } from "@/config/services"
-import faqZh from "@/locales/faq-zh"
-import faqEn from "@/locales/faq-en"
-import faqJp from "@/locales/faq-jp"
-import { resolveI18nLeaf } from "@/utils/i18nSafe"
-
-export type ServiceFaqItem = FaqItem
+export type ServiceFaqItem = { q: string; a: string }
 
 export const serviceFaqsZh: Record<string, ServiceFaqItem[]> = {
   moxibustion: [
@@ -51,6 +44,10 @@ export const serviceFaqsZh: Record<string, ServiceFaqItem[]> = {
       a: "以门店专属调配的草本精油为介质，沿经络推抚疏通，香气温润不冲鼻。适合长期紧绷、睡眠浅、想要更沉浸放松体验的人；另有90分钟加长版。"
     },
     {
+      q: "到裕和堂门店体验服务，流程是什么？需要提前准备什么？",
+      a: "裕和堂的到店流程为：到店 → 前台确认预约 → 进入独立理疗房更衣，奉上养生茶点 → 调理师沟通后开始。无需特别准备，建议提前5–10分钟到店。"
+    },
+    {
       q: "裕和堂会推销办卡吗？",
       a: "不会。全程无推销是裕和堂的服务底线，你可以安静地享受整个过程。"
     }
@@ -63,6 +60,10 @@ export const serviceFaqsZh: Record<string, ServiceFaqItem[]> = {
     {
       q: "裕和堂门店有停车位和淋浴设施吗？",
       a: "多数门店可报销停车费（以各门店规则为准）、配淋浴房，全店提供免费养生茶点。"
+    },
+    {
+      q: "裕和堂门店的营业时间是什么？",
+      a: "裕和堂全店营业至23:00，无午休。部分门店9:00开门，部分9:30开门，详见门店页。"
     }
   ],
   traditional: [
@@ -128,6 +129,10 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
       a: "House-blended herbal oils with meridian strokes; aroma is gentle. Ideal for high stress and light sleepers; a 90-minute extended option is available."
     },
     {
+      q: "What is the process when visiting a Yu Health branch, and what should I prepare?",
+      a: "At Yu Health, your visit follows this process: arrive → confirm booking → change in a private room with tea → therapist consult then start. Arrive 5–10 minutes early."
+    },
+    {
       q: "Will Yu Health pressure me to buy a membership card?",
       a: "No. Zero hard-selling is our baseline."
     }
@@ -140,6 +145,10 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
     {
       q: "Do Yu Health branches offer parking and showers?",
       a: "Most branches reimburse parking (per branch rules) and have showers; free herbal tea & snacks at all branches."
+    },
+    {
+      q: "What are Yu Health's opening hours?",
+      a: "All Yu Health branches are open until 23:00 with no midday break. Some open at 9:00, others at 9:30—see branch pages."
     }
   ],
   traditional: [
@@ -205,6 +214,10 @@ export const serviceFaqsJp: Record<string, ServiceFaqItem[]> = {
       a: "店舗調合の草本精油で経絡を疏通。香りは穏やか。緊張・浅い眠り・没入感を求める方に。90分延長もあり。"
     },
     {
+      q: "裕和堂に来店してから施術を受けるまでの流れは？事前に何を準備すればよいですか？",
+      a: "裕和堂での来店の流れは、来店→予約確認→個室更衣と養生茶→カウンセリング後スタート。5–10分前の到着をおすすめします。"
+    },
+    {
       q: "裕和堂では会員カードへの勧誘がありますか？",
       a: "ありません。強引な勧誘なしが方針です。"
     }
@@ -217,6 +230,10 @@ export const serviceFaqsJp: Record<string, ServiceFaqItem[]> = {
     {
       q: "裕和堂の店舗には駐車場やシャワーがありますか？",
       a: "多くの店舗で駐車費精算可・シャワーあり。全店で養生茶菓子無料。"
+    },
+    {
+      q: "裕和堂の営業時間は何時ですか？",
+      a: "裕和堂は全店23:00まで営業し、昼休みはありません。開店は9:00または9:30—店舗ページを参照。"
     }
   ],
   traditional: [
@@ -240,14 +257,6 @@ export const serviceFaqsJp: Record<string, ServiceFaqItem[]> = {
 }
 
 export function getServiceFaqs(slug: string, locale: string): ServiceFaqItem[] {
-  if (!getServiceBySlug(slug)) return []
-
   const pack = locale === "en" ? serviceFaqsEn : locale === "jp" ? serviceFaqsJp : serviceFaqsZh
-  const generalPack = locale === "en" ? faqEn : locale === "jp" ? faqJp : faqZh
-  const visitFaqs = VISIT_FAQ_TOPICS.flatMap((topic) =>
-    generalPack.items
-      .filter((item) => resolveI18nLeaf(item.topic) === topic)
-      .map((item) => ({ q: resolveI18nLeaf(item.q), a: resolveI18nLeaf(item.a) }))
-  )
-  return [...(pack[slug] || []), ...visitFaqs]
+  return pack[slug] || []
 }
