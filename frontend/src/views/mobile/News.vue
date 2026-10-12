@@ -6,11 +6,15 @@
       <div v-else-if="!articleList.length" class="news-empty">{{ t("news.empty") }}</div>
       <div v-else class="news-list">
         <div class="news-item" v-for="item in articleList" :key="item.id" @click="goDetail(item.id)">
-          <img v-if="item.image" :src="item.image" class="item-img" :alt="item.article_title" />
-          <div v-else class="item-img placeholder"></div>
-          <h3>{{ item.article_title }}</h3>
-          <p>{{ getSummary(item.content) }}</p>
-          <span class="item-date">{{ formatDate(item.datetime || item.createtime) }}</span>
+          <div class="item-media">
+            <img v-if="item.image" :src="item.image" class="item-img" :alt="item.article_title" />
+            <div v-else class="item-img placeholder"></div>
+          </div>
+          <div class="item-info">
+            <h3>{{ item.article_title }}</h3>
+            <p>{{ getSummary(item.content) }}</p>
+            <span class="item-date">{{ formatDate(item.datetime || item.createtime) }}</span>
+          </div>
         </div>
       </div>
       <div class="news-pagination" v-if="total > limit">
@@ -105,36 +109,64 @@ onMounted(fetchList)
     padding: 40px 0;
     font-size: 14px;
   }
+  &-list {
+    display: grid;
+    gap: 16px;
+  }
   .news-item {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
     background: #fff;
     border-radius: 12px;
-    padding: 0 0 16px;
-    margin-bottom: 15px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
     overflow: hidden;
+    .item-media {
+      aspect-ratio: 16 / 9;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
     .item-img {
       width: 100%;
-      height: 180px;
+      height: 100%;
       object-fit: cover;
       display: block;
       &.placeholder {
         background: linear-gradient(135deg, #f5f0ea, #ebe3d8);
       }
     }
-    h3 {
-      margin: 14px 15px 8px;
-      font-size: 16px;
-      color: rgba(60, 50, 28, 1);
-      line-height: 1.4;
+    .item-info {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
+      padding: 18px 16px;
     }
-    p {
-      margin: 0 15px 10px;
-      font-size: 13px;
-      color: rgba(60, 50, 28, 0.7);
+    h3 {
+      margin: 0 0 12px;
+      height: 3em;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      font-size: 18px;
+      color: rgba(60, 50, 28, 1);
       line-height: 1.5;
     }
+    p {
+      margin: 0 0 16px;
+      height: 5.1em;
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 3;
+      overflow: hidden;
+      overflow-wrap: anywhere;
+      font-size: 14px;
+      color: rgba(60, 50, 28, 0.7);
+      line-height: 1.7;
+    }
     .item-date {
-      margin: 0 15px;
+      margin-top: auto;
       font-size: 12px;
       color: rgba(60, 50, 28, 0.45);
     }

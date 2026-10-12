@@ -122,6 +122,9 @@ onMounted(fetchList)
     gap: 30px;
   }
   .news-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
     background: #fff;
     border-radius: 12px;
     overflow: hidden;
@@ -133,7 +136,8 @@ onMounted(fetchList)
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.08);
     }
     .card-img {
-      height: 200px;
+      aspect-ratio: 16 / 9;
+      flex-shrink: 0;
       overflow: hidden;
       background: #f5f0ea;
       img {
@@ -149,9 +153,18 @@ onMounted(fetchList)
       }
     }
     .card-info {
+      display: flex;
+      flex: 1;
+      flex-direction: column;
       padding: 24px;
       h3 {
         margin: 0 0 12px;
+        height: 2.8em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        overflow: hidden;
+        overflow-wrap: anywhere;
         font-size: 20px;
         line-height: 1.4;
         color: rgba(60, 50, 28, 1);
@@ -159,12 +172,18 @@ onMounted(fetchList)
       }
       p {
         margin: 0 0 16px;
+        height: 4.8em;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        overflow: hidden;
+        overflow-wrap: anywhere;
         font-size: 14px;
         line-height: 1.6;
         color: rgba(60, 50, 28, 0.7);
-        min-height: 66px;
       }
       .card-date {
+        margin-top: auto;
         font-size: 13px;
         color: rgba(60, 50, 28, 0.45);
       }
