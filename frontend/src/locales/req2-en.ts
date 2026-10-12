@@ -79,7 +79,7 @@ export default {
     storeList:
       "Yuyao Rd · Caojiadu ｜ Paramount · Jing'an Temple ｜ Huashan Rd · Wukang Rd ｜ Taikoo Hui · Qinghai Rd ｜ Wujiang Rd · West Nanjing Rd ｜ Shanghai Tower · Lujiazui ｜ Meihua Rd · Century Park ｜ North Sichuan Rd · North Bund ｜ Changde Rd · Jiangning / Changshou Rd",
     moreTraditional:
-      "More traditional care: pediatric tuina, cupping, gua sha, nail care, ear cleaning.",
+      "More traditional care: cupping · gua sha · ear cleaning · nail care · pediatric tuina.",
     viewMore: "View More"
   },
   aboutV2: {
@@ -157,10 +157,12 @@ export default {
   services: {
     h1: "Fourfold Healing, One Destination",
     intro:
-      "Four core services: signature moxibustion (three-year aged mugwort), TCM massage, herbal SPA, aromatherapy foot care, plus pediatric tuina, cupping, gua sha, ear cleaning and nail care. Senior / Master / Expert tiers; email booking available.",
+      "Four core services: signature moxibustion (three-year aged mugwort), TCM massage, herbal SPA, aromatherapy foot care, plus cupping, gua sha, ear cleaning, nail care and pediatric tuina. Senior / Master / Expert tiers; email booking available.",
     moreTraditional:
-      "More traditional care: pediatric tuina · cupping · gua sha · nail care · ear cleaning.",
+      "More traditional care: cupping · gua sha · ear cleaning · nail care · pediatric tuina.",
     moreProjects: "More services",
+    viewDetails: "Explore this service",
+    backTraditional: "Back to More Services",
     faqTitle: "FAQ for this service",
     back: "Back to Services",
     moxibustion: {
@@ -184,9 +186,34 @@ export default {
       body: "<p>Start with a perfectly warm soak—aromatherapy or ginger bath, then court-style foot and calf work. For tired feet, cold hands/feet, travel recovery. 80-minute ginger foot session available.</p>"
     },
     traditional: {
-      name: "Traditional Care",
-      summary: "Pediatric tuina, cupping, gua sha, ear cleaning, nail care and more.",
-      body: "<p>Gua sha and cupping for damp-cold relief, often paired with massage or moxibustion; professional ear cleaning and nail care. Pediatric tuina and other traditional therapies can be arranged when booking—ask any branch; therapists assess on site.</p>"
+      name: "More Traditional Care",
+      summary: "Cupping · gua sha · ear cleaning · nail care · pediatric tuina. Traditional techniques for everyday care.",
+      body: "<p>Explore five traditional services: cupping, gua sha, ear cleaning, nail care and pediatric tuina. Ask your branch about availability when booking; therapists will discuss your needs on arrival.</p>"
+    },
+    cupping: {
+      name: "Cupping",
+      summary: "Traditional cup techniques, with attention to every area.",
+      body: "<p>Traditional cupping tailored to different areas of the body, often arranged alongside massage or moxibustion as part of everyday care.</p><p>Your therapist will discuss your condition and comfort before agreeing on the areas and approach. Ask your branch about availability when booking.</p>"
+    },
+    guaSha: {
+      name: "Gua Sha",
+      summary: "Thoughtful strokes, guided by your comfort.",
+      body: "<p>Traditional gua sha techniques with pace and pressure adapted to each area and your comfort. It can be arranged alongside massage or moxibustion.</p><p>Your therapist will ask about your condition and skin before starting. Share how you feel throughout so the approach can be adjusted.</p>"
+    },
+    earCare: {
+      name: "Traditional Ear Care",
+      summary: "A gentle touch for a quiet moment of relaxation.",
+      body: "<p>Professional tools and gentle, careful techniques for ear cleaning and relaxation around the ears, at a calm and unhurried pace.</p><p>Discuss your ear condition and preferences before starting, and share how you feel during the service. Confirm the available services with your branch when booking.</p>"
+    },
+    pedicure: {
+      name: "Refined Nail Care",
+      summary: "Everyday foot care, down to the small details.",
+      body: "<p>Careful toenail trimming and cleaning around the nail edges, tailored by your therapist to the condition of your feet.</p><p>Discuss the areas needing attention and your foot condition on arrival. Confirm the exact service with your branch.</p>"
+    },
+    pediatricTuina: {
+      name: "Pediatric Tuina",
+      summary: "Gentle techniques, with a child's comfort in mind.",
+      body: "<p>Gentle, attentive techniques arranged according to your child's age and condition, with care for their comfort and cooperation throughout.</p><p>Please check availability with your branch when booking. Therapists assess on arrival; parents may stay in the room and share how their child feels.</p>"
     }
   },
   stores: {

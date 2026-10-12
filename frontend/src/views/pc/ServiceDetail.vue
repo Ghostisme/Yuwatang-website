@@ -1,10 +1,25 @@
 <template>
-  <div class="page service-detail" v-if="service">
+  <div
+    v-if="service"
+    class="page service-detail"
+    :class="{ 'traditional-overview': service.slug === 'traditional', 'traditional-detail': service.parentSlug }"
+  >
     <div class="page-body">
+      <router-link
+        v-if="service.parentSlug"
+        class="parent-link"
+        :to="{ path: '/services/traditional', query: { lang: locale } }"
+      >
+        ← {{ t("services.backTraditional") }}
+      </router-link>
       <h1 class="page-h1">{{ t(service.nameKey) }}</h1>
       <p class="lead">{{ t(service.summaryKey) }}</p>
-      <img class="hero-img" :src="getImg(service.image)" :alt="t(service.nameKey)" />
-      <div class="body-text" v-html="t(service.bodyKey)"></div>
+      <TraditionalServiceGallery v-if="service.slug === 'traditional'" />
+      <template v-else>
+        <ServiceMedia v-if="service.parentSlug" class="detail-media" :service="service" />
+        <img v-else class="hero-img" :src="getImg(service.image)" :alt="t(service.nameKey)" />
+        <div class="body-text" v-html="t(service.bodyKey)"></div>
+      </template>
 
       <section v-if="faqs.length" class="service-faq" aria-labelledby="service-faq-title">
         <h2 id="service-faq-title" class="faq-title">{{ t("services.faqTitle") }}</h2>
@@ -14,7 +29,9 @@
         </details>
       </section>
 
-      <button class="back-btn" type="button" @click="router.push('/services')">{{ t("services.back") }}</button>
+      <button class="back-btn" type="button" @click="goBack">
+        {{ t(service.parentSlug ? "services.backTraditional" : "services.back") }}
+      </button>
     </div>
   </div>
 </template>
@@ -23,6 +40,8 @@
 import { computed } from "vue"
 import { useRoute, useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
+import ServiceMedia from "@/components/ServiceMedia.vue"
+import TraditionalServiceGallery from "@/components/TraditionalServiceGallery.vue"
 import { getServiceBySlug } from "@/config/services"
 import { getServiceFaqs } from "@/config/serviceFaqs"
 import { articleSeoDescription, serviceSeoTitle, useDynamicPageSeo, useFaqPageJsonLd } from "@/composables/usePageSeo"
@@ -34,6 +53,10 @@ const { t, locale } = useI18n()
 
 const service = computed(() => getServiceBySlug(String(route.params.slug || "")))
 const faqs = computed(() => (service.value ? getServiceFaqs(service.value.slug, locale.value) : []))
+const goBack = () => router.push({
+  path: service.value?.parentSlug ? "/services/traditional" : "/services",
+  query: { lang: locale.value }
+})
 
 const pageMeta = computed(() => {
   if (!service.value) return { title: "", description: "" }
@@ -52,6 +75,9 @@ useBreadcrumbJsonLd(
       ? [
           { name: t("nav.home"), path: "/" },
           { name: t("nav.feature"), path: "/services" },
+          ...(service.value.parentSlug
+            ? [{ name: t("services.traditional.name"), path: "/services/traditional" }]
+            : []),
           { name: t(service.value.nameKey), path: `/services/${service.value.slug}` }
         ]
       : []
@@ -71,6 +97,27 @@ const getImg = (name: string) => new URL(`../../assets/img/${name}`, import.meta
   max-width: 860px;
   margin: 0 auto;
   padding: 48px 24px 80px;
+}
+.traditional-overview .page-body {
+  max-width: 1100px;
+}
+.traditional-overview .page-h1,
+.traditional-detail .page-h1 {
+  color: var(--pm-ink);
+}
+.traditional-overview .lead,
+.traditional-detail .lead,
+.traditional-detail .body-text {
+  font-size: 16px;
+}
+.parent-link {
+  display: inline-block;
+  margin-bottom: 32px;
+  color: #7a5636;
+  font-size: 14px;
+}
+.detail-media {
+  margin-bottom: 32px;
 }
 .page-h1 {
   text-align: center;

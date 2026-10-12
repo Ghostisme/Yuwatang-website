@@ -4,6 +4,7 @@ export type ServiceInfo = {
   summaryKey: string
   bodyKey: string
   image: string
+  parentSlug?: string
 }
 
 /** 需求2：四大项目 + 传统调理 */
@@ -45,4 +46,49 @@ export const services: ServiceInfo[] = [
   }
 ]
 
-export const getServiceBySlug = (slug: string) => services.find((s) => s.slug === slug)
+/** 更多项目的展示顺序；收到照片后填写对应 image 文件名即可。 */
+export const traditionalServices: ServiceInfo[] = [
+  {
+    slug: "cupping",
+    nameKey: "services.cupping.name",
+    summaryKey: "services.cupping.summary",
+    bodyKey: "services.cupping.body",
+    image: "",
+    parentSlug: "traditional"
+  },
+  {
+    slug: "gua-sha",
+    nameKey: "services.guaSha.name",
+    summaryKey: "services.guaSha.summary",
+    bodyKey: "services.guaSha.body",
+    image: "",
+    parentSlug: "traditional"
+  },
+  {
+    slug: "ear-care",
+    nameKey: "services.earCare.name",
+    summaryKey: "services.earCare.summary",
+    bodyKey: "services.earCare.body",
+    image: "",
+    parentSlug: "traditional"
+  },
+  {
+    slug: "pedicure",
+    nameKey: "services.pedicure.name",
+    summaryKey: "services.pedicure.summary",
+    bodyKey: "services.pedicure.body",
+    image: "",
+    parentSlug: "traditional"
+  },
+  {
+    slug: "pediatric-tuina",
+    nameKey: "services.pediatricTuina.name",
+    summaryKey: "services.pediatricTuina.summary",
+    bodyKey: "services.pediatricTuina.body",
+    image: "",
+    parentSlug: "traditional"
+  }
+]
+
+export const getServiceBySlug = (slug: string) =>
+  [...services, ...traditionalServices].find((s) => s.slug === slug)

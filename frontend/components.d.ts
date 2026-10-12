@@ -18,8 +18,10 @@ declare module 'vue' {
     ReviewForm: typeof import('./src/components/ReviewForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    ServiceMedia: typeof import('./src/components/ServiceMedia.vue')['default']
     StoreDetailBody: typeof import('./src/components/StoreDetailBody.vue')['default']
     TraceBoard: typeof import('./src/components/TraceBoard.vue')['default']
     TraceInfoBlock: typeof import('./src/components/TraceInfoBlock.vue')['default']
+    TraditionalServiceGallery: typeof import('./src/components/TraditionalServiceGallery.vue')['default']
   }
 }
