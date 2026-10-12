@@ -52,7 +52,7 @@
       </div>
     </section>
 
-    <div class="zdfw" style="max-width: 1407px; padding: 0 25px">
+    <div class="zdfw home-base" style="max-width: 1407px; padding: 0 25px">
       <div class="zdfw-content">
         <div class="zdfw-content-img">
           <img src="@/assets/img/home-pic8.jpg" :alt="t('homeV2.baseTeaser')" />
@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    <div class="honor-bar">{{ t("homeV2.honor") }}</div>
+    <HomeHonors />
 
     <div class="zdfw" style="max-width: 1407px; padding: 0 25px">
       <div class="zdfw-title">
@@ -125,6 +125,7 @@
 import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
+import HomeHonors from "@/components/HomeHonors.vue"
 
 import { getArticleList } from "@/api"
 import { services as serviceList } from "@/config/services"
@@ -427,14 +428,6 @@ onMounted(() => {
     }
   }
 }
-.honor-bar {
-  text-align: center;
-  padding: 20px 16px;
-  background: rgba(194, 153, 116, 0.15);
-  color: rgba(60, 50, 28, 0.85);
-  font-size: 15px;
-  margin: 40px 0;
-}
 .feed-section {
   margin: 0 auto 70px;
   display: grid;
@@ -592,17 +585,11 @@ onMounted(() => {
       cursor: pointer;
       .item-img {
         width: 100%;
+        overflow: hidden;
         img {
           display: block;
           width: 100%;
           height: 100%;
-        }
-        &:hover {
-          overflow: hidden;
-          img {
-            transform: scale(1.2);
-            transition: all 0.5s ease-in-out;
-          }
         }
       }
       .item-name {

@@ -14,6 +14,7 @@ declare module 'vue' {
     FaqBody: typeof import('./src/components/FaqBody.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
+    HomeHonors: typeof import('./src/components/HomeHonors.vue')['default']
     ReviewForm: typeof import('./src/components/ReviewForm.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']

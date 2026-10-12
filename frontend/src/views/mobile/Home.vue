@@ -50,7 +50,7 @@
       </article>
     </section>
 
-    <div class="zdfw">
+    <div class="zdfw home-base">
       <div class="zdfw-title">{{ t("nav.base") }}</div>
       <div class="zdfw-content">
         <div class="zdfw-content-img">
@@ -83,7 +83,7 @@
       <div class="info-btn" @click="goStore">{{ t("homeV2.ctaStores") }}</div>
     </div>
 
-    <div class="honor-bar">{{ t("homeV2.honor") }}</div>
+    <HomeHonors />
 
     <div class="zdfw">
       <div class="zdfw-title">
@@ -116,6 +116,7 @@
 import { ref, onMounted, computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
+import HomeHonors from "@/components/HomeHonors.vue"
 import { getArticleList } from "@/api"
 import { services as serviceList } from "@/config/services"
 import { useStoreList } from "@/composables/useStores"
@@ -433,14 +434,6 @@ onMounted(() => {
 }
 .home-store-body {
   padding: 8px 10px 10px;
-}
-.honor-bar {
-  text-align: center;
-  padding: 14px 12px;
-  background: rgba(194, 153, 116, 0.15);
-  font-size: 12px;
-  line-height: 1.5;
-  margin: 12px 0;
 }
 .feed-section {
   padding: 0 15px 40px;
