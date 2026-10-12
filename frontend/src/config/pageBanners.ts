@@ -2,6 +2,8 @@ import brand from "@/assets/img/banners/brand.jpg"
 import brandMobile from "@/assets/img/banners/brand-mobile.jpg"
 import services from "@/assets/img/banners/services.jpg"
 import servicesMobile from "@/assets/img/banners/services-mobile.jpg"
+import base from "@/assets/img/banners/base.jpg"
+import baseMobile from "@/assets/img/banners/base-mobile.jpg"
 import stores from "@/assets/img/banners/stores.jpg"
 import storesMobile from "@/assets/img/banners/stores-mobile.jpg"
 import faq from "@/assets/img/banners/faq.jpg"
@@ -18,6 +20,7 @@ import traceMobile from "@/assets/img/banners/trace-mobile.jpg"
 export const pageBanners = {
   brand: { image: brand, mobileImage: brandMobile, titleKey: "pageBanners.brand" },
   services: { image: services, mobileImage: servicesMobile, titleKey: "pageBanners.services" },
+  base: { image: base, mobileImage: baseMobile, titleKey: "baseV2.h1" },
   stores: { image: stores, mobileImage: storesMobile, titleKey: "pageBanners.stores" },
   faq: { image: faq, mobileImage: faqMobile, titleKey: "pageBanners.faq" },
   news: { image: news, mobileImage: newsMobile, titleKey: "pageBanners.news" },

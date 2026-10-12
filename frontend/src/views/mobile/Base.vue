@@ -1,9 +1,6 @@
 <template>
   <div class="base">
-    <div class="base-banner">
-      <img src="@/assets/img/base-banner.jpg" :alt="t('baseV2.h1')" />
-      <h1 class="banner-tit">{{ t("baseV2.h1") }}</h1>
-    </div>
+    <PageBanner page="base" />
     <div class="base-body">
       <BaseStory />
       <section class="film">
@@ -64,27 +61,6 @@ const isDirectVideo = computed(() => /\.(mp4|webm|ogg)([?#]|$)/i.test(documentar
   margin-top: 52px;
   background: #fcf8f4;
   min-height: 60vh;
-}
-.base-banner {
-  position: relative;
-  img {
-    width: 100%;
-    display: block;
-    object-fit: cover;
-    max-height: 200px;
-  }
-  .banner-tit {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    color: #fff;
-    font-size: 22px;
-    font-family: "LinHai";
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  }
 }
 .base-body {
   max-width: 1120px;
