@@ -41,10 +41,12 @@ npm run build
 
 电脑端和手机端的 `/base` 页面默认播放约 94 秒的基地介绍片：
 
-- 视频：`public/media/base-documentary.mp4`（1080p，保留原片声音）
+- 视频：`public/media/base-documentary.mp4`（720p，约 11.3 MiB，平均码率约 1 Mbps，保留原片声音）
 - 封面：`public/media/base-documentary.jpg`
 
 视频地址会跟随 `VITE_BASE_URL`，支持网站根目录和 `/h5/` 等子目录部署。页面先展示封面，点击播放后加载视频。
+
+内置视频已针对 4 Mbps 带宽优化，采用 H.264/AAC 编码并将播放索引前置，支持边下载边播放。电脑端和手机端的视频、封面地址均带版本参数，发布后会请求更新后的素材。
 
 如需换成 CDN 上的视频，可在对应环境文件中设置 `VITE_DOCUMENTARY_URL`，例如：
 

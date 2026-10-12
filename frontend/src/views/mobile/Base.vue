@@ -71,10 +71,10 @@ const { t } = useI18n()
 usePageSeo({ titleKey: "seo.base.title", descriptionKey: "seo.base.description", h1Key: "baseV2.h1" })
 
 const mediaBaseUrl = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/`
-const defaultDocumentaryUrl = `${mediaBaseUrl}base-documentary.mp4`
+const defaultDocumentaryUrl = `${mediaBaseUrl}base-documentary.mp4?v=720p-20261012`
 const documentaryUrl = computed(() => String(import.meta.env.VITE_DOCUMENTARY_URL || "").trim() || defaultDocumentaryUrl)
 const documentaryPoster = computed(() =>
-  documentaryUrl.value === defaultDocumentaryUrl ? `${mediaBaseUrl}base-documentary.jpg` : undefined
+  documentaryUrl.value === defaultDocumentaryUrl ? `${mediaBaseUrl}base-documentary.jpg?v=720p-20261012` : undefined
 )
 const isDirectVideo = computed(() => /\.(mp4|webm|ogg)([?#]|$)/i.test(documentaryUrl.value))
 </script>
