@@ -6,11 +6,6 @@ export const traceAsset = (rel: string) => {
   return `${base}trace-assets/${rel}`.replace(/([^:]\/)\/+/g, "$1")
 }
 
-export const traceBanners = [
-  traceAsset("upload/image/20250724/1753349198990846.jpg"),
-  traceAsset("upload/image/20250724/1753349208575061.jpg")
-]
-
 export const verifyInfo = {
   code: "9383342624358434",
   scanCount: 1030,
