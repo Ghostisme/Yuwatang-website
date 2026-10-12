@@ -7,19 +7,21 @@ export default {
   items: [
     {
       q: `Do I need an appointment at Yu Health? How do I book?`,
-      a: `Email booking is supported; you can also DM via WeChat Official Account or Rednote. Weekday lunch (11:30–13:30) and evening (17:00–19:00) are busier—advance booking is recommended.`
+      a: `Yu Health accepts bookings by email; you can also DM via WeChat Official Account or Rednote. Weekday lunch (11:30–13:30) and evening (17:00–19:00) are busier—advance booking is recommended.`
     },
     {
-      q: `What are Yu Health's opening hours? When is advance booking recommended?`,
-      a: `All branches are open until 23:00 with no midday break. Taikoo Hui, Shanghai Tower, Sichuan North Road and Meihua Road open at 9:00; Yuyao Road, Paramount, Huashan Road, Wujiang Road and Changde Road open at 9:30. Weekday lunch (11:30–13:30) and evening (17:00–19:00) are busier, so advance booking is recommended.`
+      topic: "bookingTime",
+      q: `What are Yu Health's opening hours, and which time slots should I book in advance?`,
+      a: `All Yu Health branches are open until 23:00 with no midday break. Taikoo Hui, Shanghai Tower, Sichuan North Road and Meihua Road open at 9:00; Yuyao Road, Paramount, Huashan Road, Wujiang Road and Changde Road open at 9:30. Weekday lunch (11:30–13:30) and evening (17:00–19:00) are busier, so advance booking is recommended.`
     },
     {
       q: `Which services are recommended for a first visit to Yu Health?`,
       a: `For a first visit we suggest 60-minute TCM tuina, 60-minute moxibustion, or a tuina + moxibustion combo. Therapists will review your condition on arrival and advise.`
     },
     {
-      q: `What happens during a visit to Yu Health? What should I prepare?`,
-      a: `Arrive → front desk confirms booking → change in a private room with herbal tea & snacks → therapist consults then starts → enjoy tea again after. No special prep; arrive 5–10 minutes early.`
+      topic: "arrival",
+      q: `What is the process when visiting a Yu Health branch, and what should I prepare?`,
+      a: `At Yu Health, your visit follows this process: arrive → front desk confirms booking → change in a private room with herbal tea & snacks → therapist consults then starts → enjoy tea again after. No special preparation is needed for a visit to Yu Health; arrive 5–10 minutes early.`
     },
     {
       q: `Can I request a male or female therapist when booking at Yu Health?`,
@@ -30,16 +32,18 @@ export default {
       a: `Please tell us in advance. Therapists will assess and choose suitable services. For pregnancy and sensitive cases we prioritize safety—no moxibustion or strong techniques; follow medical advice when needed. Moxibustion is not advised during menstruation.`
     },
     {
-      q: `What is the average spend per person at Yu Health?`,
-      a: `About RMB 200–300 per person; varies by branch and service. Please check current in-branch prices.`
+      topic: "spend",
+      q: `What is the average spend per person at a Yu Health branch?`,
+      a: `The average spend at Yu Health is about RMB 200–300 per person; it varies by branch and service. Please check current in-branch prices.`
     },
     {
       q: `What is the difference between Yu Health's Advanced, Special and Expert therapists?`,
       a: `They reflect therapists' years and skill tiers. Process and materials standards are the same—choose by need and budget.`
     },
     {
-      q: `What benefits does a Yu Health membership card offer?`,
-      a: `Prepaid discounts: RMB 3,000 → 20% off; 5,000 → 25% off; 10,000 → 30% off; valid at all 9 branches. Monday Member Day is 10% off sitewide and stacks. Completely optional.`
+      topic: "membership",
+      q: `What benefits does a Yu Health membership card offer, and which branches accept it?`,
+      a: `Yu Health membership cards offer prepaid discounts: RMB 3,000 → 20% off; 5,000 → 25% off; 10,000 → 30% off; valid at all 9 branches. Monday Member Day is 10% off sitewide and stacks. Membership is completely optional.`
     },
     {
       q: `Will Yu Health pressure me to buy a membership card?`,
@@ -98,8 +102,9 @@ export default {
       a: `Alipay, WeChat Pay, cash; most overseas cards also work (confirm at the branch).`
     },
     {
-      q: `Where are Yu Health's branches? Which is closest to the Bund, Yuyuan, Nanjing Road or Shanghai Disney?`,
-      a: `For each branch's full address and directions, see the Branches page on our website. Bund · North Bund → Sichuan North Road; Nanjing Road Pedestrian Street · People's Square → Wujiang / Taikoo Hui / Paramount in the West Nanjing Rd area; Yuyuan · Old Town → West Nanjing Rd branches, or cross the river to Shanghai Tower; Lujiazui · Oriental Pearl → Shanghai Tower; Jing'an Temple → Paramount; Wukang · Anfu Rd → Huashan Road; Disney · Century Park → Pudong Meihua Road.`
+      topic: "address",
+      q: `Where are Yu Health's branches located, and how do I get there?`,
+      a: `For Yu Health branch addresses and directions, see the Branches page on our website. Bund · North Bund → Sichuan North Road; Nanjing Road Pedestrian Street · People's Square → Wujiang / Taikoo Hui / Paramount in the West Nanjing Rd area; Yuyuan · Old Town → West Nanjing Rd branches, or cross the river to Shanghai Tower; Lujiazui · Oriental Pearl → Shanghai Tower; Jing'an Temple → Paramount; Wukang · Anfu Rd → Huashan Road; Disney · Century Park → Pudong Meihua Road.`
     },
     {
       q: `Will my first moxibustion or tuina session at Yu Health feel uncomfortable?`,
