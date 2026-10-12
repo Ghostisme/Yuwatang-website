@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:ip8090": "vite build --mode ip8090",
     "preview": "vite preview --port 4173"
   },
   "dependencies": {

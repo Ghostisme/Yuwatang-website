@@ -33,9 +33,22 @@ npm run dev
 
 ### Compile and Minify for Production
 
+按实际部署入口选择构建命令：
+
+| 部署入口 | 构建命令 | 环境文件 |
+| --- | --- | --- |
+| 当前 IP 站点 `http://8.210.181.83:8090/` | `npm run build:ip8090` | `.env.ip8090` |
+| 域名站点 `http://www.yuhetangtcm.com/h5/` | `npm run build` | `.env.production` |
+
+当前 IP 站点的发布命令：
+
 ```sh
-npm run build
+npm run build:ip8090
 ```
+
+该命令将静态资源路径设为 `/`，接口使用 `http://8.210.181.83:8091/api.php`。构建后，将 `dist` 内的全部文件和目录上传到前端站点根目录，包括 `index.html`、`js`、`css`、`images`、`media` 等。
+
+`npm run build` 默认读取 `.env.production`，生成绑定 `www.yuhetangtcm.com/h5` 的资源地址，适用于表中对应的域名入口。切换部署入口时需要使用对应命令重新构建。
 
 ### 艾草基地介绍视频
 
