@@ -1,9 +1,6 @@
 <template>
   <div class="news">
-    <div class="news-banner">
-      <img src="@/assets/img/contact-banner.jpg" :alt="t('news.title')" />
-    </div>
-    <h1 class="banner-tit">{{ t("news.title") }}</h1>
+    <PageBanner page="news" />
     <div class="news-content">
       <div v-if="loading" class="news-empty">{{ t("news.loading") }}</div>
       <div v-else-if="!articleList.length" class="news-empty">{{ t("news.empty") }}</div>
@@ -26,6 +23,7 @@
 </template>
 
 <script setup lang="ts">
+import PageBanner from "@/components/PageBanner.vue"
 import { computed, onMounted, ref } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
@@ -34,7 +32,7 @@ import { usePageSeo } from "@/composables/usePageSeo"
 import { localizeArticle, type ArticleApiRow } from "@/utils/localizeArticle"
 
 const { t, locale } = useI18n()
-usePageSeo({ titleKey: "seo.news.title", descriptionKey: "seo.news.description", h1Key: "news.title" })
+usePageSeo({ titleKey: "seo.news.title", descriptionKey: "seo.news.description", h1Key: "pageBanners.news" })
 const router = useRouter()
 const rawList = ref<ArticleApiRow[]>([])
 const page = ref(1)
@@ -98,18 +96,6 @@ onMounted(fetchList)
   margin-top: 52px;
   min-height: calc(100vh - 240px);
   background: rgba(255, 252, 250, 1);
-  &-banner img {
-    width: 100%;
-    display: block;
-  }
-  .banner-tit {
-    padding: 15px 0;
-    text-align: center;
-    color: rgba(60, 50, 28, 1);
-    font-size: 24px;
-    font-weight: 500;
-    margin: 10px 0 0;
-  }
   &-content {
     padding: 20px 15px 40px;
   }

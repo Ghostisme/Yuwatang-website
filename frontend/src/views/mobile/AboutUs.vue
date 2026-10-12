@@ -1,15 +1,7 @@
 <template>
   <div class="about-us">
-    <div class="about-banner">
-      <img class="banner-poster" src="@/assets/img/home-banner.jpg" :alt="t('aboutV2.h1')" />
-      <swiper v-if="videoReady" :modules="modules" :slides-per-view="1" :loop="true" :autoplay="autoplayOptions" :effect="'fade'">
-        <swiper-slide v-for="(item, index) in videoList" :key="index">
-          <video class="video" :src="item" autoplay muted loop playsinline preload="none"></video>
-        </swiper-slide>
-      </swiper>
-    </div>
+    <PageBanner page="brand" />
     <div class="about-box">
-      <h1 class="page-h1">{{ t("aboutV2.h1") }}</h1>
       <p class="lead">{{ t("aboutV2.lead") }}</p>
 
       <h2 class="section-title">{{ t("aboutV2.storyTitle") }}</h2>
@@ -35,24 +27,16 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted, watch } from "vue"
+import PageBanner from "@/components/PageBanner.vue"
+import { computed } from "vue"
 import { useI18n } from "vue-i18n"
-import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, EffectFade } from "swiper/modules"
-import { getHomeBanner } from "@/api"
 import { usePageSeo } from "@/composables/usePageSeo"
-import { rewriteMediaList } from "@/utils/mediaCdn"
 import { resolveI18nLeaf } from "@/utils/i18nSafe"
 import BrandTimeline from "@/components/BrandTimeline.vue"
 import AboutProductSection from "@/components/AboutProductSection.vue"
 
 const { t, locale, tm, rt } = useI18n()
-usePageSeo({ titleKey: "seo.about.title", descriptionKey: "seo.about.description", h1Key: "aboutV2.h1" })
-
-const modules = [Autoplay, EffectFade]
-const autoplayOptions = { delay: 5000, disableOnInteraction: false } as const
-const videoList = ref<string[]>([])
-const videoReady = ref(false)
+usePageSeo({ titleKey: "seo.about.title", descriptionKey: "seo.about.description", h1Key: "pageBanners.brand" })
 
 const timeline = computed(() => {
   void locale.value
@@ -64,21 +48,6 @@ const timeline = computed(() => {
   }))
 })
 
-const getBanner = () => {
-  getHomeBanner().then((res: any) => {
-    if (res.code == 1) {
-      videoList.value = rewriteMediaList(
-        (res.data?.data || []).map((item: any) =>
-          locale.value === "en" ? item.image_en : locale.value === "jp" ? item.image_jp : item.image
-        )
-      )
-      videoReady.value = videoList.value.length > 0
-    }
-  })
-}
-
-watch(locale, getBanner)
-onMounted(getBanner)
 </script>
 
 <style lang="scss" scoped>
@@ -86,29 +55,8 @@ onMounted(getBanner)
   margin-top: 52px;
   background: #fcf8f4;
 }
-.about-banner {
-  position: relative;
-  .banner-poster,
-  .video {
-    width: 100%;
-    height: 40vh;
-    min-height: 220px;
-    object-fit: cover;
-    display: block;
-  }
-  .video {
-    position: absolute;
-    inset: 0;
-  }
-}
 .about-box {
   padding: 24px 15px 48px;
-}
-.page-h1 {
-  font-family: "LinHai";
-  font-size: 22px;
-  margin: 0 0 12px;
-  text-align: center;
 }
 .lead {
   line-height: 1.75;

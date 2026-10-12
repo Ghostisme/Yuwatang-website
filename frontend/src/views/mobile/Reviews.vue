@@ -1,9 +1,6 @@
 <template>
   <div class="page reviews">
-    <div class="page-banner">
-      <img src="@/assets/img/contact-banner.jpg" :alt="t('reviews.h1')" />
-      <h1 class="banner-tit">{{ t("reviews.h1") }}</h1>
-    </div>
+    <PageBanner page="reviews" />
     <div class="page-body">
       <p class="lead">{{ t("reviews.lead") }}</p>
       <section class="review-form-wrap">
@@ -49,6 +46,7 @@
 </template>
 
 <script setup lang="ts">
+import PageBanner from "@/components/PageBanner.vue"
 import { computed, onMounted, ref } from "vue"
 import { useI18n } from "vue-i18n"
 import { getFeedbackList } from "@/api/index"
@@ -57,7 +55,7 @@ import { sanitizeReviewDisplay } from "@/utils/reviewCompliance"
 import ReviewForm from "@/components/ReviewForm.vue"
 
 const { t } = useI18n()
-usePageSeo({ titleKey: "seo.reviews.title", descriptionKey: "seo.reviews.description", h1Key: "reviews.h1" })
+usePageSeo({ titleKey: "seo.reviews.title", descriptionKey: "seo.reviews.description", h1Key: "pageBanners.reviews" })
 
 type ReviewItem = { id: number; name: string; content: string; createtime: number; status?: number }
 
@@ -121,28 +119,6 @@ onMounted(() => loadList())
   padding-top: 52px;
   min-height: 60vh;
   background: #fcf8f4;
-}
-.page-banner {
-  position: relative;
-  img {
-    width: 100%;
-    height: 180px;
-    object-fit: cover;
-    display: block;
-  }
-  .banner-tit {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    font-size: 22px;
-    color: #fff;
-    font-family: "LinHai";
-    letter-spacing: 0.08em;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
-  }
 }
 .page-body {
   padding: 24px 15px 64px;

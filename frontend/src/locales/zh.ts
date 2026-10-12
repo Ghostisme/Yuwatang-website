@@ -1,4 +1,14 @@
 export default {
+  pageBanners: {
+    brand: "品牌介绍",
+    services: "服务项目",
+    stores: "门店",
+    faq: "常见问题",
+    news: "新闻资讯",
+    reviews: "客户反馈",
+    contact: "联系我们",
+    trace: "产品溯源"
+  },
   home: {
     item1: "品牌介绍",
     item2:

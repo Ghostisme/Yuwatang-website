@@ -1,9 +1,6 @@
 <template>
   <div class="contact">
-    <div class="contact-banner">
-      <img src="@/assets/img/contact-banner.jpg" :alt="t('contactV2.h1')" />
-      <h1 class="banner-tit">{{ t("contactV2.h1") }}</h1>
-    </div>
+    <PageBanner page="contact" />
     <div class="contact-box">
       <p class="lead">{{ t("contactV2.lead") }}</p>
       <div class="contact-cards">
@@ -58,6 +55,7 @@
 </template>
 
 <script setup lang="ts">
+import PageBanner from "@/components/PageBanner.vue"
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
 import { useStoreList } from "@/composables/useStores"
@@ -65,7 +63,7 @@ import { usePageSeo } from "@/composables/usePageSeo"
 
 const { t } = useI18n()
 const { stores } = useStoreList()
-usePageSeo({ titleKey: "seo.contact.title", descriptionKey: "seo.contact.description", h1Key: "contactV2.h1" })
+usePageSeo({ titleKey: "seo.contact.title", descriptionKey: "seo.contact.description", h1Key: "pageBanners.contact" })
 
 const mailtoHref = computed(() => {
   const subject = encodeURIComponent(t("contactV2.emailSubject"))
@@ -78,27 +76,6 @@ const mailtoHref = computed(() => {
   margin-top: 88px;
   background: #fcf8f4;
   min-height: 60vh;
-}
-.contact-banner {
-  position: relative;
-  img {
-    width: 100%;
-    display: block;
-    max-height: 280px;
-    object-fit: cover;
-  }
-  .banner-tit {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    color: #fff;
-    font-size: 34px;
-    font-family: "LinHai";
-    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.35);
-  }
 }
 .contact-box {
   max-width: 900px;

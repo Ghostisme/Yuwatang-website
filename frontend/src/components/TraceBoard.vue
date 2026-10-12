@@ -1,29 +1,6 @@
 <template>
-  <div class="trace" :class="[variant, { ready }]">
-    <section class="trace-hero" aria-label="产品溯源">
-      <swiper
-        :modules="modules"
-        :slides-per-view="1"
-        :loop="true"
-        :speed="1400"
-        :pagination="{ clickable: true }"
-        :autoplay="{ delay: 5200, disableOnInteraction: false }"
-        effect="fade"
-        class="hero-swiper"
-      >
-        <swiper-slide v-for="(img, i) in traceBanners" :key="i">
-          <div class="hero-media">
-            <img :src="img" alt="" />
-          </div>
-        </swiper-slide>
-      </swiper>
-      <div class="hero-veil" aria-hidden="true"></div>
-      <div class="hero-copy">
-        <p class="hero-eyebrow">YUHE TANG · TRACE</p>
-        <h1 class="hero-title">产品溯源</h1>
-        <p class="hero-sub">道地蕲艾 · 三年陈化 · 一码可溯</p>
-      </div>
-    </section>
+  <div class="trace" :class="variant">
+    <PageBanner page="trace" />
 
     <div class="trace-body">
       <header class="body-head">
@@ -79,34 +56,24 @@
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from "vue"
-import { Swiper, SwiperSlide } from "swiper/vue"
-import { Autoplay, Pagination, EffectFade } from "swiper/modules"
+import PageBanner from "@/components/PageBanner.vue"
+import { computed } from "vue"
 import {
   materialRows,
   productionRows,
   reportImages,
   storageRows,
-  traceBanners,
   verifyInfo
 } from "@/data/traceProduct"
 import InfoBlock from "./TraceInfoBlock.vue"
 
 defineProps<{ variant: "pc" | "mobile" }>()
 
-const modules = [Autoplay, Pagination, EffectFade]
-const ready = ref(false)
-
 const codeChunks = computed(() => {
   const raw = String(verifyInfo.code || "").replace(/\s+/g, "")
   return raw.match(/.{1,4}/g) || [raw]
 })
 
-onMounted(() => {
-  requestAnimationFrame(() => {
-    ready.value = true
-  })
-})
 </script>
 
 <style lang="scss" scoped>
@@ -129,104 +96,6 @@ onMounted(() => {
   }
   &.mobile {
     margin-top: 52px;
-  }
-}
-
-/* ---------- Hero ---------- */
-.trace-hero {
-  position: relative;
-  width: 100%;
-  min-height: 380px;
-  overflow: hidden;
-
-  .hero-swiper,
-  :deep(.swiper),
-  :deep(.swiper-wrapper),
-  :deep(.swiper-slide) {
-    height: 100%;
-    min-height: 380px;
-  }
-}
-
-.hero-media {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transform: scale(1.06);
-    animation: kenburns 14s var(--ease) infinite alternate;
-    will-change: transform;
-  }
-}
-
-.hero-veil {
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(180deg, rgba(28, 22, 12, 0.15) 0%, rgba(28, 22, 12, 0.28) 42%, rgba(28, 22, 12, 0.72) 100%),
-    radial-gradient(80% 60% at 50% 100%, rgba(60, 50, 28, 0.35), transparent 70%);
-  pointer-events: none;
-}
-
-.hero-copy {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 52px;
-  z-index: 2;
-  text-align: center;
-  color: #fff;
-  pointer-events: none;
-  padding: 0 20px;
-
-  .hero-eyebrow {
-    margin: 0 0 10px;
-    font-size: 11px;
-    letter-spacing: 0.42em;
-    opacity: 0;
-    transform: translateY(12px);
-    transition:
-      opacity 0.8s var(--ease-out) 0.15s,
-      transform 0.8s var(--ease-out) 0.15s;
-  }
-
-  .hero-title {
-    margin: 0;
-    font-family: "LinHai", serif;
-    font-size: clamp(34px, 4.2vw, 48px);
-    font-weight: 400;
-    letter-spacing: 0.28em;
-    text-indent: 0.28em;
-    opacity: 0;
-    transform: translateY(18px);
-    transition:
-      opacity 0.9s var(--ease-out) 0.28s,
-      transform 0.9s var(--ease-out) 0.28s;
-  }
-
-  .hero-sub {
-    margin: 14px 0 0;
-    font-size: 14px;
-    letter-spacing: 0.22em;
-    opacity: 0;
-    transform: translateY(12px);
-    color: rgba(255, 246, 232, 0.88);
-    transition:
-      opacity 0.9s var(--ease-out) 0.42s,
-      transform 0.9s var(--ease-out) 0.42s;
-  }
-}
-
-.trace.ready .hero-copy {
-  .hero-eyebrow,
-  .hero-title,
-  .hero-sub {
-    opacity: 1;
-    transform: none;
   }
 }
 
@@ -565,28 +434,6 @@ onMounted(() => {
 
 /* ========== Mobile ========== */
 .trace.mobile {
-  .trace-hero,
-  .trace-hero .hero-swiper,
-  .trace-hero :deep(.swiper),
-  .trace-hero :deep(.swiper-slide) {
-    min-height: 220px;
-  }
-
-  .hero-copy {
-    bottom: 26px;
-
-    .hero-title {
-      font-size: 26px;
-      letter-spacing: 0.18em;
-      text-indent: 0.18em;
-    }
-
-    .hero-sub {
-      font-size: 12px;
-      letter-spacing: 0.1em;
-    }
-  }
-
   .trace-body {
     max-width: 100%;
     padding: 22px 16px 72px;
@@ -673,31 +520,6 @@ onMounted(() => {
   }
 }
 
-:deep(.swiper-pagination-bullet) {
-  width: 6px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.45);
-  opacity: 1;
-  transition:
-    width 0.35s var(--ease),
-    background 0.35s ease;
-}
-
-:deep(.swiper-pagination-bullet-active) {
-  width: 18px;
-  border-radius: 999px;
-  background: #fff;
-}
-
-@keyframes kenburns {
-  from {
-    transform: scale(1.06) translate3d(0, 0, 0);
-  }
-  to {
-    transform: scale(1.14) translate3d(-1.2%, -0.8%, 0);
-  }
-}
-
 @keyframes riseIn {
   to {
     opacity: 1;
@@ -728,16 +550,12 @@ onMounted(() => {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-media img,
   .verify-shield,
   .verify-glow,
   .verify-card {
     animation: none !important;
   }
 
-  .hero-copy .hero-eyebrow,
-  .hero-copy .hero-title,
-  .hero-copy .hero-sub,
   .verify-card {
     opacity: 1 !important;
     transform: none !important;

@@ -1,9 +1,6 @@
 <template>
   <div class="page stores">
-    <div class="page-banner">
-      <img src="@/assets/img/store-banner.png" :alt="t('stores.h1')" />
-      <h1 class="banner-tit">{{ t("stores.h1") }}</h1>
-    </div>
+    <PageBanner page="stores" />
     <div class="page-body">
       <p class="lead">{{ t("stores.intro") }}</p>
       <p class="sub">{{ t("stores.sub") }}</p>
@@ -32,6 +29,7 @@
 </template>
 
 <script setup lang="ts">
+import PageBanner from "@/components/PageBanner.vue"
 import { computed } from "vue"
 import { useRouter } from "vue-router"
 import { useI18n } from "vue-i18n"
@@ -42,7 +40,7 @@ import { useBreadcrumbJsonLd, useStoresGraphJsonLd } from "@/composables/useStru
 const router = useRouter()
 const { t } = useI18n()
 const { stores } = useStoreList()
-usePageSeo({ titleKey: "seo.stores.title", descriptionKey: "seo.stores.description", h1Key: "stores.h1" })
+usePageSeo({ titleKey: "seo.stores.title", descriptionKey: "seo.stores.description", h1Key: "pageBanners.stores" })
 useStoresGraphJsonLd(stores)
 useBreadcrumbJsonLd(
   computed(() => [
@@ -60,26 +58,6 @@ const goStore = (slug: string) => router.push(`/stores/${slug}`)
   background: #fcf8f4;
   min-height: 60vh;
   padding-bottom: 48px;
-}
-.page-banner {
-  position: relative;
-  img {
-    width: 100%;
-    height: 160px;
-    object-fit: cover;
-  }
-  .banner-tit {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 0;
-    color: #fff;
-    font-size: 22px;
-    font-family: "LinHai";
-    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
-  }
 }
 .page-body {
   padding: 20px 16px;

@@ -1,5 +1,15 @@
 /** 需求2 English copy (synced with zh.ts appendix) */
 export default {
+  pageBanners: {
+    brand: "About Us",
+    services: "Services",
+    stores: "Branches",
+    faq: "Frequently Asked Questions",
+    news: "News",
+    reviews: "Guest Reviews",
+    contact: "Contact Us",
+    trace: "Product Traceability"
+  },
   nav: {
     catalog: "Menu",
     brand: "Brand",

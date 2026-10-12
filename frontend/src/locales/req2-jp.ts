@@ -1,5 +1,15 @@
 /** 需求2 日本語文案（zh.ts 附录と同期） */
 export default {
+  pageBanners: {
+    brand: "ブランド紹介",
+    services: "サービス",
+    stores: "店舗",
+    faq: "よくある質問",
+    news: "ニュース",
+    reviews: "お客様の声",
+    contact: "お問い合わせ",
+    trace: "製品トレーサビリティ"
+  },
   nav: {
     catalog: "メニュー",
     brand: "ブランド",
