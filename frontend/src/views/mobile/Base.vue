@@ -35,6 +35,7 @@
         <img src="@/assets/img/base-img3.jpg" alt="陈艾仓储" />
         <img src="@/assets/img/base-img4.jpg" alt="制条工艺" />
       </div>
+      <BaseProductSection />
     </div>
   </div>
 </template>
@@ -43,6 +44,7 @@
 import { computed } from "vue"
 import { useI18n } from "vue-i18n"
 import BaseStory from "@/components/BaseStory.vue"
+import BaseProductSection from "@/components/BaseProductSection.vue"
 import { usePageSeo } from "@/composables/usePageSeo"
 
 const { t } = useI18n()

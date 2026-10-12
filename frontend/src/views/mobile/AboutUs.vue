@@ -21,7 +21,6 @@
       <h2 class="section-title">{{ t("aboutV2.honorsTitle") }}</h2>
       <p class="block-text">{{ t("aboutV2.honors") }}</p>
 
-      <AboutProductSection mobile />
     </div>
   </div>
 </template>
@@ -33,7 +32,6 @@ import { useI18n } from "vue-i18n"
 import { usePageSeo } from "@/composables/usePageSeo"
 import { resolveI18nLeaf } from "@/utils/i18nSafe"
 import BrandTimeline from "@/components/BrandTimeline.vue"
-import AboutProductSection from "@/components/AboutProductSection.vue"
 
 const { t, locale, tm, rt } = useI18n()
 usePageSeo({ titleKey: "seo.about.title", descriptionKey: "seo.about.description", h1Key: "pageBanners.brand" })

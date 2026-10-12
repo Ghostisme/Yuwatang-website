@@ -128,15 +128,7 @@ export default {
       "Values: Guest first · Gratitude · Altruism · Responsibility · Dedication · Excellence. Inspired by Kazuo Inamori; annual pilgrimage on Li Shizhen's herb-gathering route.",
     honorsTitle: "Honors",
     honors:
-      "Meituan & Dianping 5-Star Popular Merchant and Wellness Benchmark; 2019 Foot Massage Gold Merchant; Dianping Popular TCM Wellness Brand; regional #1 sales at multiple branches; 2025 Shanghai Massage Industry Benchmark Branch and Q4 Million-Branch Award.",
-    productTitle: "Product Introduction",
-    productLead:
-      "Yu Health exclusive three-year aged moxa sticks—authentic Qichun mugwort from our own base, aged and rolled in-house, fully traceable.",
-    productImages: "Product Images",
-    productVideo: "Product Video",
-    productInfo: "Product Details",
-    productQualify: "Qualifications",
-    productUsage: "Usage Guide"
+      "Meituan & Dianping 5-Star Popular Merchant and Wellness Benchmark; 2019 Foot Massage Gold Merchant; Dianping Popular TCM Wellness Brand; regional #1 sales at multiple branches; 2025 Shanghai Massage Industry Benchmark Branch and Q4 Million-Branch Award."
   },
   baseV2: {
     h1: "Qichun Mugwort Base",
@@ -164,7 +156,13 @@ export default {
     filmTitle: "Full-process documentary",
     filmLead: "From planting and harvest to aging and rolling—our base keeps a visual record of the full journey.",
     filmPlaceholder: "Documentary coming soon. You can also watch it in branch.",
-    filmWatch: "Watch documentary"
+    filmWatch: "Watch documentary",
+    productTitle: "Product Introduction",
+    productLead:
+      "Yu Health exclusive three-year aged moxa sticks—authentic Qichun mugwort from our own base, aged and rolled in-house, fully traceable.",
+    productImages: "Product Images",
+    productInfo: "Product Details",
+    productQualify: "Qualifications"
   },
   services: {
     h1: "Fourfold Healing, One Destination",
