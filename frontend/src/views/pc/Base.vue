@@ -4,16 +4,13 @@
     <div class="base-body">
       <BaseStory />
       <section class="film">
-        <h2>{{ t("baseV2.filmTitle") }}</h2>
         <p>{{ t("baseV2.filmLead") }}</p>
         <div class="film-frame">
-          <video
+          <BufferedVideo
             v-if="isDirectVideo"
+            :key="documentaryUrl"
             :src="documentaryUrl"
             :poster="documentaryPoster"
-            controls
-            playsinline
-            preload="none"
             :title="t('baseV2.filmWatch')"
           />
           <iframe
@@ -42,13 +39,14 @@ import { computed } from "vue"
 import { useI18n } from "vue-i18n"
 import BaseStory from "@/components/BaseStory.vue"
 import BaseProductSection from "@/components/BaseProductSection.vue"
+import BufferedVideo from "@/components/BufferedVideo.vue"
 import { usePageSeo } from "@/composables/usePageSeo"
 
 const { t } = useI18n()
 usePageSeo({ titleKey: "seo.base.title", descriptionKey: "seo.base.description", h1Key: "baseV2.h1" })
 
 const mediaBaseUrl = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/`
-const defaultDocumentaryUrl = `${mediaBaseUrl}base-documentary.mp4?v=720p-20261012`
+const defaultDocumentaryUrl = `${mediaBaseUrl}base-documentary.mp4?v=silent-720p-20261013`
 const documentaryUrl = computed(() => String(import.meta.env.VITE_DOCUMENTARY_URL || "").trim() || defaultDocumentaryUrl)
 const documentaryPoster = computed(() =>
   documentaryUrl.value === defaultDocumentaryUrl ? `${mediaBaseUrl}base-documentary.jpg?v=720p-20261012` : undefined
@@ -71,15 +69,6 @@ const isDirectVideo = computed(() => /\.(mp4|webm|ogg)([?#]|$)/i.test(documentar
 .film {
   padding-top: 44px;
   margin-bottom: 32px;
-
-  h2 {
-    margin: 0 0 16px;
-    color: #3c321c;
-    font-family: "LinHai", "Microsoft YaHei", var(--font-zh);
-    font-size: 28px;
-    font-weight: 600;
-    line-height: 1.5;
-  }
 
   p {
     margin: 0;

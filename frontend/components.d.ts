@@ -12,6 +12,7 @@ declare module 'vue' {
     BaseProductSection: typeof import('./src/components/BaseProductSection.vue')['default']
     BaseStory: typeof import('./src/components/BaseStory.vue')['default']
     BrandTimeline: typeof import('./src/components/BrandTimeline.vue')['default']
+    BufferedVideo: typeof import('./src/components/BufferedVideo.vue')['default']
     FaqBody: typeof import('./src/components/FaqBody.vue')['default']
     Footer: typeof import('./src/components/Footer.vue')['default']
     Header: typeof import('./src/components/Header.vue')['default']
