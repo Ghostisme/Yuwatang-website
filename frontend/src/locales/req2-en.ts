@@ -16,45 +16,46 @@ export default {
     faq: "FAQ",
     feedback: "Reviews"
   },
+  // 使用全角分隔符，避免半角 | 被 vue-i18n 当作复数规则。
   seo: {
     home: {
-      title: "Yu Health | Wellness Beyond Expectation",
+      title: "Yu Health ｜ Wellness Beyond Expectation",
       description:
         "Founded in 2009, Yu Health operates 9 directly-run branches in Shanghai with a 100-mu Qichun mugwort base. Signature services: moxibustion, TCM massage, herbal SPA and aromatherapy foot care."
     },
     about: {
-      title: "About Us | Yu Health",
+      title: "About Us ｜ Yu Health",
       description:
         "Established in 2009, 17 years in Shanghai, 9 branches, 230+ therapists, own Qichun mugwort base, 100% direct operation."
     },
     services: {
-      title: "Services | Yu Health",
+      title: "Services ｜ Yu Health",
       description: "Four pillars of healing: moxibustion, TCM massage, herbal SPA, foot therapy and traditional care."
     },
     base: {
-      title: "Qichun Mugwort Base | Yu Health",
+      title: "Qichun Mugwort Base ｜ Yu Health",
       description: "100-mu base since 2017, three-year aged mugwort, full-chain quality control with traceable moxa sticks."
     },
     stores: {
-      title: "Branches | Yu Health",
+      title: "Branches ｜ Yu Health",
       description: "9 directly-run branches in prime Shanghai locations, open until 23:00, membership valid at all branches."
     },
     reviews: {
-      title: "Guest Reviews | Yu Health",
+      title: "Guest Reviews ｜ Yu Health",
       description: "Voices from guests worldwide. Share your Yu Health experience."
     },
     contact: {
-      title: "Contact | Yu Health",
+      title: "Contact ｜ Yu Health",
       description: "Email booking for overseas and online inquiries. Phone directory for all 9 branches."
     },
-    news: { title: "News | Yu Health", description: "Latest updates from Yu Health." },
-    trace: { title: "Product Traceability | Yu Health", description: "Product traceability lookup." },
+    news: { title: "News ｜ Yu Health", description: "Latest updates from Yu Health." },
+    trace: { title: "Product Traceability ｜ Yu Health", description: "Product traceability lookup." },
     faq: {
-      title: "FAQ | Yu Health",
+      title: "FAQ ｜ Yu Health",
       description: "25 FAQs on booking, hours, moxibustion, tuina, membership and overseas guests."
     },
     guide: {
-      title: "Site Guide | Yu Health",
+      title: "Site Guide ｜ Yu Health",
       description: "Quick links to brand, services, mugwort base, branches, FAQ, news, reviews and contact."
     }
   },

@@ -196,44 +196,45 @@ export default {
     about: "关于",
     contact: "联系"
   },
+  // 使用全角分隔符，避免半角 | 被 vue-i18n 当作复数规则。
   seo: {
     home: {
-      title: "裕和堂 Yu Health | 健康生活，不期而「裕」",
+      title: "裕和堂 Yu Health ｜ 健康生活，不期而「裕」",
       description:
         "裕和堂创立于2009年，上海9家直营门店，自有蕲春100亩艾草基地，主营扶阳艾灸、中医推拿、草本精油SPA与香薰足疗。"
     },
     about: {
-      title: "品牌介绍 | 裕和堂 Yu Health",
+      title: "品牌介绍 ｜ 裕和堂 Yu Health",
       description: "2009年创立，深耕上海17年，9家直营门店，约230位调理师，自有蕲春艾草基地，纯直营不加盟。"
     },
     services: {
-      title: "服务项目 | 裕和堂 Yu Health",
+      title: "服务项目 ｜ 裕和堂 Yu Health",
       description: "四重疗愈一站养身：扶阳艾灸、中医推拿、草本精油SPA、香薰足疗及传统调理。"
     },
     base: {
-      title: "蕲春艾草基地 | 裕和堂 Yu Health",
+      title: "蕲春艾草基地 ｜ 裕和堂 Yu Health",
       description: "2017年蕲春100亩艾草基地，三年陈艾，从种植到制条全程品控，艾条附溯源码。"
     },
     stores: {
-      title: "门店 | 裕和堂 Yu Health",
+      title: "门店 ｜ 裕和堂 Yu Health",
       description: "9家直营门店选址上海核心地段，全店营业至23:00，会员卡9店通用。"
     },
     reviews: {
-      title: "客户反馈 | 裕和堂 Yu Health",
+      title: "客户反馈 ｜ 裕和堂 Yu Health",
       description: "听听来自世界各地客人的声音，留下你的裕和堂体验故事。"
     },
     contact: {
-      title: "联系我们 | 裕和堂 Yu Health",
+      title: "联系我们 ｜ 裕和堂 Yu Health",
       description: "海外与线上咨询、预约以邮箱为主，9家直营门店电话总表。"
     },
-    news: { title: "新闻资讯 | 裕和堂 Yu Health", description: "裕和堂最新动态与品牌资讯。" },
-    trace: { title: "产品溯源 | 裕和堂", description: "产品溯源查询。" },
+    news: { title: "新闻资讯 ｜ 裕和堂 Yu Health", description: "裕和堂最新动态与品牌资讯。" },
+    trace: { title: "产品溯源 ｜ 裕和堂", description: "产品溯源查询。" },
     faq: {
-      title: "常见问题 | 裕和堂 Yu Health",
+      title: "常见问题 ｜ 裕和堂 Yu Health",
       description: "预约、营业时间、艾灸推拿、会员卡与海外访客等 25 条常见问题解答。"
     },
     guide: {
-      title: "网站导览 | 裕和堂 Yu Health",
+      title: "网站导览 ｜ 裕和堂 Yu Health",
       description: "一页直达品牌介绍、服务项目、艾草基地、门店、FAQ、新闻、客户反馈与联系我们。"
     }
   },

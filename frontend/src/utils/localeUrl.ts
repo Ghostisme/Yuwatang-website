@@ -16,8 +16,8 @@ export const HTML_LANG_MAP: Record<AppLocale, string> = {
 
 export const APP_LOCALES: AppLocale[] = ["zh", "en", "jp"]
 
-/** 英文为默认（x-default） */
-export const DEFAULT_LOCALE: AppLocale = "en"
+/** 中文为默认（x-default）；显式语言参数和用户历史选择优先。 */
+export const DEFAULT_LOCALE: AppLocale = "zh"
 
 export const isAppLocale = (value: unknown): value is AppLocale =>
   value === "zh" || value === "en" || value === "jp"
