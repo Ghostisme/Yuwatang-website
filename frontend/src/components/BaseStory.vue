@@ -15,6 +15,9 @@
           <div class="base-story-reason">
             <h3>{{ t("baseV2.whyQiaiTitle") }}</h3>
             <p>{{ t("baseV2.whyQiai") }}</p>
+            <blockquote class="base-story-quote">
+              {{ qiaiQuote.before }}<strong v-if="qiaiQuote.emphasis" class="base-story-quote-emphasis">{{ qiaiQuote.emphasis }}</strong>{{ qiaiQuote.after }}
+            </blockquote>
           </div>
           <div class="base-story-reason">
             <h3>{{ t("baseV2.whyThreeTitle") }}</h3>
@@ -47,9 +50,21 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from "vue"
 import { useI18n } from "vue-i18n"
 
 const { t } = useI18n()
+
+const qiaiQuote = computed(() => {
+  const text = t("baseV2.whyQiaiQuote")
+  const emphasis = t("baseV2.whyQiaiTribute")
+  const index = text.indexOf(emphasis)
+  return {
+    before: index < 0 ? text : text.slice(0, index),
+    emphasis: index < 0 ? "" : emphasis,
+    after: index < 0 ? "" : text.slice(index + emphasis.length)
+  }
+})
 </script>
 
 <style lang="scss" scoped>
@@ -88,13 +103,29 @@ const { t } = useI18n()
   min-width: 0;
   padding-top: 14px;
 
-  p {
+  p,
+  .base-story-quote {
     margin: 0;
     color: rgba(60, 50, 28, 0.74);
     font-size: 16px;
     line-height: 1.95;
     overflow-wrap: break-word;
   }
+
+  .base-story-quote {
+    margin-top: 20px;
+    padding-left: 16px;
+    border-left: 2px solid #b59a70;
+    color: #786044;
+  }
+}
+
+.base-story-quote-emphasis {
+  padding: 2px 4px;
+  border-radius: 2px;
+  background: rgba(181, 154, 112, 0.16);
+  color: #6e5435;
+  font-weight: 700;
 }
 
 .base-story-reasons {
@@ -184,7 +215,8 @@ const { t } = useI18n()
   .base-story-copy {
     padding-top: 0;
 
-    p {
+    p,
+    .base-story-quote {
       font-size: 15px;
       line-height: 1.85;
     }

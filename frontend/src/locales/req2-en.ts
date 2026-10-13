@@ -134,13 +134,16 @@ export default {
     h1: "Qichun Mugwort Base",
     moxibustionTitle: "About Moxibustion",
     moxibustionIntro:
-      "Moxibustion is a classic TCM external therapy: ignited mugwort sticks are suspended over acupoints to warm meridians, dispel cold and dampness. Yu Health practices manual suspended moxibustion only—therapists hold sticks, select points by constitution, and control heat by feel. All sticks come from our three-year aged Qichun mugwort below.",
+      "Moxibustion is a classic TCM external therapy: ignited mugwort sticks are suspended over acupoints to warm meridians, dispel cold and dampness. Yu Health practices manual suspended moxibustion only—therapists hold sticks, select points by constitution, and use their experience to control the distance and heat. All sticks come from our three-year aged Qichun mugwort below.",
     whyTitle: "Why Three-Year Aged Mugwort",
     whyLead:
       "Tracing herbs to truth. Since 2017, our 100-mu base in Qichun: spring planting, Dragon Boat harvest, three-year natural aging, triple screening, standardized rolling and humidity control. Finished sticks are delivered to Shanghai branches with trace codes.",
     whyQiaiTitle: "Why Qiai",
     whyQiai:
       "Qichun is Li Shizhen's hometown; Bencao Gangmu praises Qiai—thick leaves, rich fuzz, mild nature, regarded as premium mugwort.",
+    whyQiaiQuote:
+      "Since the Chenghua era, mugwort from Qizhou has been regarded as the finest, offered as regional tribute, prized throughout the land and known as Qiai.",
+    whyQiaiTribute: "offered as regional tribute",
     whyThreeTitle: "Why three years",
     whyThree:
       "Mencius said, \"For a seven-year illness, seek three-year mugwort.\" Fresh mugwort is harsh; after three years, fluff is soft, heat is mild and penetrating—ideal for manual suspended moxibustion. Three years cannot be rushed.",
