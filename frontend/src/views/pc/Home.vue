@@ -3,7 +3,7 @@
     <div class="banner">
       <img
         class="banner-poster"
-        :class="{ 'is-ready': videoReady }"
+        :class="{ 'is-ready': videoPlaying }"
         src="@/assets/img/home-banner.jpg"
         :alt="t('homeV2.heroTitle')"
       />
@@ -11,6 +11,7 @@
         v-if="videoReady"
         class="video banner-video"
         :src="bannerVideoSrc"
+        @playing="videoPlaying = true"
         autoplay
         muted
         loop
@@ -140,7 +141,7 @@ import { usePageSeo } from "@/composables/usePageSeo"
 const { t } = useI18n()
 usePageSeo({ titleKey: "seo.home.title", descriptionKey: "seo.home.description", h1Key: "homeV2.heroTitle" })
 const router = useRouter()
-const bannerVideoSrc = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/home-banner.mp4`
+const bannerVideoSrc = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/home-banner.mp4?v=20261013`
 
 const homeServiceCards = [
   { slug: "moxibustion", img: homePic5 },
@@ -166,6 +167,7 @@ const prodList = computed(() =>
 const shopOneList = ref(t("home.item16").split(","))
 const shopTwoList = ref(t("home.item17").split(","))
 const videoReady = ref(false)
+const videoPlaying = ref(false)
 const newsPreview = ref<any[]>([])
 
 const formatDate = (value: string | number) => {
@@ -250,7 +252,7 @@ onMounted(() => {
     height: 100%;
     object-fit: cover;
     display: block;
-    z-index: 0;
+    z-index: 1;
     transition: opacity 0.6s ease;
     &.is-ready {
       opacity: 0;
@@ -261,7 +263,7 @@ onMounted(() => {
   .video {
     position: absolute;
     inset: 0;
-    z-index: 1;
+    z-index: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
