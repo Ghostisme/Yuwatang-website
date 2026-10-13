@@ -7,11 +7,11 @@ export default {
   items: [
     {
       q: `Do I need an appointment at Yu Health? How do I book?`,
-      a: `Yu Health accepts bookings by email; you can also DM via WeChat Official Account or Rednote. Weekday lunch (11:30–13:30) and evening (17:00–19:00) are busier—advance booking is recommended.`
+      a: `Yu Health accepts bookings by email; you can also DM via WeChat Official Account or Rednote. Yu Health tends to have more guests during weekday lunch (11:30–13:30) and evening (17:00–19:00), so advance booking is recommended.`
     },
     {
       q: `What are Yu Health's opening hours, and which time slots should I book in advance?`,
-      a: `All Yu Health branches are open until 23:00 with no midday break. Taikoo Hui, Shanghai Tower, Sichuan North Road and Meihua Road open at 9:00; Yuyao Road, Paramount, Huashan Road, Wujiang Road and Changde Road open at 9:30. Weekday lunch (11:30–13:30) and evening (17:00–19:00) are busier, so advance booking is recommended.`
+      a: `All Yu Health branches are open until 23:00 with no midday break. Taikoo Hui, Shanghai Tower, Sichuan North Road and Meihua Road open at 9:00; Yuyao Road, Paramount, Huashan Road, Wujiang Road and Changde Road open at 9:30. Yu Health tends to have more guests during weekday lunch (11:30–13:30) and evening (17:00–19:00), so advance booking is recommended.`
     },
     {
       q: `Which services are recommended for a first visit to Yu Health?`,
@@ -35,7 +35,7 @@ export default {
     },
     {
       q: `What is the difference between Yu Health's Advanced, Special and Expert therapists?`,
-      a: `They reflect therapists' years and skill tiers. Process and materials standards are the same—choose by need and budget.`
+      a: `They reflect therapists' years and skill tiers. The service process is the same—choose by need and budget.`
     },
     {
       q: `What benefits does a Yu Health membership card offer, and which branches accept it?`,
@@ -75,7 +75,7 @@ export default {
     },
     {
       q: `Can I use commercial or public medical insurance at Yu Health?`,
-      a: `Commercial and public medical insurance are not supported at this time; check with each branch for details.`
+      a: `The Meihua Road branch of Yu Health TCM Clinic supports insurance claim submission. Other branches currently do not support commercial or public medical insurance; please check with each branch for details.`
     },
     {
       q: `Does Yu Health offer franchise opportunities?`,
@@ -95,7 +95,7 @@ export default {
     },
     {
       q: `What payment methods does Yu Health accept?`,
-      a: `Alipay, WeChat Pay, cash; most overseas cards also work (confirm at the branch).`
+      a: `Alipay, WeChat Pay, cash; most overseas cards (such as Visa, MasterCard and UnionPay) also work (confirm at the branch).`
     },
     {
       q: `Where are Yu Health's branches located, and how do I get there?`,
@@ -103,7 +103,7 @@ export default {
     },
     {
       q: `Will my first moxibustion or tuina session at Yu Health feel uncomfortable?`,
-      a: `Moxibustion should feel warmly comfortable—tell the therapist immediately if too hot to avoid burns/blisters; sensation varies by constitution. After moxibustion avoid raw/cold foods and keep warm; mornings are preferred; if finished after 8pm, avoid bathing that night. Tuina may feel sore as tight muscles release; mild post-soreness usually eases within a day. Tell your therapist about any discomfort.`
+      a: `Moxibustion should feel comfortably warm—if it feels too hot, tell your therapist immediately so they can adjust the distance to avoid burns or blisters. Sensations vary from person to person depending on constitution. After moxibustion, avoid raw or cold foods and keep warm; we recommend scheduling your session in the morning. If your moxibustion session finishes after 8pm, we do not recommend bathing that night. Tuina can involve noticeable aching or pain, a normal sensation as tense muscle groups relax. A small number of people experience mild post-treatment soreness, which usually eases within a day. Tell your therapist about any discomfort at any time.`
     },
   ]
 }

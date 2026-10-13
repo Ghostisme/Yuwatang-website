@@ -77,7 +77,7 @@ export const serviceFaqsZh: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "在裕和堂消费可以使用商保 / 医保吗？",
-      a: "暂不支持商保与医保，具体以各门店说明为准。"
+      a: "裕和堂中医诊所梅花路店支持上报，其余门店暂不支持商保与医保，具体以各门店说明为准。"
     },
     {
       q: "特殊身体状况适合来裕和堂调理吗（孕 / 生理期 / 术后 / 皮肤破损）？",
@@ -162,7 +162,7 @@ export const serviceFaqsEn: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "Can I use commercial or public medical insurance at Yu Health?",
-      a: "Commercial and public medical insurance are not supported at this time; check with each branch for details."
+      a: "The Meihua Road branch of Yu Health TCM Clinic supports insurance claim submission. Other branches currently do not support commercial or public medical insurance; please check with each branch for details."
     },
     {
       q: "Are Yu Health's services suitable during pregnancy, menstruation, recovery from surgery or with broken skin?",
@@ -247,7 +247,7 @@ export const serviceFaqsJp: Record<string, ServiceFaqItem[]> = {
     },
     {
       q: "裕和堂では民間保険や公的医療保険を使えますか？",
-      a: "民間保険・公的医保は現時点で非対応。詳細は各店舗にお問い合わせください。"
+      a: "裕和堂中医診療所の梅花路店は保険申請の提出に対応しています。その他の店舗では、現在、民間保険・公的医療保険はご利用いただけません。詳細は各店舗にお問い合わせください。"
     },
     {
       q: "妊娠中・生理中・術後・皮膚に傷がある場合、裕和堂で施術を受けられますか？",
