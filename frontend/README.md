@@ -48,7 +48,7 @@ npm run build:ip8090
 
 该命令将静态资源路径设为 `/`，接口使用 `http://8.210.181.83:8091/api.php`。构建后，将 `dist` 内的全部文件和目录上传到前端站点根目录，包括 `index.html`、`js`、`css`、`images`、`media` 等。
 
-`npm run build` 默认读取 `.env.production`，生成绑定 `www.yuhetangtcm.com/h5` 的资源地址，适用于表中对应的域名入口。切换部署入口时需要使用对应命令重新构建。
+`npm run build` 默认读取 `.env.production`，生成 `/h5/` 下的资源和路由路径，适用于表中对应的域名入口；抓取文件中的绝对链接使用该环境配置的域名。切换部署入口时需要使用对应命令重新构建。
 
 ### 艾草基地介绍视频
 
@@ -68,3 +68,27 @@ VITE_DOCUMENTARY_URL=https://cdn.example.com/base-documentary.mp4
 ```
 
 该配置优先于内置视频；留空时使用内置视频。MP4、WebM、OGG 地址使用视频播放器，嵌入式播放页面地址使用 iframe。修改环境配置后，需要重启开发服务或重新构建。
+
+### 默认语言与分享信息
+
+首次访问默认中文；`?lang=en`、`?lang=jp` 和已保存的用户语言选择仍然生效。页面正文位于公共 `main` 标签内，标题、描述、canonical、hreflang 和分享信息随页面与语言切换更新。
+
+分享封面为 `public/images/og-cover.jpg`，尺寸 1200 × 630，使用已有品牌标识和门店照片。入口 HTML 包含默认中文分享信息，各页面加载后更新为对应标题、描述、语言和 URL。翻译文件中的标题使用全角 `｜`，避免半角 `|` 被 vue-i18n 当作复数规则解析。
+
+### 站点地图与抓取说明
+
+构建时根据 `VITE_BASE_URL` 和 `VITE_SITE_ORIGIN` 自动生成 `dist/sitemap.xml`、`dist/robots.txt`、`dist/llms.txt`。根目录 IP 构建与域名 `/h5/` 构建会使用各自入口，不需要手动批量替换域名。
+
+页面清单在 `scripts/site-pages.ts`，目前包含 33 个页面和中文、英语、日语共 99 个 URL。静态页面的 `lastmod` 来自对应源码和文案的 Git 修改日期；后台新闻、门店、反馈没有可信更新时间时不填写，构建日期不作为内容更新时间。新增新闻或门店时，可同步更新该清单以补入站点地图与 `llms.txt`。
+
+`public` 下的抓取文件保留默认域名部署版本；发布时使用本次构建后的 `dist` 文件。子目录部署时，搜索平台仍需能够访问域名根目录的 `robots.txt`：可将构建生成的 `robots.txt` 另放一份到域名根目录，或合并其中的 Sitemap 配置。
+
+### History 路由与缺失资源
+
+构建生成的 `dist/nginx-spa.conf` 已匹配当前根目录或 `/h5/` 入口。Nginx 发布时替换前端入口原有的 `location`，加入文件中的命名 `location` 和旧页面 301 规则，保留现有 PHP/API 配置。不要保留将所有 404 回落到首页的 `error_page` 规则。
+
+Apache 使用 `public/.htaccess`，其相对路径同时支持根目录和子目录部署。合法页面刷新交给 SPA，现有静态文件直接返回，不存在的图片、文本和无效路径返回 404。新闻 ID 和门店 slug 对应记录是否存在，仍由详情页及后台接口判断。
+
+### 首页背景视频
+
+`public/media/home-banner.mp4` 保留完整的约 16.9 秒、1280 × 720、25 fps 画面，移除音轨并使用 H.264 压缩和前置播放索引，体积从约 3.34 MB 降到约 1.71 MB。封面先显示，页面空闲后再加载视频，实际开始播放后才淡出封面；视频继续静音自动循环播放。
