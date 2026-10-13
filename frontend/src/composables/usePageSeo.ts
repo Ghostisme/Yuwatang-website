@@ -1,6 +1,8 @@
 import { onMounted, onUnmounted, unref, watch, type WatchSource } from "vue"
 import { useI18n } from "vue-i18n"
 import { upsertJsonLd, removeJsonLd } from "@/utils/jsonLd"
+import { buildLocaleHref, resolveInitialLocale } from "@/utils/localeUrl"
+import { SITE_NAME, SHARE_IMAGE_PATH, SHARE_IMAGE_WIDTH, SHARE_IMAGE_HEIGHT, SOCIAL_LOCALE } from "@/config/siteMeta"
 
 export type PageSeoOptions = {
   titleKey: string
@@ -8,12 +10,12 @@ export type PageSeoOptions = {
   h1Key?: string
 }
 
-const setMeta = (name: string, content: string) => {
+const setMeta = (name: string, content: string, attribute: "name" | "property" = "name") => {
   if (!content) return
-  let el = document.querySelector(`meta[name="${name}"]`) as HTMLMetaElement | null
+  let el = document.querySelector(`meta[${attribute}="${name}"]`) as HTMLMetaElement | null
   if (!el) {
     el = document.createElement("meta")
-    el.setAttribute("name", name)
+    el.setAttribute(attribute, name)
     document.head.appendChild(el)
   }
   el.setAttribute("content", content)
@@ -23,6 +25,33 @@ const setMeta = (name: string, content: string) => {
 export function setPageMeta(title: string, description: string) {
   if (title) document.title = title
   setMeta("description", description)
+
+  const locale = resolveInitialLocale()
+  const base = new URL(import.meta.env.BASE_URL || "/", window.location.origin)
+  base.pathname = `${base.pathname.replace(/\/$/, "")}/`
+  const pathname = window.location.pathname
+  const path = pathname === base.pathname.slice(0, -1)
+    ? "/"
+    : pathname.startsWith(base.pathname) ? `/${pathname.slice(base.pathname.length)}` : pathname
+  const url = buildLocaleHref(path, locale)
+  const image = new URL(SHARE_IMAGE_PATH, base).href
+
+  setMeta("og:type", "website", "property")
+  setMeta("og:site_name", SITE_NAME, "property")
+  setMeta("og:title", title, "property")
+  setMeta("og:description", description, "property")
+  setMeta("og:url", url, "property")
+  setMeta("og:locale", SOCIAL_LOCALE[locale], "property")
+  setMeta("og:image", image, "property")
+  setMeta("og:image:type", "image/jpeg", "property")
+  setMeta("og:image:width", String(SHARE_IMAGE_WIDTH), "property")
+  setMeta("og:image:height", String(SHARE_IMAGE_HEIGHT), "property")
+  setMeta("og:image:alt", SITE_NAME, "property")
+  setMeta("twitter:card", "summary_large_image")
+  setMeta("twitter:title", title)
+  setMeta("twitter:description", description)
+  setMeta("twitter:image", image)
+  setMeta("twitter:image:alt", SITE_NAME)
 }
 
 /** 需求2-5：每页唯一 TDK；需求2-7：配合页面唯一 H1 */
