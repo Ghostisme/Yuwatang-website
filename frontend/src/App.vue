@@ -1,11 +1,13 @@
 <template>
   <div class="app">
     <Header />
-    <router-view v-slot="{ Component, route }">
-      <Transition name="pm-page" mode="out-in" @after-enter="onPageReady">
-        <component :is="Component" :key="route.fullPath" />
-      </Transition>
-    </router-view>
+    <main id="main-content">
+      <router-view v-slot="{ Component, route }">
+        <Transition name="pm-page" mode="out-in" @after-enter="onPageReady">
+          <component :is="Component" :key="route.fullPath" />
+        </Transition>
+      </router-view>
+    </main>
     <Footer />
     <BackToTop />
   </div>
