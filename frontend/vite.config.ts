@@ -7,6 +7,7 @@ import VueI18nPlugin from "@intlify/unplugin-vue-i18n/vite"
 import { resolve, dirname } from "path" // 确保导入 resolve
 import { fileURLToPath, URL } from "node:url"
 import path from "path"
+import { websiteSeoAssets } from "./scripts/seo-assets"
 
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = dirname(__filename)
@@ -15,8 +16,10 @@ const __dirname = dirname(__filename)
 // https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "")
+  // BASE_URL 同时供 Vue Router 使用，完整域名只用于抓取文件，路由必须使用路径。
+  const basePath = new URL(env.VITE_BASE_URL || "/", "http://localhost").pathname.replace(/\/?$/, "/")
   return {
-    base: env.VITE_BASE_URL || "/", // 项目地址
+    base: basePath,
     server: {
       host: "0.0.0.0", // 或 process.env.VITE_HOST
       open: true, // 自动打开浏览器
@@ -32,6 +35,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [
       vue(),
+      websiteSeoAssets(env),
       VueI18nPlugin({
         include: path.resolve(__dirname, "./src/locales/**"),
         strictMessage: false
