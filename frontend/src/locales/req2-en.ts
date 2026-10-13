@@ -128,7 +128,7 @@ export default {
       "Values: Guest first · Gratitude · Altruism · Responsibility · Dedication · Excellence. Inspired by Kazuo Inamori; annual pilgrimage on Li Shizhen's herb-gathering route.",
     honorsTitle: "Honors",
     honors:
-      "Meituan & Dianping 5-Star Popular Merchant and Wellness Benchmark; 2019 Foot Massage Gold Merchant; Dianping Popular TCM Wellness Brand; regional #1 sales at multiple branches; 2025 Shanghai Massage Industry Benchmark Branch and Q4 Million-Branch Award."
+      "Meituan & Dianping 5-Star Popular Merchant and Wellness Benchmark; 2019 Foot Massage Gold Merchant; Dianping Popular TCM Wellness Brand; regional #1 sales at multiple branches; 2025 Shanghai Massage Industry Benchmark Branch and the Q4 2025 Consumers' Favorite Branch Award."
   },
   baseV2: {
     h1: "Qichun Mugwort Base",
