@@ -1,4 +1,4 @@
-define(['jquery', 'bootstrap', 'dropzone', 'template'], function ($, undefined, Dropzone, Template) {
+define(['jquery', 'bootstrap', 'dropzone', 'template', 'fast'], function ($, undefined, Dropzone, Template, Fast) {
     var Upload = {
             list: {},
             options: {},
