@@ -1,4 +1,5 @@
 import { getStoreDetail, getStoreList } from "@/api"
+import { rewriteUploadedMediaUrl } from "@/utils/mediaCdn"
 
 /** 后台返回的原始门店行（含多语言字段） */
 export type StoreApiRow = {
@@ -85,18 +86,18 @@ export function resolveStoreImage(path: string | undefined | null, locale = "zh"
   if (!raw) {
     return resolveStoreImage("store-banner.png")
   }
-  if (/^https?:\/\//i.test(raw)) return raw
+  if (/^https?:\/\//i.test(raw)) return rewriteUploadedMediaUrl(raw)
   if (raw.startsWith("/uploads") || raw.startsWith("uploads/")) {
     const p = raw.startsWith("/") ? raw : `/${raw}`
     const api = String(import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8000/api.php")
     try {
       const u = new URL(api)
-      return `${u.origin}${p}`
+      return rewriteUploadedMediaUrl(`${u.origin}${p}`)
     } catch {
       return p
     }
   }
-  if (raw.startsWith("/")) return raw
+  if (raw.startsWith("/")) return rewriteUploadedMediaUrl(raw)
 
   const key = `../assets/img/${raw}`
   if (assetModules[key]) return assetModules[key]

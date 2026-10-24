@@ -18,8 +18,16 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "")
   // BASE_URL 同时供 Vue Router 使用，完整域名只用于抓取文件，路由必须使用路径。
   const basePath = new URL(env.VITE_BASE_URL || "/", "http://localhost").pathname.replace(/\/?$/, "/")
+  const mediaCdnBase = String(env.VITE_MEDIA_CDN_BASE || "").trim().replace(/\/$/, "")
+  const mediaExtension = /\.(?:avif|gif|ico|jpe?g|png|svg|webp|mp4|webm|ogg)(?:[?#]|$)/i
   return {
     base: basePath,
+    experimental: {
+      // 图片的模板引用、JS import、CSS url() 共用同一构建路径；路由和代码仍使用本站路径。
+      renderBuiltUrl(filename) {
+        if (mediaCdnBase && mediaExtension.test(filename)) return `${mediaCdnBase}${basePath}${filename}`
+      }
+    },
     server: {
       host: "0.0.0.0", // 或 process.env.VITE_HOST
       open: true, // 自动打开浏览器
@@ -36,6 +44,16 @@ export default defineConfig(({ mode }) => {
     plugins: [
       vue(),
       websiteSeoAssets(env),
+      {
+        name: "website-media-cdn-build",
+        generateBundle() {
+          this.emitFile({
+            type: "asset",
+            fileName: "media-cdn-build.json",
+            source: JSON.stringify({ basePath, mediaCdnBase }, null, 2)
+          })
+        }
+      },
       VueI18nPlugin({
         include: path.resolve(__dirname, "./src/locales/**"),
         strictMessage: false

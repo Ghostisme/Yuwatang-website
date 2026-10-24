@@ -3,6 +3,7 @@ import { useI18n } from "vue-i18n"
 import { upsertJsonLd, removeJsonLd } from "@/utils/jsonLd"
 import { buildLocaleHref, resolveInitialLocale } from "@/utils/localeUrl"
 import { SITE_NAME, SHARE_IMAGE_PATH, SHARE_IMAGE_WIDTH, SHARE_IMAGE_HEIGHT, SOCIAL_LOCALE } from "@/config/siteMeta"
+import { rewriteMediaUrl } from "@/utils/mediaCdn"
 
 export type PageSeoOptions = {
   titleKey: string
@@ -34,7 +35,7 @@ export function setPageMeta(title: string, description: string) {
     ? "/"
     : pathname.startsWith(base.pathname) ? `/${pathname.slice(base.pathname.length)}` : pathname
   const url = buildLocaleHref(path, locale)
-  const image = new URL(SHARE_IMAGE_PATH, base).href
+  const image = rewriteMediaUrl(new URL(SHARE_IMAGE_PATH, base).href)
 
   setMeta("og:type", "website", "property")
   setMeta("og:site_name", SITE_NAME, "property")

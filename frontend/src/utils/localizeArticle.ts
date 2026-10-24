@@ -1,3 +1,5 @@
+import { rewriteArticleMedia, rewriteUploadedMediaUrl } from "@/utils/mediaCdn"
+
 /** 后台文章原始行（含多语言） */
 export type ArticleApiRow = {
   id: number
@@ -28,6 +30,7 @@ export function localizeArticle(row: ArticleApiRow, locale: string) {
   return {
     ...row,
     article_title: String(title).trim() || row.article_title,
-    content: String(content).trim() || row.content || ""
+    content: rewriteArticleMedia(String(content).trim() || row.content || ""),
+    image: rewriteUploadedMediaUrl(row.image)
   }
 }

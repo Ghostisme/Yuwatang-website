@@ -135,7 +135,8 @@ export function websiteSeoAssets(env: Record<string, string>): Plugin {
     transformIndexHtml: {
       order: "post",
       handler(html) {
-        const image = new URL(SHARE_IMAGE_PATH, site).href
+        const mediaCdn = String(env.VITE_MEDIA_CDN_BASE || "").trim().replace(/\/$/, "")
+        const image = mediaCdn ? `${mediaCdn}${site.pathname}${SHARE_IMAGE_PATH}` : new URL(SHARE_IMAGE_PATH, site).href
         return html
           .replace(/(<meta property="og:url" content=")[^"]*("\s*\/?>)/, `$1${pageUrl(site, "/", "zh")}$2`)
           .replace(/(<meta (?:property="og:image"|name="twitter:image") content=")[^"]*("\s*\/?>)/g, `$1${image}$2`)

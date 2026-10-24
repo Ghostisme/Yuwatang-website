@@ -1,9 +1,10 @@
 /** 基地产品与溯源页数据（自鹤佗年 product/18 迁移） */
+import { rewriteMediaUrl } from "@/utils/mediaCdn"
 
 export const traceAsset = (rel: string) => {
   const base = import.meta.env.BASE_URL || "/"
   // 使用 /trace-assets，避免与 Vue 路由 /trace 的 public 目录冲突（刷新会丢路由）
-  return `${base}trace-assets/${rel}`.replace(/([^:]\/)\/+/g, "$1")
+  return rewriteMediaUrl(`${base}trace-assets/${rel}?v=20261024`.replace(/([^:]\/)\/+/g, "$1"))
 }
 
 export const verifyInfo = {
