@@ -4,16 +4,23 @@
       <img
         class="banner-poster"
         :class="{ 'is-ready': videoPlaying }"
-        src="@/assets/img/home-banner.jpg"
+        :src="bannerPosterSrc"
         :alt="t('homeV2.heroTitle')"
+        fetchpriority="high"
+        decoding="async"
       />
       <video
         v-if="videoReady"
+        :key="bannerVideoSrc"
         class="video banner-video"
         :src="bannerVideoSrc"
+        :poster="bannerPosterSrc"
+        @canplay="handleBannerCanPlay"
         @playing="videoPlaying = true"
+        @error="handleBannerVideoError"
         autoplay
         muted
+        :defaultMuted="true"
         loop
         playsinline
         preload="metadata"
@@ -137,11 +144,12 @@ import homePic4 from "@/assets/img/home-pic4.jpg"
 import homePic5 from "@/assets/img/home-pic5.jpg"
 
 import { usePageSeo } from "@/composables/usePageSeo"
+import { useHomeBanner } from "@/composables/useHomeBanner"
 
 const { t } = useI18n()
 usePageSeo({ titleKey: "seo.home.title", descriptionKey: "seo.home.description", h1Key: "homeV2.heroTitle" })
 const router = useRouter()
-const bannerVideoSrc = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/home-banner.mp4?v=20261013`
+const { bannerPosterSrc, bannerVideoSrc, videoReady, videoPlaying, handleBannerCanPlay, handleBannerVideoError } = useHomeBanner()
 
 const homeServiceCards = [
   { slug: "moxibustion", img: homePic5 },
@@ -166,8 +174,6 @@ const prodList = computed(() =>
 
 const shopOneList = ref(t("home.item16").split(","))
 const shopTwoList = ref(t("home.item17").split(","))
-const videoReady = ref(false)
-const videoPlaying = ref(false)
 const newsPreview = ref<any[]>([])
 
 const formatDate = (value: string | number) => {
@@ -209,22 +215,7 @@ const goFeature = (index: number) => {
   router.push({ path: `/services/${slug}` })
 }
 
-const scheduleBannerVideo = () => {
-  const enable = () => {
-    videoReady.value = true
-  }
-  const w = window as Window & {
-    requestIdleCallback?: (cb: () => void, opts?: { timeout: number }) => number
-  }
-  if (typeof w.requestIdleCallback === "function") {
-    w.requestIdleCallback(enable, { timeout: 2500 })
-  } else {
-    setTimeout(enable, 2000)
-  }
-}
-
 onMounted(() => {
-  scheduleBannerVideo()
   // 次要接口错峰，减轻首屏带宽争抢
   setTimeout(loadFeed, 1200)
 })
