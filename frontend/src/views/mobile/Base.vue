@@ -41,16 +41,14 @@ import BaseStory from "@/components/BaseStory.vue"
 import BaseProductSection from "@/components/BaseProductSection.vue"
 import BufferedVideo from "@/components/BufferedVideo.vue"
 import { usePageSeo } from "@/composables/usePageSeo"
+import { getBaseDocumentaryAssets } from "@/config/baseDocumentary"
 
 const { t } = useI18n()
 usePageSeo({ titleKey: "seo.base.title", descriptionKey: "seo.base.description", h1Key: "baseV2.h1" })
 
-const mediaBaseUrl = `${String(import.meta.env.BASE_URL || "/").replace(/\/?$/, "/")}media/`
-const defaultDocumentaryUrl = `${mediaBaseUrl}base-documentary.mp4?v=silent-720p-20261013`
-const documentaryUrl = computed(() => String(import.meta.env.VITE_DOCUMENTARY_URL || "").trim() || defaultDocumentaryUrl)
-const documentaryPoster = computed(() =>
-  documentaryUrl.value === defaultDocumentaryUrl ? `${mediaBaseUrl}base-documentary.jpg?v=720p-20261012` : undefined
-)
+const documentary = getBaseDocumentaryAssets()
+const documentaryUrl = computed(() => documentary.src)
+const documentaryPoster = computed(() => documentary.poster)
 const isDirectVideo = computed(() => /\.(mp4|webm|ogg)([?#]|$)/i.test(documentaryUrl.value))
 </script>
 
