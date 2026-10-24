@@ -7,6 +7,7 @@
     "dev": "vite",
     "build": "vite build",
     "build:ip8090": "vite build --mode ip8090",
+    "package:cdn": "node scripts/package-cdn.mjs",
     "preview": "vite preview --port 4173"
   },
   "dependencies": {

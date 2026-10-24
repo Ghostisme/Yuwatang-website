@@ -91,4 +91,10 @@ Apache 使用 `public/.htaccess`，其相对路径同时支持根目录和子目
 
 ### 首页背景视频
 
-`public/media/home-banner.mp4` 保留完整的约 16.9 秒、1280 × 720、25 fps 画面，移除音轨并使用 H.264 压缩和前置播放索引，体积从约 3.34 MB 降到约 1.71 MB。封面先显示，页面空闲后再加载视频，实际开始播放后才淡出封面；视频继续静音自动循环播放。
+首页首屏按页面初次加载时的屏幕方向选择视频，旋转屏幕不切换素材：横屏默认 `public/media/home-banner-1080p.mp4`，浏览器报告 3G 或更慢网络、或开启省流模式时优先 `home-banner-720p.mp4`；竖屏默认 `home-banner-mobile-720x1280.mp4`，失败时回退 `home-banner-mobile-1080x1920.mp4`。首帧图分别为 `public/images/home-banner-poster.jpg` 和 `public/images/home-banner-mobile-poster.jpg`。旧的 `public/media/home-banner.mp4` 暂时保留，确认新素材上线后再清理。
+
+封面先显示，页面空闲后再创建视频，`canplay` 时尝试播放，仅收到 `playing` 事件后才淡出封面；播放器保持 `autoplay muted loop playsinline`，同时显式绑定 `muted` HTML 特性以兼容 iOS/微信，不显示浏览器控件，视频加载失败时保留封面或尝试同方向的下一份素材。所有素材 URL 带 `?v=20261024`，后续换文件时更新版本号即可。
+
+正式站将这 6 个新素材上传到阿里云 OSS，并通过国内 CDN 提供 HTTPS 访问。构建环境设置 `VITE_MEDIA_CDN_BASE` 为 CDN 素材根地址（例如 `https://static.example.com`）后，首页视频和首帧图会统一改走该域名；OSS 上保留 `media/`、`images/` 路径（网站部署在 `/h5/` 时需保留 `h5/media/`、`h5/images/`）。留空时使用当前宝塔站点的静态素材路径，可用于本地预览。CDN 需返回正确的 `Content-Type`（MP4 为 `video/mp4`、JPEG 为 `image/jpeg`）、支持 `Range` 请求；使用长缓存并在缓存键中保留版本参数 `v`。修改环境变量后重新构建前端。
+
+2026-10-24 已将生产环境素材根地址配置为 `https://static.yuhetangtcm.com`，完成六个 CDN 文件的 HTTPS、完整哈希及 Range 验证，并通过本地生产构建中的浏览器播放检查。当前备案及中国内地加速区域切换、证书自动续期和 CDN 同步、宝塔发布及真机验收仍待完成，详见 `docs/home-banner-v5-deployment.md`。
